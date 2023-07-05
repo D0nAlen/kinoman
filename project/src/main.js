@@ -89,38 +89,44 @@ const render = (container, template, place = "beforeend") => {
 };
 
 const siteMainElement = document.querySelector(".main");
-const siteHeaderElement = siteMainElement.querySelector(".header__profile profile");
-
+const siteHeaderElement = document.querySelector(".header");
 render(siteHeaderElement, createHeaderProfileTemplate());
-// render(siteMainElement, createFilterTemplate());
+render(siteMainElement, createMenuTemplate());
 
-const createCardFilmTemplate = () => {
-  return `
-    
-        `;
-};
+const siteFilterElement = siteMainElement.querySelector(".main-navigation");
+render(siteMainElement, createFilterTemplate());
 
-const createShowMoreButtonTemplate = () => {
-  return `
-    
-        `;
-};
+// const siteStatisticElement = siteMainElement.querySelector(".main-navigation");
+// render(siteMainElement, createStatisticTemplate());
 
-const createCardTopRatedTemplate = () => {
-  return `
-    
-        `;
-};
 
-const createCardMostCommentedTemplate = () => {
-  return `
+// const createCardFilmTemplate = () => {
+//   return `
     
-        `;
-};
+//         `;
+// };
+
+// const createShowMoreButtonTemplate = () => {
+//   return `
+    
+//         `;
+// };
+
+// const createCardTopRatedTemplate = () => {
+//   return `
+    
+//         `;
+// };
+
+// const createCardMostCommentedTemplate = () => {
+//   return `
+    
+//         `;
+// };
 
 //   popup
-const createDetailedInformationFilmTemplate = () => {
-  return `
+// const createDetailedInformationFilmTemplate = () => {
+//   return `
     
-        `;
-};
+//         `;
+// };
