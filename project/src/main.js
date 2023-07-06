@@ -1,8 +1,10 @@
 "use strict";
 
-const CARD_COUNT = 5;
+const CARD_FILMS_COUNT = 5;
+const CARD__TOP_RATED_COUNT = 2;
+const CARD__MOST_COMMENTED_COUNT = 2;
 
-const createHeaderProfileTemplate = () => {
+const headerProfileTemplate = () => {
   return `
     <section class="header__profile profile">
     <p class="profile__rating">Movie Buff</p>
@@ -11,7 +13,7 @@ const createHeaderProfileTemplate = () => {
     `;
 };
 
-const createMenuTemplate = () => {
+const menuTemplate = () => {
   return `
   <nav class="main-navigation">
   <div class="main-navigation__items">
@@ -25,7 +27,7 @@ const createMenuTemplate = () => {
     `;
 };
 
-const createFilterTemplate = () => {
+const filterTemplate = () => {
   return `
   <ul class="sort">
   <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
@@ -41,7 +43,9 @@ const filmsContainerTemplate = () => {
   <section class="films-list">
     <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
   
-    <div class="films-list__container">
+    <div class="films-list__container"></div>
+  </section>
+  </section>
   `;
 };
 const cardFilmTemplate = () => {
@@ -66,8 +70,72 @@ const cardFilmTemplate = () => {
           `;
 };
 
-const createShowMoreButtonTemplate = () => {
+const showMoreButtonTemplate = () => {
   return `<button class="films-list__show-more">Show more</button>`;
+};
+
+const topRatedContainerTemplate = () => {
+  return `
+  <section class="films-list--extra">
+  <h2 class="films-list__title">Top rated</h2>
+  
+  <div class="films-list__container"></div>
+  </section>
+  `;
+};
+
+const cardTopRatedTemplate = () => {
+  return `
+  <article class="film-card">
+  <h3 class="film-card__title">The Great Flamarion</h3>
+  <p class="film-card__rating">8.9</p>
+  <p class="film-card__info">
+    <span class="film-card__year">1945</span>
+    <span class="film-card__duration">1h 18m</span>
+    <span class="film-card__genre">Mystery</span>
+  </p>
+  <img src="./images/posters/the-great-flamarion.jpg" alt="" class="film-card__poster">
+  <p class="film-card__description">The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Grea…</p>
+  <a class="film-card__comments">12 comments</a>
+  <form class="film-card__controls">
+    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
+    <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+    <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+  </form>
+</article>
+`;
+};
+
+const mostCommentedContainerTemplate = () => {
+  return `
+  <section class="films-list--extra">
+  <h2 class="films-list__title">Most commented</h2>
+
+  <div class="films-list__container"></div>
+  </section>
+  `;
+};
+
+const cardMostCommentedTemplate = () => {
+  return `
+  <article class="film-card">
+  <h3 class="film-card__title">Made for Each Other</h3>
+  <p class="film-card__rating">5.8</p>
+  <p class="film-card__info">
+    <span class="film-card__year">1939</span>
+    <span class="film-card__duration">1h 32m</span>
+    <span class="film-card__genre">Comedy</span>
+  </p>
+  <img src="./images/posters/made-for-each-other.png" alt="" class="film-card__poster">
+  <p class="film-card__description">John Mason (James Stewart) is a young, somewhat timid attorney in New York City. He has been doing his job well, and he has a chance of bei…</p>
+  <a class="film-card__comments">56 comments</a>
+  <form class="film-card__controls">
+    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
+    <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+    <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+  </form>
+</article>
+        `;
 };
 
 const render = (container, template, place = "beforeend") => {
@@ -76,33 +144,35 @@ const render = (container, template, place = "beforeend") => {
 
 const siteMainElement = document.querySelector(".main");
 const siteHeaderElement = document.querySelector(".header");
-render(siteHeaderElement, createHeaderProfileTemplate());
-render(siteMainElement, createMenuTemplate());
+render(siteHeaderElement, headerProfileTemplate());
+render(siteMainElement, menuTemplate());
 
 const siteFilterElement = siteMainElement.querySelector(".main-navigation");
-render(siteMainElement, createFilterTemplate());
+render(siteMainElement, filterTemplate());
 
 render(siteMainElement, filmsContainerTemplate());
-const cardFilmElement = siteMainElement.querySelector(".films-list__container");
-for (let i = 0; i < CARD_COUNT; i++) {
+const filmsContainer = siteMainElement.querySelector(".films");
+const cardFilmElement = filmsContainer.querySelector(".films-list__container");
+for (let i = 0; i < CARD_FILMS_COUNT; i++) {
   render(cardFilmElement, cardFilmTemplate());
 }
 
-render(siteMainElement, createShowMoreButtonTemplate());
+const filmsListElement = filmsContainer.querySelector(".films-list");
+render(filmsListElement, showMoreButtonTemplate());
 
+render(filmsContainer, topRatedContainerTemplate());
+const topRatedContainerElement = filmsContainer.querySelectorAll(
+  ".films-list__container")[1];
+for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
+  render(topRatedContainerElement, cardTopRatedTemplate());
+}
 
-
-// const createCardTopRatedTemplate = () => {
-//   return `
-
-//         `;
-// };
-
-// const createCardMostCommentedTemplate = () => {
-//   return `
-
-//         `;
-// };
+render(filmsContainer, mostCommentedContainerTemplate());
+const mostCommentedContainerElement = filmsContainer.querySelectorAll(
+  ".films-list__container")[2];
+for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
+  render(mostCommentedContainerElement, cardMostCommentedTemplate());
+}
 
 //   popup
 // const createDetailedInformationFilmTemplate = () => {
