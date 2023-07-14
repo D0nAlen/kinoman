@@ -1,6 +1,10 @@
 "use strict";
 
-const createHeaderProfileTemplate = () => {
+const CARD_FILMS_COUNT = 5;
+const CARD__TOP_RATED_COUNT = 2;
+const CARD__MOST_COMMENTED_COUNT = 2;
+
+const headerProfileTemplate = () => {
   return `
     <section class="header__profile profile">
     <p class="profile__rating">Movie Buff</p>
@@ -9,7 +13,7 @@ const createHeaderProfileTemplate = () => {
     `;
 };
 
-const createMenuTemplate = () => {
+const menuTemplate = () => {
   return `
   <nav class="main-navigation">
   <div class="main-navigation__items">
@@ -23,7 +27,7 @@ const createMenuTemplate = () => {
     `;
 };
 
-const createFilterTemplate = () => {
+const filterTemplate = () => {
   return `
   <ul class="sort">
   <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
@@ -33,94 +37,162 @@ const createFilterTemplate = () => {
       `;
 };
 
-const createStatisticTemplate = () => {
+const filmsContainerTemplate = () => {
   return `
-  <section class="statistic">
-  <p class="statistic__rank">
-    Your rank
-    <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    <span class="statistic__rank-label">Sci-Fighter</span>
+  <section class="films">
+  <section class="films-list">
+    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+  
+    <div class="films-list__container"></div>
+  </section>
+  </section>
+  `;
+};
+const cardFilmTemplate = () => {
+  return `
+  <article class="film-card">
+  <h3 class="film-card__title">Sagebrush Trail</h3>
+  <p class="film-card__rating">3.2</p>
+  <p class="film-card__info">
+    <span class="film-card__year">1933</span>
+    <span class="film-card__duration">54m</span>
+    <span class="film-card__genre">Western</span>
   </p>
-
-  <form action="https://echo.htmlacademy.ru/" method="get" class="statistic__filters">
-    <p class="statistic__filters-description">Show stats:</p>
-
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-all-time" value="all-time" checked>
-    <label for="statistic-all-time" class="statistic__filters-label">All time</label>
-
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-today" value="today">
-    <label for="statistic-today" class="statistic__filters-label">Today</label>
-
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-week" value="week">
-    <label for="statistic-week" class="statistic__filters-label">Week</label>
-
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-month" value="month">
-    <label for="statistic-month" class="statistic__filters-label">Month</label>
-
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-year" value="year">
-    <label for="statistic-year" class="statistic__filters-label">Year</label>
+  <img src="./images/posters/sagebrush-trail.jpg" alt="" class="film-card__poster">
+  <p class="film-card__description">Sentenced for a murder he did not commit, John Brant escapes from prison determined to find the real killer. By chance Brant's narrow escap…</p>
+  <a class="film-card__comments">89 comments</a>
+  <form class="film-card__controls">
+    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
+    <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+    <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
   </form>
+</article>
+          `;
+};
 
-  <ul class="statistic__text-list">
-    <li class="statistic__text-item">
-      <h4 class="statistic__item-title">You watched</h4>
-      <p class="statistic__item-text">22 <span class="statistic__item-description">movies</span></p>
-    </li>
-    <li class="statistic__text-item">
-      <h4 class="statistic__item-title">Total duration</h4>
-      <p class="statistic__item-text">130 <span class="statistic__item-description">h</span> 22 <span class="statistic__item-description">m</span></p>
-    </li>
-    <li class="statistic__text-item">
-      <h4 class="statistic__item-title">Top genre</h4>
-      <p class="statistic__item-text">Sci-Fi</p>
-    </li>
-  </ul>
+const showMoreButtonTemplate = () => {
+  return `<button class="films-list__show-more">Show more</button>`;
+};
 
-  <div class="statistic__chart-wrap">
-    <canvas class="statistic__chart" width="1000"></canvas>
-  </div>
+const topRatedContainerTemplate = () => {
+  return `
+  <section class="films-list--extra">
+  <h2 class="films-list__title">Top rated</h2>
+  
+  <div class="films-list__container"></div>
+  </section>
+  `;
+};
 
-</section>
-      `;
+const cardTopRatedTemplate = () => {
+  return `
+  <article class="film-card">
+  <h3 class="film-card__title">The Great Flamarion</h3>
+  <p class="film-card__rating">8.9</p>
+  <p class="film-card__info">
+    <span class="film-card__year">1945</span>
+    <span class="film-card__duration">1h 18m</span>
+    <span class="film-card__genre">Mystery</span>
+  </p>
+  <img src="./images/posters/the-great-flamarion.jpg" alt="" class="film-card__poster">
+  <p class="film-card__description">The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Grea…</p>
+  <a class="film-card__comments">12 comments</a>
+  <form class="film-card__controls">
+    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
+    <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+    <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+  </form>
+</article>
+`;
+};
+
+const mostCommentedContainerTemplate = () => {
+  return `
+  <section class="films-list--extra">
+  <h2 class="films-list__title">Most commented</h2>
+
+  <div class="films-list__container"></div>
+  </section>
+  `;
+};
+
+const cardMostCommentedTemplate = () => {
+  return `
+  <article class="film-card">
+  <h3 class="film-card__title">Made for Each Other</h3>
+  <p class="film-card__rating">5.8</p>
+  <p class="film-card__info">
+    <span class="film-card__year">1939</span>
+    <span class="film-card__duration">1h 32m</span>
+    <span class="film-card__genre">Comedy</span>
+  </p>
+  <img src="./images/posters/made-for-each-other.png" alt="" class="film-card__poster">
+  <p class="film-card__description">John Mason (James Stewart) is a young, somewhat timid attorney in New York City. He has been doing his job well, and he has a chance of bei…</p>
+  <a class="film-card__comments">56 comments</a>
+  <form class="film-card__controls">
+    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
+    <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+    <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+  </form>
+</article>
+        `;
 };
 
 const render = (container, template, place = "beforeend") => {
   container.insertAdjacentHTML(place, template);
 };
 
+// popup film details
+const filmDetailsTemplate = ()=>{
+return `
+<section class="film-details">
+  <form class="film-details__inner" action="" method="get">
+    <div class="form-details__top-container">
+      <div class="film-details__close">
+        <button class="film-details__close-btn" type="button">close</button>
+      </div>
+      <div class="film-details__info-wrap"></div>
+    </div>
+  </form>
+</section>
+`;
+};
+
 const siteMainElement = document.querySelector(".main");
-const siteHeaderElement = siteMainElement.querySelector(".header__profile profile");
+const siteHeaderElement = document.querySelector(".header");
+render(siteHeaderElement, headerProfileTemplate());
+render(siteMainElement, menuTemplate());
 
-render(siteHeaderElement, createHeaderProfileTemplate());
-// render(siteMainElement, createFilterTemplate());
+const siteFilterElement = siteMainElement.querySelector(".main-navigation");
+render(siteMainElement, filterTemplate());
 
-const createCardFilmTemplate = () => {
-  return `
-    
-        `;
-};
+render(siteMainElement, filmsContainerTemplate());
+const filmsContainer = siteMainElement.querySelector(".films");
+const cardFilmElement = filmsContainer.querySelector(".films-list__container");
+for (let i = 0; i < CARD_FILMS_COUNT; i++) {
+  render(cardFilmElement, cardFilmTemplate());
+}
 
-const createShowMoreButtonTemplate = () => {
-  return `
-    
-        `;
-};
+const filmsListElement = filmsContainer.querySelector(".films-list");
+render(filmsListElement, showMoreButtonTemplate());
 
-const createCardTopRatedTemplate = () => {
-  return `
-    
-        `;
-};
+render(filmsContainer, topRatedContainerTemplate());
+const topRatedContainerElement = filmsContainer.querySelectorAll(
+  ".films-list__container")[1];
+for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
+  render(topRatedContainerElement, cardTopRatedTemplate());
+}
 
-const createCardMostCommentedTemplate = () => {
-  return `
-    
-        `;
-};
+render(filmsContainer, mostCommentedContainerTemplate());
+const mostCommentedContainerElement = filmsContainer.querySelectorAll(
+  ".films-list__container")[2];
+for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
+  render(mostCommentedContainerElement, cardMostCommentedTemplate());
+}
 
 //   popup
-const createDetailedInformationFilmTemplate = () => {
-  return `
-    
-        `;
-};
+// const createDetailedInformationFilmTemplate = () => {
+//   return `
+
+//         `;
+// };
