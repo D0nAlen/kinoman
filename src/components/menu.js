@@ -2,18 +2,14 @@ const createMenuMarkup = (menu) => {
   const { title, count } = menu;
 
   return `
-  <a href="#watchlist" class="main-navigation__item">${title} <span class="main-navigation__item-count">${count}</span></a>
-  <a href="#history" class="main-navigation__item">${title} <span class="main-navigation__item-count">${count}</span></a>
-  <a href="#favorites" class="main-navigation__item">${title} <span class="main-navigation__item-count">${count}</span></a>
+  <a href="#${title}" class="main-navigation__item">${title} <span class="main-navigation__item-count">${count}</span></a>
   `;
 };
 
 export const menuTemplate = (menuButtons) => {
-  // const menuMarkup = menuButtons
-  // .map((it) =>
-  // createMenuMarkup(it)).join(`\n`);
-
-  const menuMarkup = createMenuMarkup(menuButtons);
+  const menuMarkup = menuButtons
+  .map((it) =>
+  createMenuMarkup(it)).join(`\n`);
 
   return `
     <nav class="main-navigation">
