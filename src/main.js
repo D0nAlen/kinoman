@@ -9,8 +9,10 @@ import {topRatedContainerTemplate} from "./components/topRatedContainer.js";
 import {cardTopRatedTemplate} from "./components/cardTopRated.js";
 import {mostCommentedContainerTemplate} from "./components/mostCommentedContainer.js";
 import {cardMostCommentedTemplate} from "./components/cardMostCommented.js";
+import { generateFilms } from "./mock/cardFilm.js";
+import { generateMenu } from "./mock/menu.js";
 
-const CARD_FILMS_COUNT = 5;
+const CARD_FILMS_COUNT = 8;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 
@@ -18,28 +20,15 @@ const render = (container, template, place = "beforeend") => {
   container.insertAdjacentHTML(place, template);
 };
 
-// popup film details
-// const filmDetailsTemplate = ()=>{
-// return `
-// <section class="film-details">
-//   <form class="film-details__inner" action="" method="get">
-//     <div class="form-details__top-container">
-//       <div class="film-details__close">
-//         <button class="film-details__close-btn" type="button">close</button>
-//       </div>
-//       <div class="film-details__info-wrap"></div>
-//     </div>
-//   </form>
-// </section>
-// `;
-// };
 
 const siteMainElement = document.querySelector(".main");
 const siteHeaderElement = document.querySelector(".header");
-render(siteHeaderElement, headerProfileTemplate());
-render(siteMainElement, menuTemplate());
 
-// const siteFilterElement = siteMainElement.querySelector(".main-navigation");
+const menu = generateMenu();
+render(siteHeaderElement, headerProfileTemplate());
+render(siteMainElement, menuTemplate(menu));
+// const films = generateFilms(CARD_FILMS_COUNT);
+
 render(siteMainElement, filterTemplate());
 
 render(siteMainElement, filmsContainerTemplate());
@@ -65,10 +54,3 @@ const mostCommentedContainerElement = filmsContainer.querySelectorAll(
 for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
   render(mostCommentedContainerElement, cardMostCommentedTemplate());
 }
-
-//   popup
-// const createDetailedInformationFilmTemplate = () => {
-//   return `
-
-//         `;
-// };
