@@ -13,7 +13,7 @@ const getRandomArrayItem = (array) => {
 const generateFilm = () => {
   return {
     filmName: getRandomArrayItem(FILM_NAME),
-    poster: `../public/images/posters/sagebrush-trail.jpg`,
+    poster: `"./images/posters/made-for-each-other.png"`,
     description: `Lorem ipsum dolor sit amet, 
       consectetur adipiscing elit. Cras aliquet 
       varius magna, non porta ligula feugiat 
@@ -31,10 +31,10 @@ const generateFilm = () => {
       dapibus. In rutrum ac purus sit amet 
       tempus.`,
     comment: {
+      text:`It's wonderful! I like it!`,
       emotion: `^_^`,
-      date: `04-05-2023`,
       author: `Gage`,
-      message: `It's wonderful! I like it!`,
+      date: `04-05-2023`,
     },
   };
 };

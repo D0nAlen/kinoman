@@ -12,7 +12,9 @@ import {cardMostCommentedTemplate} from "./components/cardMostCommented.js";
 import { generateFilms } from "./mock/cardFilm.js";
 import { generateMenu } from "./mock/menu.js";
 
-const CARD_FILMS_COUNT = 8;
+const CARD_FILMS_COUNT = 20;
+const SHOWING_TASKS_COUNT_ON_START = 5;
+const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 
@@ -27,7 +29,7 @@ const siteHeaderElement = document.querySelector(".header");
 const menu = generateMenu();
 render(siteHeaderElement, headerProfileTemplate());
 render(siteMainElement, menuTemplate(menu));
-// const films = generateFilms(CARD_FILMS_COUNT);
+const films = generateFilms(CARD_FILMS_COUNT);
 
 render(siteMainElement, filterTemplate());
 
@@ -35,7 +37,7 @@ render(siteMainElement, filmsContainerTemplate());
 const filmsContainer = siteMainElement.querySelector(".films");
 const cardFilmElement = filmsContainer.querySelector(".films-list__container");
 for (let i = 0; i < CARD_FILMS_COUNT; i++) {
-  render(cardFilmElement, cardFilmTemplate());
+  render(cardFilmElement, cardFilmTemplate(films[i]));
 }
 
 const filmsListElement = filmsContainer.querySelector(".films-list");
