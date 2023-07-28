@@ -1,7 +1,10 @@
 "use strict";
-import { filmDetailsCloseButton } from "./components/popup/closeButton.js";
-import { filmDetailsInfo } from "./components/popup/infoWrap.js";
-import { filmDetailsControls } from "./components/popup/controls.js";
+import { filmDetailsCloseButtonTemplate } from "./popup/closeButton.js";
+import { filmDetailsInfoTemplate } from "./popup/filmInfo.js";
+import { filmDetailsControlsTemplate } from "./popup/controls.js";
+import { commentsListTemplate } from "./popup/commentsList.js";
+import { commentTemplate } from "./popup/comment.js";
+import { addNewCommentTemplate } from "./popup/newComment.js";
 
 const render = (container, template, place = "beforeend") => {
   container.insertAdjacentHTML(place, template);
@@ -10,6 +13,18 @@ const render = (container, template, place = "beforeend") => {
 const formDetailsTopContainer = document.querySelector(
   ".form-details__top-container"
 );
-render(formDetailsTopContainer, filmDetailsCloseButton());
-render(formDetailsTopContainer, filmDetailsInfo());
-render(formDetailsTopContainer, filmDetailsControls());
+
+render(formDetailsTopContainer, filmDetailsCloseButtonTemplate());
+render(formDetailsTopContainer, filmDetailsInfoTemplate());
+render(formDetailsTopContainer, filmDetailsControlsTemplate());
+
+const formDetailsContainer = document.querySelector(
+  ".form-details__bottom-container"
+);
+render(formDetailsContainer, commentsListTemplate());
+
+const commentList = document.querySelector(".film-details__comments-list");
+render(commentList, commentTemplate());
+
+const commentsWrap = document.querySelector(".film-details__comments-wrap");
+render(commentsWrap, addNewCommentTemplate());

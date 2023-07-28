@@ -1,4 +1,6 @@
-export const filmDetailsInfo = () => {
+export const filmDetailsInfoTemplate = () => {
+  //const {poster, age } = filmInfo;
+
     return `
     <div class="film-details__info-wrap">
     <div class="film-details__poster">

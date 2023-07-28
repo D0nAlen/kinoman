@@ -1,4 +1,4 @@
-export const filmDetailsControls = () =>{
+export const filmDetailsControlsTemplate = () =>{
     return `
     <section class="film-details__controls">
     <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
