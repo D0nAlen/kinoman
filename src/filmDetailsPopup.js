@@ -23,8 +23,14 @@ const formDetailsContainer = document.querySelector(
 );
 render(formDetailsContainer, commentsListTemplate());
 
+const comment = {
+  text: "Interesting setting and a good cast",
+  emotion: "./images/emoji/smile.png",
+  author: "Tim Macoveev",
+  date: "2019/12/31 23:59",
+};
 const commentList = document.querySelector(".film-details__comments-list");
-render(commentList, commentTemplate());
+render(commentList, commentTemplate(comment));
 
 const commentsWrap = document.querySelector(".film-details__comments-wrap");
 render(commentsWrap, addNewCommentTemplate());
