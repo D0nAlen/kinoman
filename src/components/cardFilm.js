@@ -1,6 +1,7 @@
 export const cardFilmTemplate = (film) => {
   //comment - массив комментариев
-  const { filmName, rating=3.2, year= 1933, duration="54m",genre="Western", poster, description, comment } = film;
+  const { filmName, rating, year, duration,genre, poster, description, comment } = film;
+  // const {} = film;
 
   return `
     <article class="film-card">
@@ -13,7 +14,7 @@ export const cardFilmTemplate = (film) => {
     </p>
     <img src=${poster} alt="" class="film-card__poster">
     <p class="film-card__description">${description}</p>
-    <a class="film-card__comments">89 comments</a>
+    <a class="film-card__comments">${comment.length} comments</a>
     <form class="film-card__controls">
       <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
       <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>

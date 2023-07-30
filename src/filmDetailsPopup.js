@@ -3,7 +3,7 @@ import { filmDetailsCloseButtonTemplate } from "./popup/closeButton.js";
 import { filmDetailsInfoTemplate } from "./popup/filmInfo.js";
 import { filmDetailsControlsTemplate } from "./popup/controls.js";
 import { commentsListTemplate } from "./popup/commentsList.js";
-import { commentTemplate } from "./popup/comment.js";
+import { generateComment } from "./popup/comment.js";
 import { addNewCommentTemplate } from "./popup/newComment.js";
 
 const render = (container, template, place = "beforeend") => {
@@ -30,7 +30,7 @@ const comment = {
   date: "2019/12/31 23:59",
 };
 const commentList = document.querySelector(".film-details__comments-list");
-render(commentList, commentTemplate(comment));
+render(commentList, generateComment(comment));
 
 const commentsWrap = document.querySelector(".film-details__comments-wrap");
 render(commentsWrap, addNewCommentTemplate());

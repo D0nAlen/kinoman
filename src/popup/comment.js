@@ -1,4 +1,4 @@
-export const commentTemplate = (comment) => {
+const generateComment = (comment) => {
   const { text, emotion, author, date } = comment;
 
   return `
@@ -17,3 +17,9 @@ export const commentTemplate = (comment) => {
 </li>
 `;
 };
+
+const generateComments = (count) => {
+  return new Array(count).fill(``).map(generateComment);
+};
+
+export {generateComment, generateComments};
