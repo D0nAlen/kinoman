@@ -1,7 +1,6 @@
 export const cardFilmTemplate = (film) => {
   //comment - массив комментариев
   const { filmName, rating, year, duration,genre, poster, description, comment } = film;
-  // const {} = film;
 
   return `
     <article class="film-card">

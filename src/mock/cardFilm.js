@@ -1,5 +1,4 @@
 import { FILM_NAME } from "../const.js";
-import { COMMENTS } from "../const.js";
 import { FILMS_CARDS } from "../const.js";
 
 const getRandomIntegerNumber = (min, max) => {
@@ -41,7 +40,7 @@ const getRandomArrayItem = (array) => {
 // };
 
 const generateFilms = (count) => {
-  let filmsArray = new Array();
+  let filmsArray = new Array(count);
   // return new Array(count).fill(``).map(generateFilm);
   return Object.assign(filmsArray, FILMS_CARDS);
 };

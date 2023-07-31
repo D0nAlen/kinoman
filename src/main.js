@@ -12,7 +12,7 @@ import {cardMostCommentedTemplate} from "./components/cardMostCommented.js";
 import { generateFilms } from "./mock/cardFilm.js";
 import { generateMenu } from "./mock/menu.js";
 
-const CARD_FILMS_COUNT = 6;
+const CARD_FILMS_COUNT = 20;
 const SHOWING_TASKS_COUNT_ON_START = 5;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 const CARD__TOP_RATED_COUNT = 2;
@@ -32,7 +32,6 @@ render(siteHeaderElement, headerProfileTemplate());
 render(siteMainElement, menuTemplate(menu));
 
 const films = generateFilms(CARD_FILMS_COUNT);
-// console.log(films);
 render(siteMainElement, filterTemplate());
 
 render(siteMainElement, filmsContainerTemplate());
