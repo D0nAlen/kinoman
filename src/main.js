@@ -13,8 +13,8 @@ import { generateFilms } from "./mock/cardFilm.js";
 import { generateMenu } from "./mock/menu.js";
 
 const CARD_FILMS_COUNT = 20;
-const SHOWING_TASKS_COUNT_ON_START = 5;
-const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
+const SHOWING_FILMS_COUNT_ON_START = 5;
+const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 
@@ -37,15 +37,40 @@ render(siteMainElement, filterTemplate());
 render(siteMainElement, filmsContainerTemplate());
 const filmsContainer = siteMainElement.querySelector(".films");
 const cardFilmElement = filmsContainer.querySelector(".films-list__container");
-for (let i = 0; i < CARD_FILMS_COUNT; i++) {
+for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
   render(cardFilmElement, cardFilmTemplate(films[i]));
 }
 
 
 
-
+let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 const filmsListElement = filmsContainer.querySelector(".films-list");
 render(filmsListElement, showMoreButtonTemplate());
+const loadMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
+loadMoreButton.addEventListener(`click`, () => {
+  const prevFilmsCount = showingFilmsCount;
+  showingFilmsCount = showingFilmsCount + SHOWING_FILMS_COUNT_BY_BUTTON;
+
+  films
+    .slice(prevFilmsCount, showingFilmsCount)
+    .forEach((film) =>
+      render(cardFilmElement, cardFilmTemplate(film), `beforeend`)
+    );
+
+  if (showingFilmsCount >= films.length) {
+    loadMoreButton.remove();
+  }
+});
+
+
+
+
+
+
+
+
+
+
 
 render(filmsContainer, topRatedContainerTemplate());
 const topRatedContainerElement = filmsContainer.querySelectorAll(
