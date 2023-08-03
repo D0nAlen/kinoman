@@ -31,11 +31,12 @@ const siteMainElement = document.querySelector(".main");
 const menu = generateMenu();
 const films = generateFilms(CARD_FILMS_COUNT);
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
-const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
+const mostCommentedFilms = generateMostCommentedFilms(
+  CARD__MOST_COMMENTED_COUNT
+);
 
 render(siteHeaderElement, headerProfileTemplate());
 render(siteMainElement, menuTemplate(menu));
-
 
 render(siteMainElement, filterTemplate());
 
@@ -44,11 +45,11 @@ const filmsContainer = siteMainElement.querySelector(".films");
 const cardFilmElement = filmsContainer.querySelector(".films-list__container");
 for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
   render(cardFilmElement, cardFilmTemplate(films[i]));
-
-  // !отрисовать контроллы во всех видах карточек
-  const controlsCardFilm = cardFilmElement.querySelector(".film-card");
-  render(controlsCardFilm, controlsTemplate());
 }
+
+// !отрисовать контроллы во всех видах карточек
+const controlsCardFilm = cardFilmElement.querySelectorAll(".film-card");
+controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 
 // кнопка "load more"
 let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
@@ -77,11 +78,18 @@ const topRatedContainerElement = filmsContainer.querySelectorAll(
 for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
   render(topRatedContainerElement, cardTopRatedTemplate(topRatedFilms[i]));
 }
+const controlsTopRatedFilm = topRatedContainerElement.querySelectorAll(".film-card");
+controlsTopRatedFilm.forEach((film) => render(film, controlsTemplate()));
 
 render(filmsContainer, mostCommentedContainerTemplate());
 const mostCommentedContainerElement = filmsContainer.querySelectorAll(
   ".films-list__container"
 )[2];
 for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-  render(mostCommentedContainerElement, cardMostCommentedTemplate(mostCommentedFilms[i]));
+  render(
+    mostCommentedContainerElement,
+    cardMostCommentedTemplate(mostCommentedFilms[i])
+  );
 }
+const controlsMostCommentedFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+controlsMostCommentedFilm.forEach((film) => render(film, controlsTemplate()));
