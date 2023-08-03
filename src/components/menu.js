@@ -2,7 +2,7 @@ const createMenuMarkup = (menu) => {
   const { title, count } = menu;
 
   return `
-  <a href="#${title}" class="main-navigation__item">${title} <span class="main-navigation__item-count">${count}</span></a>
+  <a href="#${title}" class="main-navigation__item" id="${title}">${title} <span class="main-navigation__item-count">${count}</span></a>
   `;
 };
 
