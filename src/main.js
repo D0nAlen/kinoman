@@ -52,11 +52,6 @@ const cardFilmElement = filmsContainer.querySelector(".films-list__container");
 for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
   render(cardFilmElement, cardFilmTemplate(films[i]));
 }
-const controlsCardFilm = cardFilmElement.querySelectorAll(".film-card");
-controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
-
-// !!!изменить SHOWING_FILMS_COUNT_BY_BUTTON, именно из этого обработчика
-// (дубль обработчика в Watchlist не работает.)
 
 // button "load more"
 let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
@@ -108,9 +103,6 @@ const topRatedContainerElement = filmsContainer.querySelectorAll(
 for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
   render(topRatedContainerElement, cardTopRatedTemplate(topRatedFilms[i]));
 }
-const controlsTopRatedFilm =
-  topRatedContainerElement.querySelectorAll(".film-card");
-controlsTopRatedFilm.forEach((film) => render(film, controlsTemplate()));
 
 render(filmsContainer, mostCommentedContainerTemplate());
 const mostCommentedContainerElement = filmsContainer.querySelectorAll(
@@ -122,6 +114,3 @@ for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
     cardMostCommentedTemplate(mostCommentedFilms[i])
   );
 }
-const controlsMostCommentedFilm =
-  mostCommentedContainerElement.querySelectorAll(".film-card");
-controlsMostCommentedFilm.forEach((film) => render(film, controlsTemplate()));
