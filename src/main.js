@@ -24,9 +24,9 @@ const render = (container, template, place = "beforeend") => {
   container.insertAdjacentHTML(place, template);
 };
 
-if (CARD_FILMS_COUNT <= SHOWING_FILMS_COUNT_ON_START) {
-  SHOWING_FILMS_COUNT_ON_START = CARD_FILMS_COUNT;
-}
+// if (CARD_FILMS_COUNT <= SHOWING_FILMS_COUNT_ON_START) {
+//   SHOWING_FILMS_COUNT_ON_START = CARD_FILMS_COUNT;
+// }
 
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
@@ -81,10 +81,30 @@ loadMoreButton.addEventListener(`click`, () => {
   }
 });
 
+// #All
+const allButton = document.getElementById("all");
+allButton.addEventListener(`click`, () => {
+  cardFilmsCount = CARD_FILMS_COUNT;
+ showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+
+  if (cardFilmsCount <= showingFilmsCount) {
+    showingFilmsCount = cardFilmsCount;
+    loadMoreButton.remove();
+  }
+
+  cardFilmElement.innerHTML = "";
+
+  for (let i = 0; i < showingFilmsCount; i++) {
+    render(cardFilmElement, cardFilmTemplate(films[i]));
+  }
+  const controlsCardFilm = cardFilmElement.querySelectorAll(".film-card");
+  controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
+});
+
 // #Watchlist
 const watchlistButton = document.getElementById("Watchlist");
 watchlistButton.addEventListener(`click`, () => {
-  cardFilmsCount = CARD_FILMS_COUNT;
+  // cardFilmsCount = CARD_FILMS_COUNT;
  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
 cardFilmsCount = menu[0].count;
@@ -102,14 +122,36 @@ cardFilmsCount = menu[0].count;
   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 });
 
+
 // !!!не добавляется кнопка Load More после удаления со страницы и переключения на другую вкладку.
 // #History
 const historyButton = document.getElementById("History");
 historyButton.addEventListener(`click`, () => {
-  cardFilmsCount = CARD_FILMS_COUNT;
+  // cardFilmsCount = CARD_FILMS_COUNT;
  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
 cardFilmsCount = menu[1].count;
+  if (cardFilmsCount <= showingFilmsCount) {
+    showingFilmsCount = cardFilmsCount;
+    loadMoreButton.remove();
+  }
+
+  cardFilmElement.innerHTML = "";
+
+  for (let i = 0; i < showingFilmsCount; i++) {
+    render(cardFilmElement, cardFilmTemplate(films[i]));
+  }
+  const controlsCardFilm = cardFilmElement.querySelectorAll(".film-card");
+  controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
+});
+
+// #Favourites
+const favoritesButton = document.getElementById("Favorites");
+favoritesButton.addEventListener(`click`, () => {
+  // cardFilmsCount = CARD_FILMS_COUNT;
+ showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+
+cardFilmsCount = menu[2].count;
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
     loadMoreButton.remove();
