@@ -57,9 +57,9 @@ for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
 let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 let cardFilmsCount = CARD_FILMS_COUNT;
 let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-const filmsListElement = filmsContainer.querySelector(".films-list");
-render(filmsListElement, showMoreButtonTemplate());
-const loadMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
+const showMoreButtonElement = filmsContainer.querySelector(".films-list");
+render(showMoreButtonElement, showMoreButtonTemplate());
+let loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
 loadMoreButton.addEventListener(`click`, () => {
   const prevFilmsCount = showingFilmsCount;
 // let cardFilmsCount = CARD_FILMS_COUNT;
@@ -84,6 +84,9 @@ loadMoreButton.addEventListener(`click`, () => {
 // #All
 const allButton = document.getElementById("all");
 allButton.addEventListener(`click`, () => {
+  // render(showMoreButtonElement, showMoreButtonTemplate());
+  // loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
+
   cardFilmsCount = CARD_FILMS_COUNT;
  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
@@ -99,6 +102,32 @@ allButton.addEventListener(`click`, () => {
   }
   const controlsCardFilm = cardFilmElement.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
+
+// Убрать дубликаты, разбить на модули.
+  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+ cardFilmsCount = CARD_FILMS_COUNT;
+ showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
+  render(showMoreButtonElement, showMoreButtonTemplate());
+ loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
+  loadMoreButton.addEventListener(`click`, () => {
+    const prevFilmsCount = showingFilmsCount;
+  // let cardFilmsCount = CARD_FILMS_COUNT;
+  // let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
+    let remainingCards = cardFilmsCount - showingFilmsCount;
+    if (remainingCards < showingFilmsCountByButton)
+    showingFilmsCountByButton = remainingCards;
+    showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
+    films
+      .slice(prevFilmsCount, showingFilmsCount)
+      .forEach((film) =>
+        render(cardFilmElement, cardFilmTemplate(film), `beforeend`)
+      );  
+  
+    // if (showingFilmsCount >= films.length) {
+    if (showingFilmsCount >= cardFilmsCount) {
+      loadMoreButton.remove();
+    }
+  });
 });
 
 // #Watchlist
@@ -123,7 +152,6 @@ cardFilmsCount = menu[0].count;
 });
 
 
-// !!!не добавляется кнопка Load More после удаления со страницы и переключения на другую вкладку.
 // #History
 const historyButton = document.getElementById("History");
 historyButton.addEventListener(`click`, () => {
@@ -145,7 +173,7 @@ cardFilmsCount = menu[1].count;
   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 });
 
-// #Favourites
+// #Favorites
 const favoritesButton = document.getElementById("Favorites");
 favoritesButton.addEventListener(`click`, () => {
   // cardFilmsCount = CARD_FILMS_COUNT;
