@@ -94,7 +94,6 @@ allButton.addEventListener(`click`, () => {
   cardFilmsCount = CARD_FILMS_COUNT;
   showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
   showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
     showMoreButton.remove();
