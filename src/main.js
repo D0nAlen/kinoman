@@ -14,6 +14,7 @@ import { generateMenu } from "./mock/menu.js";
 import { controlsTemplate } from "./components/controls.js";
 import { generateTopRatedFilms } from "./mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
+import { showMoreButtonElement } from "./mock/showMoreButton.js";
 
 const CARD_FILMS_COUNT = 10;
 const SHOWING_FILMS_COUNT_ON_START = 5;
@@ -42,7 +43,9 @@ render(siteMainElement, filterTemplate());
 
 render(siteMainElement, filmsContainerTemplate());
 const filmsContainer = siteMainElement.querySelector(".films");
-const filmsListContainer = filmsContainer.querySelector(".films-list__container");
+const filmsListContainer = filmsContainer.querySelector(
+  ".films-list__container"
+);
 
 // Default cards rendering
 for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
@@ -58,35 +61,17 @@ render(filmsList, showMoreButtonTemplate());
 let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
 
 const showMoreButtonRendering = () => {
-  if (!filmsList.contains(showMoreButton) &&
-    showingFilmsCount < cardFilmsCount) {
-
+  if (
+    !filmsList.contains(showMoreButton) &&
+    showingFilmsCount < cardFilmsCount
+  ) {
     render(filmsList, showMoreButtonTemplate());
     showMoreButton = filmsList.querySelector(`.films-list__show-more`);
-    showMoreButtonElement();
+    showMoreButtonElement(showMoreButton, showingFilmsCount, cardFilmsCount, showingFilmsCountByButton, films, filmsListContainer);
   }
 };
 
-const showMoreButtonElement = () => {
-  showMoreButton.addEventListener(`click`, () => {
-    const prevFilmsCount = showingFilmsCount;
-    let remainingCards = cardFilmsCount - showingFilmsCount;
-    if (remainingCards < showingFilmsCountByButton)
-      showingFilmsCountByButton = remainingCards;
-    showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
-    films
-      .slice(prevFilmsCount, showingFilmsCount)
-      .forEach((film) =>
-        render(filmsListContainer, cardFilmTemplate(film), `beforeend`)
-      );
-
-    if (showingFilmsCount >= cardFilmsCount) {
-      showMoreButton.remove();
-    }
-  });
-};
-
-showMoreButtonElement();
+showMoreButtonElement(showMoreButton, showingFilmsCount, cardFilmsCount, showingFilmsCountByButton, films, filmsListContainer);
 
 // #All
 const allButton = document.getElementById("all");
