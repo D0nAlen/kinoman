@@ -24,10 +24,6 @@ const render = (container, template, place = "beforeend") => {
   container.insertAdjacentHTML(place, template);
 };
 
-// if (CARD_FILMS_COUNT <= SHOWING_FILMS_COUNT_ON_START) {
-//   SHOWING_FILMS_COUNT_ON_START = CARD_FILMS_COUNT;
-// }
-
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
 
@@ -60,26 +56,31 @@ let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
 const showMoreButtonElement = filmsContainer.querySelector(".films-list");
 render(showMoreButtonElement, showMoreButtonTemplate());
 let loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
-loadMoreButton.addEventListener(`click`, () => {
-  const prevFilmsCount = showingFilmsCount;
-// let cardFilmsCount = CARD_FILMS_COUNT;
-// let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-  let remainingCards = cardFilmsCount - showingFilmsCount;
-  if (remainingCards < showingFilmsCountByButton)
-  showingFilmsCountByButton = remainingCards;
-  showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
-  films
-    .slice(prevFilmsCount, showingFilmsCount)
-    .forEach((film) =>
-      render(cardFilmElement, cardFilmTemplate(film), `beforeend`)
+
+const showMoreButtonRendering = () => {
+  if (!showMoreButtonElement.contains(loadMoreButton)) {
+    render(showMoreButtonElement, showMoreButtonTemplate());
+    loadMoreButton = showMoreButtonElement.querySelector(
+      `.films-list__show-more`
     );
+    loadMoreButton.addEventListener(`click`, () => {
+      const prevFilmsCount = showingFilmsCount;
+      let remainingCards = cardFilmsCount - showingFilmsCount;
+      if (remainingCards < showingFilmsCountByButton)
+        showingFilmsCountByButton = remainingCards;
+      showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
+      films
+        .slice(prevFilmsCount, showingFilmsCount)
+        .forEach((film) =>
+          render(cardFilmElement, cardFilmTemplate(film), `beforeend`)
+        );
 
-
-  // if (showingFilmsCount >= films.length) {
-  if (showingFilmsCount >= cardFilmsCount) {
-    loadMoreButton.remove();
+      if (showingFilmsCount >= cardFilmsCount) {
+        loadMoreButton.remove();
+      }
+    });
   }
-});
+};
 
 // #All
 const allButton = document.getElementById("all");
@@ -88,7 +89,7 @@ allButton.addEventListener(`click`, () => {
   // loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
 
   cardFilmsCount = CARD_FILMS_COUNT;
- showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
@@ -103,40 +104,42 @@ allButton.addEventListener(`click`, () => {
   const controlsCardFilm = cardFilmElement.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 
-// Убрать дубликаты, разбить на модули.
-  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
- cardFilmsCount = CARD_FILMS_COUNT;
- showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-  render(showMoreButtonElement, showMoreButtonTemplate());
- loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
-  loadMoreButton.addEventListener(`click`, () => {
-    const prevFilmsCount = showingFilmsCount;
-  // let cardFilmsCount = CARD_FILMS_COUNT;
-  // let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-    let remainingCards = cardFilmsCount - showingFilmsCount;
-    if (remainingCards < showingFilmsCountByButton)
-    showingFilmsCountByButton = remainingCards;
-    showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
-    films
-      .slice(prevFilmsCount, showingFilmsCount)
-      .forEach((film) =>
-        render(cardFilmElement, cardFilmTemplate(film), `beforeend`)
-      );  
-  
-    // if (showingFilmsCount >= films.length) {
-    if (showingFilmsCount >= cardFilmsCount) {
-      loadMoreButton.remove();
-    }
-  });
+  // alert(window.requestAnimationFrame(loadMoreButton));
+  showMoreButtonRendering();
+  // Убрать дубликаты, разбить на модули.
+  //   showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+  //  cardFilmsCount = CARD_FILMS_COUNT;
+  //  showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
+  //   render(showMoreButtonElement, showMoreButtonTemplate());
+  //  loadMoreButton = showMoreButtonElement.querySelector(`.films-list__show-more`);
+  //   loadMoreButton.addEventListener(`click`, () => {
+  //     const prevFilmsCount = showingFilmsCount;
+  //   // let cardFilmsCount = CARD_FILMS_COUNT;
+  //   // let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
+  //     let remainingCards = cardFilmsCount - showingFilmsCount;
+  //     if (remainingCards < showingFilmsCountByButton)
+  //     showingFilmsCountByButton = remainingCards;
+  //     showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
+  //     films
+  //       .slice(prevFilmsCount, showingFilmsCount)
+  //       .forEach((film) =>
+  //         render(cardFilmElement, cardFilmTemplate(film), `beforeend`)
+  //       );
+
+  //     // if (showingFilmsCount >= films.length) {
+  //     if (showingFilmsCount >= cardFilmsCount) {
+  //       loadMoreButton.remove();
+  //     }
+  //   });
 });
 
 // #Watchlist
 const watchlistButton = document.getElementById("Watchlist");
 watchlistButton.addEventListener(`click`, () => {
   // cardFilmsCount = CARD_FILMS_COUNT;
- showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
-cardFilmsCount = menu[0].count;
+  cardFilmsCount = menu[0].count;
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
     loadMoreButton.remove();
@@ -151,14 +154,13 @@ cardFilmsCount = menu[0].count;
   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 });
 
-
 // #History
 const historyButton = document.getElementById("History");
 historyButton.addEventListener(`click`, () => {
   // cardFilmsCount = CARD_FILMS_COUNT;
- showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
-cardFilmsCount = menu[1].count;
+  cardFilmsCount = menu[1].count;
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
     loadMoreButton.remove();
@@ -177,9 +179,9 @@ cardFilmsCount = menu[1].count;
 const favoritesButton = document.getElementById("Favorites");
 favoritesButton.addEventListener(`click`, () => {
   // cardFilmsCount = CARD_FILMS_COUNT;
- showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+  showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
-cardFilmsCount = menu[2].count;
+  cardFilmsCount = menu[2].count;
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
     loadMoreButton.remove();
