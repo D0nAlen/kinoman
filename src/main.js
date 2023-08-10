@@ -57,11 +57,10 @@ const filmsList = filmsContainer.querySelector(".films-list");
 render(filmsList, showMoreButtonTemplate());
 let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
 
-// !!!1) после нажатия на кнопку со значением, больше 5, не выводятся скрытые карточки.
-
 const showMoreButtonRendering = () => {
   if (!filmsList.contains(showMoreButton) &&
     showingFilmsCount < cardFilmsCount) {
+
     render(filmsList, showMoreButtonTemplate());
     showMoreButton = filmsList.querySelector(`.films-list__show-more`);
     showMoreButtonElement();
@@ -87,13 +86,14 @@ const showMoreButtonElement = () => {
   });
 };
 
-showMoreButtonRendering();
+showMoreButtonElement();
 
 // #All
 const allButton = document.getElementById("all");
 allButton.addEventListener(`click`, () => {
   cardFilmsCount = CARD_FILMS_COUNT;
   showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+  showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
 
   if (cardFilmsCount <= showingFilmsCount) {
     showingFilmsCount = cardFilmsCount;
