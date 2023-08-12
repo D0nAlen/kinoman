@@ -38,6 +38,7 @@ export const COMMENTS = [
   },
 ];
 
+// 20 фильмов
 export const FILMS_CARDS = [
   {
     filmName: `example`,
