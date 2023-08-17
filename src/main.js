@@ -17,18 +17,18 @@ import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
 import { render } from "./mock/render.js";
 import { defaultCardOutput } from "./mock/allButton.js";
 import { allButtonElement } from "./mock/allButton.js";
+import { watchlistButtonElement } from "./mock/watchlistButton.js";
 
 const CARD_FILMS_COUNT = 20;
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
-
+let isShowMoreButtonExist = true;
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
 
 const menu = generateMenu();
-const films = generateFilms(CARD_FILMS_COUNT);
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(
   CARD__MOST_COMMENTED_COUNT
@@ -44,12 +44,11 @@ render(siteMainElement, filmsContainerTemplate());
 
 const filmsContainer = siteMainElement.querySelector(".films");
 
-defaultCardOutput(siteMainElement);
+defaultCardOutput(siteMainElement, isShowMoreButtonExist);
 
-allButtonElement(siteMainElement);
+allButtonElement(siteMainElement, isShowMoreButtonExist);
 
-
-
+watchlistButtonElement(siteMainElement, isShowMoreButtonExist);
 
 // !!! У каждого раздела своя кнопка Show more, со своей логикой и списком фильмов.
 
@@ -83,8 +82,6 @@ allButtonElement(siteMainElement);
 //     controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 //   });
 // };
-
-// watchlistButtonElement();
 
 // // #History
 // const historyButton = document.getElementById("History");
@@ -130,11 +127,6 @@ allButtonElement(siteMainElement);
 // });
 
 // Top Rated films
-
-
-
-
-
 
 render(filmsContainer, topRatedContainerTemplate());
 const topRatedContainerElement = filmsContainer.querySelectorAll(
