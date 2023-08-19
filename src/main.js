@@ -3,28 +3,26 @@ import { headerProfileTemplate } from "./components/headerProfile.js";
 import { menuTemplate } from "./components/menu.js";
 import { filterTemplate } from "./components/filter.js";
 import { filmsContainerTemplate } from "./components/filmsList.js";
-import { cardFilmTemplate } from "./components/cardFilm.js";
 import { showMoreButtonTemplate } from "./components/showMoreButton.js";
 import { topRatedContainerTemplate } from "./components/topRatedContainer.js";
 import { cardTopRatedTemplate } from "./components/cardTopRated.js";
 import { mostCommentedContainerTemplate } from "./components/mostCommentedContainer.js";
 import { cardMostCommentedTemplate } from "./components/cardMostCommented.js";
-import { generateFilms } from "./mock/cardFilm.js";
 import { generateMenu } from "./mock/menu.js";
-import { controlsTemplate } from "./components/controls.js";
 import { generateTopRatedFilms } from "./mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
 import { render } from "./mock/render.js";
 import { defaultCardOutput } from "./mock/allButton.js";
 import { allButtonElement } from "./mock/allButton.js";
-import { watchlistButtonElement } from "./mock/watchlistButton.js";
+import { generateFilms } from "./mock/cardFilm.js";
+import { FILMS_CARDS } from "./const.js";
 
-const CARD_FILMS_COUNT = 20;
+// const CARD_FILMS_COUNT = 15;
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
-let isShowMoreButtonExist = true;
+// let isShowMoreButtonExist = true;
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
 
@@ -34,6 +32,7 @@ const mostCommentedFilms = generateMostCommentedFilms(
   CARD__MOST_COMMENTED_COUNT
 );
 
+
 render(siteHeaderElement, headerProfileTemplate());
 
 render(siteMainElement, menuTemplate(menu));
@@ -42,13 +41,17 @@ render(siteMainElement, filterTemplate());
 
 render(siteMainElement, filmsContainerTemplate());
 
-const filmsContainer = siteMainElement.querySelector(".films");
 
-defaultCardOutput(siteMainElement, isShowMoreButtonExist);
+ const filmsContainer = siteMainElement.querySelector(".films");
+//  const filmsList = filmsContainer.querySelector(".films-list");
+//  render(filmsList, showMoreButtonTemplate());
+//  let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
 
-allButtonElement(siteMainElement, isShowMoreButtonExist);
+defaultCardOutput(siteMainElement);
 
-watchlistButtonElement(siteMainElement, isShowMoreButtonExist);
+allButtonElement(siteMainElement);
+
+// watchlistButtonElement(siteMainElement, isShowMoreButtonExist, showMoreButton);
 
 // !!! У каждого раздела своя кнопка Show more, со своей логикой и списком фильмов.
 
