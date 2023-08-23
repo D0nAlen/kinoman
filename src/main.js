@@ -14,10 +14,12 @@ import { render } from "./mock/render.js";
 import { defaultCardOutput } from "./mock/allButton.js";
 import { allButtonElement } from "./mock/allButton.js";
 import { watchlistButtonElement } from "./mock/watchlistButton.js";
+import { historyButtonElement } from "./mock/historyButton.js";
+import { menuButtonElement } from "./mock/menuButton.js";
 
 // const CARD_FILMS_COUNT = 15;
-const SHOWING_FILMS_COUNT_ON_START = 5;
-const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
+// const SHOWING_FILMS_COUNT_ON_START = 5;
+// const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 const siteHeaderElement = document.querySelector(".header");
@@ -29,7 +31,6 @@ const mostCommentedFilms = generateMostCommentedFilms(
   CARD__MOST_COMMENTED_COUNT
 );
 
-
 render(siteHeaderElement, headerProfileTemplate());
 
 render(siteMainElement, menuTemplate(menu));
@@ -38,93 +39,18 @@ render(siteMainElement, filterTemplate());
 
 render(siteMainElement, filmsContainerTemplate());
 
+const filmsContainer = siteMainElement.querySelector(".films");
 
- const filmsContainer = siteMainElement.querySelector(".films");
-//  const filmsList = filmsContainer.querySelector(".films-list");
-//  render(filmsList, showMoreButtonTemplate());
-//  let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
+menuButtonElement(siteMainElement, "all", 17);
+menuButtonElement(siteMainElement, "Watchlist", 10);
 
-defaultCardOutput(siteMainElement);
+// defaultCardOutput(siteMainElement);
 
-allButtonElement(siteMainElement);
+// allButtonElement(siteMainElement);
 
-watchlistButtonElement(siteMainElement);
+// watchlistButtonElement(siteMainElement);
 
-// !!! У каждого раздела своя кнопка Show more, со своей логикой и списком фильмов.
-
-// #Watchlist
-// const watchlistButton = document.getElementById("Watchlist");
-// const watchlistButtonElement = () => {
-//   let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-//   let cardFilmsCount = menu[0].count;
-//   let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-
-//   // showMoreButtonElement();
-
-//   watchlistButton.addEventListener(`click`, () => {
-//     if (cardFilmsCount <= showingFilmsCount) {
-//       showingFilmsCount = cardFilmsCount;
-//       showMoreButton.remove();
-//     }
-
-//     let remainingCards = cardFilmsCount - showingFilmsCount;
-//     if (remainingCards < showingFilmsCountByButton)
-//       showingFilmsCountByButton = remainingCards;
-//     // showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
-// // alert(remainingCards, cardFilmsCount, showingFilmsCount);
-//     filmsListContainer.innerHTML = "";
-
-//     // alert(showingFilmsCount);
-//     for (let i = 0; i < showingFilmsCount; i++) {
-//       render(filmsListContainer, cardFilmTemplate(films[i]));
-//     }
-//     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-//     controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
-//   });
-// };
-
-// // #History
-// const historyButton = document.getElementById("History");
-// historyButton.addEventListener(`click`, () => {
-//   let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-
-//   let cardFilmsCount = menu[1].count;
-//   if (cardFilmsCount <= showingFilmsCount) {
-//     showingFilmsCount = cardFilmsCount;
-//     showMoreButton.remove();
-//   }
-
-//   filmsListContainer.innerHTML = "";
-
-//   for (let i = 0; i < showingFilmsCount; i++) {
-//     render(filmsListContainer, cardFilmTemplate(films[i]));
-//   }
-//   const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-//   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
-//   showMoreButtonRendering();
-// // });
-
-// // #Favorites
-// const favoritesButton = document.getElementById("Favorites");
-// favoritesButton.addEventListener(`click`, () => {
-//   let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-
-//   let cardFilmsCount = menu[2].count;
-//   if (cardFilmsCount <= showingFilmsCount) {
-//     showingFilmsCount = cardFilmsCount;
-//     showMoreButton.remove();
-//   }
-
-//   filmsListContainer.innerHTML = "";
-
-//   for (let i = 0; i < showingFilmsCount; i++) {
-//     render(filmsListContainer, cardFilmTemplate(films[i]));
-//   }
-//   const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-//   controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
-
-//   // showMoreButtonRendering();
-// });
+// historyButtonElement(siteMainElement);
 
 // Top Rated films
 
