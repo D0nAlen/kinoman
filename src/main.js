@@ -11,15 +11,13 @@ import { generateMenu } from "./mock/menu.js";
 import { generateTopRatedFilms } from "./mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
 import { render } from "./mock/render.js";
-import { defaultCardOutput } from "./mock/allButton.js";
-import { allButtonElement } from "./mock/allButton.js";
-import { watchlistButtonElement } from "./mock/watchlistButton.js";
-import { historyButtonElement } from "./mock/historyButton.js";
 import { menuButtonElement } from "./mock/menuButton.js";
+import { FILMS_CARDS } from "./const.js";
+import { WATCHLIST_CARDS } from "./const.js";
+import { HISTORY_CARDS } from "./const.js";
+import { FAVORITES_CARDS } from "./const.js";
+import { defaultCardOutput } from "./mock/menuButton.js";
 
-// const CARD_FILMS_COUNT = 15;
-// const SHOWING_FILMS_COUNT_ON_START = 5;
-// const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 const siteHeaderElement = document.querySelector(".header");
@@ -41,19 +39,14 @@ render(siteMainElement, filmsContainerTemplate());
 
 const filmsContainer = siteMainElement.querySelector(".films");
 
-menuButtonElement(siteMainElement, "all", 17);
-menuButtonElement(siteMainElement, "Watchlist", 10);
+defaultCardOutput(siteMainElement);
+menuButtonElement(siteMainElement, "all", FILMS_CARDS, 17);
+menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS, 10);
+menuButtonElement(siteMainElement, "History", HISTORY_CARDS, 7);
+menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS, 6);
 
-// defaultCardOutput(siteMainElement);
-
-// allButtonElement(siteMainElement);
-
-// watchlistButtonElement(siteMainElement);
-
-// historyButtonElement(siteMainElement);
 
 // Top Rated films
-
 render(filmsContainer, topRatedContainerTemplate());
 const topRatedContainerElement = filmsContainer.querySelectorAll(
   ".films-list__container"

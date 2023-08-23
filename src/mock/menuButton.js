@@ -1,39 +1,40 @@
 import { filmsContainerTemplate } from "../components/filmsList";
 import { cardFilmTemplate } from "../components/cardFilm";
-import { FILMS_CARDS } from "../const.js";
 import { generateFilms } from "./cardFilm.js";
-import { render } from "./render";
-import { controlsTemplate } from "../components/controls";
-import { showMoreButtonTemplate } from "../components/showMoreButton";
+import { render } from "./render.js";
+import { controlsTemplate } from "../components/controls.js";
+import { showMoreButtonTemplate } from "../components/showMoreButton.js";
+import { FILMS_CARDS } from "../const.js";
 
-// const CARD_FILMS_COUNT = 17;
   const SHOWING_FILMS_COUNT_ON_START = 5;
   const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
-// export const menuButtonElement = (buttonElement,cardFilmsCount,setCardFilmsCount) => {
-//   buttonElement.addEventListener(`click`, () => {
-//     cardFilmsCount = setCardFilmsCount;
-//     let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-//     // let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-//     if (cardFilmsCount <= showingFilmsCount) {
-//       showingFilmsCount = cardFilmsCount;
-//       showMoreButton.remove();
-//     }
+  // default card output
+export const defaultCardOutput = (siteMainElement) => {
+  const filmsContainer = siteMainElement.querySelector(".films");
+  const filmsListContainer = filmsContainer.querySelector(
+    ".films-list__container"
+  );
+  const films = generateFilms(FILMS_CARDS, FILMS_CARDS.length);
 
-//     filmsListContainer.innerHTML = "";
+  for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+    render(filmsListContainer, cardFilmTemplate(films[i]));
+  }
 
-//     for (let i = 0; i < showingFilmsCount; i++) {
-//       render(filmsListContainer, cardFilmTemplate(films[i]));
-//     }
-//     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-//     controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
-//     showMoreButtonRendering();
-//   });
-// };
+  const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 
-export const menuButtonElement = (siteMainElement, idButton, CARD_FILMS_COUNT) => {
+  // button "Show more"
+  const filmsList = filmsContainer.querySelector(".films-list");
+  render(filmsList, showMoreButtonTemplate());
+
+  showMoreButtonElement(filmsListContainer, filmsList, films, FILMS_CARDS.length);
+
+};
+
+export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST, CARD_FILMS_COUNT) => {
   const nameButton = document.getElementById(idButton);
-  const films = generateFilms(FILMS_CARDS, CARD_FILMS_COUNT);
+  const films = generateFilms(FILMS_LIST, CARD_FILMS_COUNT);
 
   nameButton.addEventListener(`click`, () => {
     let filmsContainer = siteMainElement.querySelector(".films");
@@ -48,10 +49,12 @@ export const menuButtonElement = (siteMainElement, idButton, CARD_FILMS_COUNT) =
     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
       render(filmsListContainer, cardFilmTemplate(films[i]));
     }
+    const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) => render(film, controlsTemplate()));
 
     // button "Show more"
     render(filmsList, showMoreButtonTemplate());
-    showMoreButtonElement(filmsListContainer, filmsList,films,CARD_FILMS_COUNT);
+    showMoreButtonElement(filmsListContainer, filmsList, films, CARD_FILMS_COUNT);
   });
 };
 
