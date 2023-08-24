@@ -1,8 +1,6 @@
-"use strict";
 import { headerProfileTemplate } from "./components/headerProfile.js";
 import { menuTemplate } from "./components/menu.js";
 import { filterTemplate } from "./components/filter.js";
-import { filmsContainerTemplate } from "./components/filmsList.js";
 import { topRatedContainerTemplate } from "./components/topRatedContainer.js";
 import { cardTopRatedTemplate } from "./components/cardTopRated.js";
 import { mostCommentedContainerTemplate } from "./components/mostCommentedContainer.js";
@@ -17,6 +15,9 @@ import { WATCHLIST_CARDS } from "./const.js";
 import { HISTORY_CARDS } from "./const.js";
 import { FAVORITES_CARDS } from "./const.js";
 import { defaultCardOutput } from "./mock/menuButton.js";
+import { filmsListTemplate } from "./components/filmsList.js";
+import { filmsContainerTemplate } from "./components/filmsContainer.js";
+import { controlsTemplate } from "./components/controls.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -25,19 +26,18 @@ const siteMainElement = document.querySelector(".main");
 
 const menu = generateMenu();
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
-const mostCommentedFilms = generateMostCommentedFilms(
-  CARD__MOST_COMMENTED_COUNT
-);
+const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-render(siteHeaderElement, headerProfileTemplate());
+render(siteHeaderElement, headerProfileTemplate(), "beforeend");
 
-render(siteMainElement, menuTemplate(menu));
+render(siteMainElement, menuTemplate(menu), "beforeend");
 
-render(siteMainElement, filterTemplate());
+render(siteMainElement, filterTemplate(), "beforeend");
 
-render(siteMainElement, filmsContainerTemplate());
-
+render(siteMainElement, filmsContainerTemplate(), "beforeend");
 const filmsContainer = siteMainElement.querySelector(".films");
+render(filmsContainer, filmsListTemplate(), "beforeend");
+
 
 defaultCardOutput(siteMainElement);
 menuButtonElement(siteMainElement, "all", FILMS_CARDS, 17);
@@ -45,24 +45,21 @@ menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS, 10);
 menuButtonElement(siteMainElement, "History", HISTORY_CARDS, 7);
 menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS, 6);
 
-
+console.log(filmsContainer);
 // Top Rated films
-render(filmsContainer, topRatedContainerTemplate());
-const topRatedContainerElement = filmsContainer.querySelectorAll(
-  ".films-list__container"
-)[1];
+render(filmsContainer, topRatedContainerTemplate(), "beforeend");
+const topRatedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[1];
 for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-  render(topRatedContainerElement, cardTopRatedTemplate(topRatedFilms[i]));
+  render(topRatedContainerElement, cardTopRatedTemplate(topRatedFilms[i]), "beforeend");
 }
+let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
+controlsCardFilm.forEach((film) => render(film, controlsTemplate(), "beforeend"));
 
 // Most commented films
-render(filmsContainer, mostCommentedContainerTemplate());
-const mostCommentedContainerElement = filmsContainer.querySelectorAll(
-  ".films-list__container"
-)[2];
+render(filmsContainer, mostCommentedContainerTemplate(), "beforeend");
+const mostCommentedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[2];
 for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-  render(
-    mostCommentedContainerElement,
-    cardMostCommentedTemplate(mostCommentedFilms[i])
-  );
+  render(mostCommentedContainerElement, cardMostCommentedTemplate(mostCommentedFilms[i]), "beforeend");
 }
+controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+controlsCardFilm.forEach((film) => render(film, controlsTemplate(), "beforeend"));
