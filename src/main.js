@@ -62,3 +62,5 @@ for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
 }
 controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
 controlsCardFilm.forEach((film) => render(film, controlsTemplate(), "beforeend"));
+controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+controlsCardFilm.forEach((film) => render(film, controlsTemplate(), "beforeend"));
