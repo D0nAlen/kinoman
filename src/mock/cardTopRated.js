@@ -1,7 +1,6 @@
-import { FILMS_CARDS } from "../const.js";
+import { TOP_RATED_CARDS } from "../const";
 
 export const generateTopRatedFilms = (count) => {
-  const filmsArray = new Array();
-  return FILMS_CARDS.slice(filmsArray,count);
+  return TOP_RATED_CARDS.slice(0, count);
 
 };

@@ -40,10 +40,10 @@ render(filmsContainer, filmsListTemplate(), "beforeend");
 
 
 defaultCardOutput(siteMainElement);
-menuButtonElement(siteMainElement, "all", FILMS_CARDS, 17);
-menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS, 10);
-menuButtonElement(siteMainElement, "History", HISTORY_CARDS, 7);
-menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS, 6);
+menuButtonElement(siteMainElement, "all", FILMS_CARDS);
+menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
+menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
+menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
 
 // Top Rated films
 render(filmsContainer, topRatedContainerTemplate(), "beforeend");

@@ -1,7 +1,6 @@
-import { FILMS_CARDS } from "../const.js";
+import { MOST_COMMENTED_CARDS } from "../const.js";
 
-export const generateMostCommentedFilms = (count) => {
-  const filmsArray = new Array();
-  return FILMS_CARDS.slice(filmsArray,count);
+export const generateMostCommentedFilms = () => {
+  return MOST_COMMENTED_CARDS.slice();
 
 };
