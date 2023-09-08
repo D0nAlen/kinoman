@@ -1,6 +1,5 @@
 export const addNewCommentTemplate = () =>{
-    return `
-    <div class="film-details__new-comment">
+    return `<div class="film-details__new-comment">
     <div for="add-emoji" class="film-details__add-emoji-label"></div>
 
     <label class="film-details__comment-label">
