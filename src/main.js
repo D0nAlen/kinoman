@@ -23,6 +23,12 @@ import { COMMENTS } from "./const.js";
 import { generateComments } from "./mock/comment.js";
 import FormDetailsTopContainerComponent from "./popupFilmDetails/topContainer.js";
 import FilmDetailsCloseButtonComponent from "./popupFilmDetails/closeButton.js";
+import FilmDetailsInfoWrap from "./popupFilmDetails/infoWrap.js";
+import FilmDetailsControlsComponent from "./popupFilmDetails/controls.js";
+import FormDetailsBottomContainerComponent from "./popupFilmDetails/bottomContainer.js";
+import FilmDetailsCommentsWrapComponent from "./popupFilmDetails/commentsWrap.js";
+import FilmDetailsCommentsListComponent from "./popupFilmDetails/commentList.js";
+import FilmDetailsNewCommentComponent from "./popupFilmDetails/newComment.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -69,25 +75,19 @@ controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getEleme
 
 
 // popup window
-// const formDetailsTopContainer = document.querySelector(".form-details__top-container");
 const filmDetailsInner = document.querySelector(".film-details__inner");
 const comments = generateComments(COMMENTS);
 render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
+
 const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
 render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
-// render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
-// render(formDetailsTopContainer, new FilmDetailsInfoComponent().getElement(), RenderPosition.BEFOREEND);
-// render(formDetailsTopContainer, filmDetailsControlsTemplate(), RenderPosition.BEFOREEND);
+render(formDetailsTopContainer, new FilmDetailsInfoWrap().getElement(), RenderPosition.BEFOREEND);
+render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
 
-// const formDetailsContainer = document.querySelector(
-//   ".form-details__bottom-container"
-// );
-// render(formDetailsContainer, commentsListTemplate(), RenderPosition.BEFOREEND);
+render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
 
-// const commentList = document.querySelector(".film-details__comments-list");
-// for (let i = 0; i < COMMENTS_COUNT; i++) {
-//   render(commentList, new CommentComponent(comments[i]).getElement(), RenderPosition.BEFOREEND);
-// }
+const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
+render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent().getElement(), RenderPosition.BEFOREEND);
 
-// const commentsWrap = document.querySelector(".film-details__comments-wrap");
-// render(commentsWrap, addNewCommentTemplate(), RenderPosition.BEFOREEND);
+render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
+render(filmDetailsCommentsWrap,new FilmDetailsNewCommentComponent().getElement(),RenderPosition.BEFOREEND);

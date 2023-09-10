@@ -1,5 +1,7 @@
+import { createElement } from "../utils.js";
+
 const createFilmDetailsCommentTemplate = () => {
-    return `<li class="film-details__comment">
+  return `<li class="film-details__comment">
 <span class="film-details__comment-emoji">
   <img src="./images/emoji/smile.png" width="55" height="55" alt="emoji-smile" />
 </span>
@@ -15,3 +17,24 @@ const createFilmDetailsCommentTemplate = () => {
 </div>
 </li>`;
 };
+
+export default class CreateFilmDetailsCommentTemplateComponent {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsCommentTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

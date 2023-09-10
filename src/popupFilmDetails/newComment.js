@@ -1,5 +1,7 @@
-const createFilmDetailsNewCommentTemplate = () =>{
-    return `<div class="film-details__new-comment">
+import { createElement } from "../utils.js";
+
+const createFilmDetailsNewCommentTemplate = () => {
+  return `<div class="film-details__new-comment">
     <div for="add-emoji" class="film-details__add-emoji-label"></div>
 
     <label class="film-details__comment-label">
@@ -29,3 +31,24 @@ const createFilmDetailsNewCommentTemplate = () =>{
     </div>
   </div>`;
 };
+
+export default class FilmDetailsNewCommentComponent {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsNewCommentTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
