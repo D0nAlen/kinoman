@@ -11,4 +11,4 @@ module.exports = {
   devServer: {
     static: path.join(__dirname, `public`),
   },
-};
+}

@@ -1,21 +1,17 @@
 import { createElement } from "../utils.js";
 
-const createTopRatedContainerTemplate = () => {
-    return `<section class="films-list--extra">
-    <h2 class="films-list__title">Top rated</h2>
-    
-    <div class="films-list__container"></div>
-    </section>
-    `;
-  };
+const createFormDetailsTopContainerTemplate = () => {
+    return `<div class="form-details__top-container"></div>`;
+};
 
-export default class TopRatedContainerComponent {
+
+export default class FormDetailsTopContainerComponent {
     constructor() {
       this._element = null;
     }
   
     getTemplate() {
-      return createTopRatedContainerTemplate();
+      return createFormDetailsTopContainerTemplate();
     }
   
     getElement() {
@@ -28,4 +24,4 @@ export default class TopRatedContainerComponent {
     removeElement() {
       this._element = null;
     }
-}
+  }

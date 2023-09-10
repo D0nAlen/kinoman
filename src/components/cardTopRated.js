@@ -1,4 +1,6 @@
-export const cardTopRatedTemplate = (film) => {
+import { createElement } from "../utils.js";
+
+const createCardTopRatedTemplate = (film) => {
   const { filmName, rating, year, duration, genre, poster, description, comment } = film;
 
     return `<article class="film-card">
@@ -15,4 +17,26 @@ export const cardTopRatedTemplate = (film) => {
    
   </article>
   `;
-  };
+};
+
+export default class CardTopRatedComponent {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCardTopRatedTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+};

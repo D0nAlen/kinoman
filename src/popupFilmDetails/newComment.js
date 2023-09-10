@@ -1,4 +1,4 @@
-export const addNewCommentTemplate = () =>{
+const createFilmDetailsNewCommentTemplate = () =>{
     return `<div class="film-details__new-comment">
     <div for="add-emoji" class="film-details__add-emoji-label"></div>
 
@@ -27,6 +27,5 @@ export const addNewCommentTemplate = () =>{
         <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
       </label>
     </div>
-  </div>
-    `;
+  </div>`;
 };

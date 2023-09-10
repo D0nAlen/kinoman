@@ -64,8 +64,7 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     }
 
     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-      // render(filmsListContainer, createCardFilmTemplate(films[i]), RenderPosition.BEFOREEND);
-      render(filmsListContainer, new CardFilmComponent(films[i]), RenderPosition.BEFOREEND);
+      render(filmsListContainer, new CardFilmComponent(films[i]).getElement(), RenderPosition.BEFOREEND);
     }
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
     controlsCardFilm.forEach((film) =>
@@ -96,8 +95,7 @@ const showMoreButtonElement = (filmsListContainer, filmsList, films) => {
     films
       .slice(prevFilmsCount, showingFilmsCount)
       .forEach((film) =>
-        // render(filmsListContainer, createCardFilmTemplate(film), RenderPosition.BEFOREEND)
-        render(filmsListContainer, new CardFilmComponent(film), RenderPosition.BEFOREEND)
+        render(filmsListContainer, new CardFilmComponent(film).getElement(), RenderPosition.BEFOREEND)
       );
 
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
