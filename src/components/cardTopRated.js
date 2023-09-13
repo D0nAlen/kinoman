@@ -1,19 +1,20 @@
 import { createElement } from "../utils.js";
+import FilmComponent from "./film.js";
 
 const createCardTopRatedTemplate = (film) => {
-  const { filmName, rating, year, duration, genre, poster, description, comment } = film;
+  const getFilm = new FilmComponent(film);
 
     return `<article class="film-card">
-    <h3 class="film-card__title">${filmName}</h3>
-    <p class="film-card__rating">${rating}</p>
+    <h3 class="film-card__title">${getFilm.getFilmName()}</h3>
+    <p class="film-card__rating">${getFilm.getRating()}</p>
     <p class="film-card__info">
-      <span class="film-card__year">${year}</span>
-      <span class="film-card__duration">${duration}</span>
-      <span class="film-card__genre">${genre}</span>
+      <span class="film-card__year">${getFilm.getYear()}</span>
+      <span class="film-card__duration">${getFilm.getDuration()}</span>
+      <span class="film-card__genre">${getFilm.getGenre()}</span>
     </p>
-    <img src=${poster} alt="" class="film-card__poster">
-    <p class="film-card__description">${description}</p>
-    <a class="film-card__comments">${comment.length} comments</a>
+    <img src=${getFilm.getPoster()} alt="" class="film-card__poster">
+    <p class="film-card__description">${getFilm.getDescription()}</p>
+    <a class="film-card__comments">${getFilm.getComment().length} comments</a>
    
   </article>
   `;

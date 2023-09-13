@@ -29,7 +29,8 @@ import FormDetailsBottomContainerComponent from "./components/popupFilmDetails/b
 import FilmDetailsCommentsWrapComponent from "./components/popupFilmDetails/commentsWrap.js";
 import FilmDetailsCommentsListComponent from "./components/popupFilmDetails/commentList.js";
 import FilmDetailsNewCommentComponent from "./components/popupFilmDetails/newComment.js";
-import PopupCardFilmComponent from "./components/popupCardFilm.js";
+// import PopupCardFilmComponent from "./components/popupCardFilm.js";
+import CommentComponent from "./components/popupFilmDetails/comment.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -97,8 +98,13 @@ const renderPopupFilm = () => {
 
     render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
     const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
-    render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent().getElement(), RenderPosition.BEFOREEND);
+    render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent(comments).getElement(), RenderPosition.BEFOREEND);
     render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
+    // отрисовка списка комментариев
+    const filmDetailsCommentsList = filmDetailsInner.querySelector(".film-details__comments-list");
+    for (let i = 0; i < comments.length; i++) {
+        render(filmDetailsCommentsList, new CommentComponent(comments[i]).getElement(),RenderPosition.BEFOREEND);
+    }
     render(filmDetailsCommentsWrap, new FilmDetailsNewCommentComponent().getElement(), RenderPosition.BEFOREEND);
 };
 
@@ -129,6 +135,7 @@ const renderBoard = () => {
 };
 
 renderBoard();
+renderPopupFilm();
 
 // // popup window
 // const filmDetailsInner = document.querySelector(".film-details__inner");
