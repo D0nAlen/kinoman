@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import { createElement } from "../../utils.js";
 
 const createFilmDetailsCommentTemplate = () => {
   return `<li class="film-details__comment">

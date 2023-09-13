@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import { createElement } from "../../utils.js";
 
 const createFormDetailsTopContainerTemplate = () => {
     return `<div class="form-details__top-container"></div>`;

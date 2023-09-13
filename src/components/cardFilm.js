@@ -1,8 +1,8 @@
-import { createElement} from "../utils.js";
- 
- const createCardFilmTemplate = (film) => {
+import { createElement } from "../utils.js";
+
+const createCardFilmTemplate = (film) => {
   //comment - массив комментариев
-  const { filmName, rating, year, duration,genre, poster, description, comment } = film;
+  const { filmName, rating, year, duration, genre, poster, description, comment } = film;
 
   return `<article class="film-card">
     <h3 class="film-card__title">${filmName}</h3>

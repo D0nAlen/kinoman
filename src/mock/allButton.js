@@ -1,7 +1,6 @@
 import { render } from "../utils.js"
 import { generateFilms } from "./cardFilm.js";
 import { FILMS_CARDS } from "../const.js";
-// import { filmsContainerTemplate } from "../components/filmsList.js";
 import { RenderPosition } from "../utils.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";

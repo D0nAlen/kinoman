@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import { createElement } from "../../utils.js";
 
 const createFilmDetailsInfoWrapTemplate = () => {
   // const { filmName, rating, year, duration, genre, poster, description, comment } = film;

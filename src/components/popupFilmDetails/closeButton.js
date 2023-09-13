@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import { createElement } from "../../utils.js";
 
 const createFilmDetailsCloseButtonTemplate = () => {
   return `<div class="film-details__close">

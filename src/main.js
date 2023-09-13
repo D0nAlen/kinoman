@@ -21,14 +21,15 @@ import ControlsComponent from "./components/controls.js";
 import MostCommentedContainerComponent from "./components/mostCommentedContainer.js";
 import { COMMENTS } from "./const.js";
 import { generateComments } from "./mock/comment.js";
-import FormDetailsTopContainerComponent from "./popupFilmDetails/topContainer.js";
-import FilmDetailsCloseButtonComponent from "./popupFilmDetails/closeButton.js";
-import FilmDetailsInfoWrap from "./popupFilmDetails/infoWrap.js";
-import FilmDetailsControlsComponent from "./popupFilmDetails/controls.js";
-import FormDetailsBottomContainerComponent from "./popupFilmDetails/bottomContainer.js";
-import FilmDetailsCommentsWrapComponent from "./popupFilmDetails/commentsWrap.js";
-import FilmDetailsCommentsListComponent from "./popupFilmDetails/commentList.js";
-import FilmDetailsNewCommentComponent from "./popupFilmDetails/newComment.js";
+import FormDetailsTopContainerComponent from "./components/popupFilmDetails/topContainer.js";
+import FilmDetailsCloseButtonComponent from "./components/popupFilmDetails/closeButton.js";
+import FilmDetailsInfoWrap from "./components/popupFilmDetails/infoWrap.js";
+import FilmDetailsControlsComponent from "./components/popupFilmDetails/controls.js";
+import FormDetailsBottomContainerComponent from "./components/popupFilmDetails/bottomContainer.js";
+import FilmDetailsCommentsWrapComponent from "./components/popupFilmDetails/commentsWrap.js";
+import FilmDetailsCommentsListComponent from "./components/popupFilmDetails/commentList.js";
+import FilmDetailsNewCommentComponent from "./components/popupFilmDetails/newComment.js";
+import PopupCardFilmComponent from "./components/popupCardFilm.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -48,46 +49,101 @@ render(siteMainElement, new FilmsContainerComponent().getElement(), RenderPositi
 const filmsContainer = siteMainElement.querySelector(".films");
 render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
 
+// const renderFilm = (filmListElement, film) => {
+//     const replaceFilmToPopup = () => {
+//       filmListElement.replaceChild(filmPopupComponent.getElement(), filmComponent.getElement());
+//     };
 
-defaultCardOutput(siteMainElement);
-menuButtonElement(siteMainElement, "all", FILMS_CARDS);
-menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
-menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
-menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
+//     const replacePopupToFilm = () => {
+//       filmListElement.replaceChild(filmComponent.getElement(), filmPopupComponent.getElement());
+//     };
 
-// Top Rated films
-render(filmsContainer, new TopRatedContainerComponent().getElement(), RenderPosition.BEFOREEND);
-const topRatedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[1];
-for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-    render(topRatedContainerElement, new CardTopRatedComponent(topRatedFilms[i]).getElement(), RenderPosition.BEFOREEND);
-}
-let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
+//     const onEscKeyDown = (evt) => {
+//       const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
-// Most commented films
-render(filmsContainer, new MostCommentedContainerComponent().getElement(), RenderPosition.BEFOREEND);
-const mostCommentedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[2];
-for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-    render(mostCommentedContainerElement, new CardMostCommentedComponent(mostCommentedFilms[i]).getElement(), RenderPosition.BEFOREEND);
-}
-controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
-controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
+//       if (isEscKey) {
+//         replacePopupToFilm();
+//         document.removeEventListener(`keydown`, onEscKeyDown);
+//       }
+//     };
 
+//     const filmComponent = new TaskComponent(film);
+//     const editButton = filmComponent.getElement().querySelector(".card__btn--edit");
+//     editButton.addEventListener(`click`, () => {
+//       replaceFilmToPopup();
+//       document.addEventListener(`keydown`, onEscKeyDown);
+//     });
 
-// popup window
-const filmDetailsInner = document.querySelector(".film-details__inner");
-const comments = generateComments(COMMENTS);
-render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
+//     const filmPopupComponent = new TaskEditComponent(film);
+//     const editForm = filmPopupComponent.getElement().querySelector(`form`);
+//     editForm.addEventListener(`submit`, (evt) => {
+//       evt.preventDefault();
+//       replacePopupToFilm();
+//       document.removeEventListener(`keydown`, onEscKeyDown);
+//     });
 
-const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
-render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
-render(formDetailsTopContainer, new FilmDetailsInfoWrap().getElement(), RenderPosition.BEFOREEND);
-render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
+//     render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
+//   };
 
-render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
+const renderPopupFilm = () => {
+    const filmDetailsInner = document.querySelector(".film-details__inner");
+    const comments = generateComments(COMMENTS);
+    render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
+    const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
 
-const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
-render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent().getElement(), RenderPosition.BEFOREEND);
+    render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
+    render(formDetailsTopContainer, new FilmDetailsInfoWrap().getElement(), RenderPosition.BEFOREEND);
+    render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
 
-render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
-render(filmDetailsCommentsWrap,new FilmDetailsNewCommentComponent().getElement(),RenderPosition.BEFOREEND);
+    render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
+    const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
+    render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent().getElement(), RenderPosition.BEFOREEND);
+    render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
+    render(filmDetailsCommentsWrap, new FilmDetailsNewCommentComponent().getElement(), RenderPosition.BEFOREEND);
+};
+
+const renderBoard = () => {
+    defaultCardOutput(siteMainElement);
+    menuButtonElement(siteMainElement, "all", FILMS_CARDS);
+    menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
+    menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
+    menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
+
+    // Top Rated films
+    render(filmsContainer, new TopRatedContainerComponent().getElement(), RenderPosition.BEFOREEND);
+    const topRatedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[1];
+    for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
+        render(topRatedContainerElement, new CardTopRatedComponent(topRatedFilms[i]).getElement(), RenderPosition.BEFOREEND);
+    }
+    let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
+
+    // Most commented films
+    render(filmsContainer, new MostCommentedContainerComponent().getElement(), RenderPosition.BEFOREEND);
+    const mostCommentedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[2];
+    for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
+        render(mostCommentedContainerElement, new CardMostCommentedComponent(mostCommentedFilms[i]).getElement(), RenderPosition.BEFOREEND);
+    }
+    controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
+};
+
+renderBoard();
+
+// // popup window
+// const filmDetailsInner = document.querySelector(".film-details__inner");
+// const comments = generateComments(COMMENTS);
+// render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
+// const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
+
+// render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
+// render(formDetailsTopContainer, new FilmDetailsInfoWrap().getElement(), RenderPosition.BEFOREEND);
+// render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
+
+// render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
+// const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
+// render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent().getElement(), RenderPosition.BEFOREEND);
+// render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
+// render(filmDetailsCommentsWrap, new FilmDetailsNewCommentComponent().getElement(), RenderPosition.BEFOREEND);
+
+// renderPopupFilm();
