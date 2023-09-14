@@ -11,7 +11,7 @@ const getFilm = new FilmComponent(film);
     <p class="film-card__info">
       <span class="film-card__year">${getFilm.getYear()}</span>
       <span class="film-card__duration">${getFilm.getDuration()}</span>
-      <span class="film-card__genre">${getFilm.getGenre()}</span>
+      <span class="film-card__genre">${getFilm.getGenres().join(", ")}</span>
     </p>
     <img src=${getFilm.getPoster()} alt="" class="film-card__poster">
     <p class="film-card__description">${getFilm.getDescription()}</p>

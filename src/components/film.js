@@ -7,6 +7,10 @@ export default class FilmComponent {
         return  this._film.filmName;
     }
 
+    getOriginalFilmName(){
+        return  this._film.originalFilmName;
+    }
+
     getRating(){
         return  this._film.rating;
     }
@@ -19,8 +23,8 @@ export default class FilmComponent {
         return  this._film.duration;
     }
 
-    getGenre(){
-        return  this._film.genre;
+    getGenres(){
+        return  this._film.genres;
     }
 
     getPoster(){
@@ -33,5 +37,28 @@ export default class FilmComponent {
 
     getComment(){
         return  this._film.comment;
+    }
+
+    getAge(){
+        return  this._film.age;
+    }
+
+    getDirector(){
+        return  this._film.director;
+    }
+
+    getWriters(){
+        return  this._film.writers;
+    }
+    getActors(){
+        return  this._film.actors;
+    }
+
+    getReleaseDate(){
+        return this._film.releaseDate;
+    }
+
+    getCountry(){
+        return this._film.country;
     }
 };

@@ -1,51 +1,52 @@
 import { createElement } from "../../utils.js";
+import FilmComponent from "../film.js";
 
-const createFilmDetailsInfoWrapTemplate = () => {
-  // const { filmName, rating, year, duration, genre, poster, description, comment } = film;
+const createFilmDetailsInfoWrapTemplate = (film) => {
+  const getFilm = new FilmComponent(film);
 
   return `<div class="film-details__info-wrap">
     <div class="film-details__poster">
-      <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
+      <img class="film-details__poster-img" src=${getFilm.getPoster()} alt="">
 
-      <p class="film-details__age">18+</p>
+      <p class="film-details__age">${getFilm.getAge()}</p>
     </div>
 
     <div class="film-details__info">
       <div class="film-details__info-head">
         <div class="film-details__title-wrap">
-          <h3 class="film-details__title">The Great Flamarion</h3>
-          <p class="film-details__title-original">Original: The Great Flamarion</p>
+          <h3 class="film-details__title">${getFilm.getFilmName()}</h3>
+          <p class="film-details__title-original">Original: ${getFilm.getOriginalFilmName()}</p>
         </div>
 
         <div class="film-details__rating">
-          <p class="film-details__total-rating">8.9</p>
+          <p class="film-details__total-rating">${getFilm.getRating()}</p>
         </div>
       </div>
 
       <table class="film-details__table">
         <tr class="film-details__row">
           <td class="film-details__term">Director</td>
-          <td class="film-details__cell">Anthony Mann</td>
+          <td class="film-details__cell">${getFilm.getDirector()}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Writers</td>
-          <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+          <td class="film-details__cell">${getFilm.getWriters()}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Actors</td>
-          <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+          <td class="film-details__cell">${getFilm.getActors()}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Release Date</td>
-          <td class="film-details__cell">30 March 1945</td>
+          <td class="film-details__cell">${getFilm.getReleaseDate()}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Runtime</td>
-          <td class="film-details__cell">1h 18m</td>
+          <td class="film-details__cell">${getFilm.getDuration()}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Country</td>
-          <td class="film-details__cell">USA</td>
+          <td class="film-details__cell">${getFilm.getCountry()}</td>
         </tr>
         <tr class="film-details__row">
           <td class="film-details__term">Genres</td>
@@ -65,13 +66,13 @@ const createFilmDetailsInfoWrapTemplate = () => {
 };
 
 export default class FilmDetailsInfoWrap {
-  constructor() {
-    // this._film = film;
+  constructor(film) {
+    this._film = film;
     this._element = null;
   }
 
   getTemplate() {
-    return createFilmDetailsInfoWrapTemplate();
+    return createFilmDetailsInfoWrapTemplate(this._film);
   }
 
   getElement() {
