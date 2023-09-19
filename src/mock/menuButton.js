@@ -7,7 +7,7 @@ import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
 import PopupCardFilmComponent from "../components/popupCardFilm.js";
-// import { renderFilm } from "../main.js";
+import { renderFilm } from "../main.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -34,6 +34,7 @@ export const defaultCardOutput = (siteMainElement) => {
 
   // button "Show more"
   const filmsList = filmsContainer.querySelector(".films-list");
+  renderFilm(filmsListContainer, FILMS_CARDS[0]);
   render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
 
   showMoreButtonElement(filmsListContainer, filmsList, films, FILMS_CARDS.length);
