@@ -1,14 +1,20 @@
 import { createElement } from "../utils.js";
 
+const createPopupCardFilmTemplate = () => {
+  return `<section class="film-details">
+ <form class="film-details__inner" action="" method="get">
+ </form>
+</section>`;
+};
 
 export default class PopupCardFilmComponent {
-  constructor(film) {
-    this._film = film;
+  constructor() {
+    // this._film = film;
     this._element = null;
   }
 
   getTemplate() {
-    return createRenderPopupFilm(this._film);
+    return createPopupCardFilmTemplate();
   }
 
   getElement() {

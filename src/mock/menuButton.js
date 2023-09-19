@@ -6,6 +6,8 @@ import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
+import PopupCardFilmComponent from "../components/popupCardFilm.js";
+// import { renderFilm } from "../main.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -14,13 +16,15 @@ const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 export const defaultCardOutput = (siteMainElement) => {
   SHOWING_FILMS_COUNT_ON_START = 5;
   const filmsContainer = siteMainElement.querySelector(".films");
-  const filmsListContainer = filmsContainer.querySelector(
-    ".films-list__container"
-  );
+  const filmsListContainer = filmsContainer.querySelector(".films-list__container");
   const films = generateFilms(FILMS_CARDS);
 
   for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-    render(filmsListContainer, new CardFilmComponent(films[i]).getElement(), RenderPosition.BEFOREEND);
+  // const cardFilmComponent = new CardFilmComponent(films[0]);
+  render(filmsListContainer, new CardFilmComponent(films[i]).getElement(), RenderPosition.BEFOREEND);
+  // render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
+  // пример замены нодов!
+  // filmsListContainer.replaceChild(new ShowMoreButtonComponent().getElement(), cardFilmComponent.getElement());
   }
 
   const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
@@ -32,12 +36,7 @@ export const defaultCardOutput = (siteMainElement) => {
   const filmsList = filmsContainer.querySelector(".films-list");
   render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
 
-  showMoreButtonElement(
-    filmsListContainer,
-    filmsList,
-    films,
-    FILMS_CARDS.length
-  );
+  showMoreButtonElement(filmsListContainer, filmsList, films, FILMS_CARDS.length);
 };
 
 export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
