@@ -1,4 +1,3 @@
-
 import { generateMenu } from "./mock/menu.js";
 import { generateTopRatedFilms } from "./mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
@@ -26,99 +25,96 @@ import FilmDetailsCommentsListComponent from "./components/popupFilmDetails/comm
 import FilmDetailsNewCommentComponent from "./components/popupFilmDetails/newComment.js";
 import CommentComponent from "./components/popupFilmDetails/comment.js";
 import GenreTemplateComponent from "./components/popupFilmDetails/genres.js";
-import { generateGenres } from "./mock/genres.js";
-import CardFilmComponent from "./components/cardFilm.js";
+// import { generateGenres } from "./mock/genres.js";
 import PopupCardFilmComponent from "./components/popupCardFilm.js";
+import { addPopup } from "./components/popupFilmDetails/popupElement.js";
 
+// !!!1)Переписать функцию отрисовки попапа(через appendChild и RemoveChild).
+//    2)добавить сообщение, если в системе нет фильмов (пустая страница).
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
 
-// !!!1)Отредактировать функцию, чтобы менялся попап и карточка фильма.
-//    2)добавить сообщение, если в системе нет фильмов (пустая страница).
-export const renderFilm = (filmListElement, film) => {
-  const replaceFilmToPopup = () => {
-    filmListElement.replaceChild(filmPopupComponent.getElement(), filmComponent.getElement());
-  };
+// export const renderFilm = (filmListElement, film) => {
+//   const replaceFilmToPopup = () => {
+//     filmListElement.replaceChild(filmPopupComponent.getElement(), filmComponent.getElement());
+//   };
 
-  const replacePopupToFilm = () => {
-    filmListElement.replaceChild(filmComponent.getElement(), filmPopupComponent.getElement());
-  };
+//   const replacePopupToFilm = () => {
+//     filmListElement.replaceChild(filmComponent.getElement(), filmPopupComponent.getElement());
+//   };
 
-  const onEscKeyDown = (evt) => {
-    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+//   const onEscKeyDown = (evt) => {
+//     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
-    if (isEscKey) {
-      replacePopupToFilm();
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    }
-  };
+//     if (isEscKey) {
+//       replacePopupToFilm();
+//       document.removeEventListener(`keydown`, onEscKeyDown);
+//     }
+//   };
 
-  const filmComponent = new CardFilmComponent(film);
-  // render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
-  const filmCardButton = filmComponent.getElement().querySelector(".film-card");
-  console.log(filmCardButton);
-  filmCardButton.addEventListener(`click`, () => {
-    replaceFilmToPopup();
-    document.addEventListener(`keydown`, onEscKeyDown);
-  });
+//   const filmComponent = new CardFilmComponent(film);
+//   // render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
+//   const filmCardButton = filmComponent.getElement().querySelector(".film-card");
+//   console.log(filmCardButton);
+//   filmCardButton.addEventListener(`click`, () => {
+//     replaceFilmToPopup();
+//     document.addEventListener(`keydown`, onEscKeyDown);
+//   });
 
-  const filmPopupComponent = new PopupCardFilmComponent();
-  // const popupWindow = filmPopupComponent.getElement().querySelector(`.film-details`);
-  // popupWindow.addEventListener(`submit`, (evt) => {
-  //   evt.preventDefault();
-  //   replacePopupToFilm();
-  //   document.removeEventListener(`keydown`, onEscKeyDown);
-  // });
+//   const filmPopupComponent = new PopupCardFilmComponent();
+//   // const popupWindow = filmPopupComponent.getElement().querySelector(`.film-details`);
+//   // popupWindow.addEventListener(`submit`, (evt) => {
+//   //   evt.preventDefault();
+//   //   replacePopupToFilm();
+//   //   document.removeEventListener(`keydown`, onEscKeyDown);
+//   // });
 
-  render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
-};
+//   render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
+// };
 
-const renderPopupFilm = (filmsContainer) => {
-  render(filmsContainer, new PopupCardFilmComponent().getElement(), RenderPosition.BEFOREEND);
-  const filmDetailsInner = document.querySelector(".film-details__inner");
-  const comments = generateComments(COMMENTS);
-  render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
-  const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
 
-  render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
-  // пока вставлен случайный фильм из FILM_CARDS
-  render(formDetailsTopContainer, new FilmDetailsInfoWrap(FILMS_CARDS[0]).getElement(), RenderPosition.BEFOREEND);
+// const renderPopupFilm = (filmsContainer) => {
+//   render(filmsContainer, new PopupCardFilmComponent().getElement(), RenderPosition.BEFOREEND);
+//   const filmDetailsInner = document.querySelector(".film-details__inner");
+//   const comments = generateComments(COMMENTS);
+//   render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
+//   const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
 
-  //вывод жанров фильма
-  const filmDetailsGenres = formDetailsTopContainer.querySelector(".film-details-genres");
-  const genres = generateGenres(FILMS_CARDS[0].genres);
-  for (let i = 0; i < genres.length; i++) {
-    render(filmDetailsGenres, new GenreTemplateComponent(genres[i]).getElement(), RenderPosition.BEFOREEND);
-  }
+//   render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
+//   // пока вставлен случайный фильм из FILM_CARDS
+//   render(formDetailsTopContainer, new FilmDetailsInfoWrap(FILMS_CARDS[0]).getElement(), RenderPosition.BEFOREEND);
 
-  render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
+//   //вывод жанров фильма
+//   const filmDetailsGenres = formDetailsTopContainer.querySelector(".film-details-genres");
+//   const genres = generateGenres(FILMS_CARDS[0].genres);
+//   for (let i = 0; i < genres.length; i++) {
+//     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]).getElement(), RenderPosition.BEFOREEND);
+//   }
 
-  render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
-  const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
-  render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent(comments).getElement(), RenderPosition.BEFOREEND);
-  render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
-  // отрисовка списка комментариев
-  const filmDetailsCommentsList = filmDetailsInner.querySelector(".film-details__comments-list");
-  for (let i = 0; i < comments.length; i++) {
-    render(filmDetailsCommentsList, new CommentComponent(comments[i]).getElement(), RenderPosition.BEFOREEND);
-  }
-  render(filmDetailsCommentsWrap, new FilmDetailsNewCommentComponent().getElement(), RenderPosition.BEFOREEND);
-};
+//   render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
+
+//   render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
+//   const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
+//   render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent(comments).getElement(), RenderPosition.BEFOREEND);
+//   render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
+//   // отрисовка списка комментариев
+//   const filmDetailsCommentsList = filmDetailsInner.querySelector(".film-details__comments-list");
+//   for (let i = 0; i < comments.length; i++) {
+//     render(filmDetailsCommentsList, new CommentComponent(comments[i]).getElement(), RenderPosition.BEFOREEND);
+//   }
+//   render(filmDetailsCommentsWrap, new FilmDetailsNewCommentComponent().getElement(), RenderPosition.BEFOREEND);
+// };
 
 
 const renderBoard = () => {
-  defaultCardOutput(siteMainElement);
-  // const filmListElement = siteMainElement.querySelector(".films-list__container");
-  
-  // filmListElement.replaceChild(filmListElement.getElement(), filmComponent.getElement());
+
+  defaultCardOutput(siteMainElement); 
   menuButtonElement(siteMainElement, "all", FILMS_CARDS);
   menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
   menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
   menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
-  // ??? Как реализовать смену попап?
-  //  renderFilm(filmListElement, new CardFilmComponent(FILMS_CARDS[0]).getElement());
 
   // Top Rated films
   render(filmsContainer, new TopRatedContainerComponent().getElement(), RenderPosition.BEFOREEND);
@@ -153,4 +149,5 @@ const filmsContainer = siteMainElement.querySelector(".films");
 render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
 
 renderBoard();
-renderPopupFilm(filmsContainer);
+// renderPopupFilm(filmsContainer);
+addPopup();

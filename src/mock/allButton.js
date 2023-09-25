@@ -16,9 +16,7 @@ const films = generateFilms(FILMS_CARDS, CARD_FILMS_COUNT);
 // default card output
 export const defaultCardOutput = (siteMainElement) => {
   const filmsContainer = siteMainElement.querySelector(".films");
-  const filmsListContainer = filmsContainer.querySelector(
-    ".films-list__container"
-  );
+  const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
   for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
     render(filmsListContainer, new CardFilmComponent(films[i]));
@@ -27,8 +25,6 @@ export const defaultCardOutput = (siteMainElement) => {
   // button "Show more"
   const filmsList = filmsContainer.querySelector(".films-list");
   render(filmsList, new ShowMoreButtonComponent().getElement());
-  // let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
-  // showMoreButtonElement(showMoreButton, filmsListContainer);
   showMoreButtonElement(filmsListContainer, filmsList);
 };
 
@@ -42,9 +38,7 @@ export const allButtonElement = (siteMainElement) => {
     render(siteMainElement, new FilmsContainerComponent().getElement());
     filmsContainer = siteMainElement.querySelector(".films");
 
-    const filmsListContainer = filmsContainer.querySelector(
-      ".films-list__container"
-    );
+    const filmsListContainer = filmsContainer.querySelector(".films-list__container");
     const filmsList = filmsContainer.querySelector(".films-list");
     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
       render(filmsListContainer, new CardFilmComponent(films[i]).getElement());
