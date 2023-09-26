@@ -28,8 +28,10 @@ import GenreTemplateComponent from "./components/popupFilmDetails/genres.js";
 // import { generateGenres } from "./mock/genres.js";
 import PopupCardFilmComponent from "./components/popupCardFilm.js";
 import { addPopup } from "./components/popupFilmDetails/popupElement.js";
+import CardFilmComponent from "./components/cardFilm.js";
+import FilmDetailsContainerComponent from "./components/popupFilmDetails/container.js";
 
-// !!!1)Переписать функцию отрисовки попапа(через appendChild и RemoveChild).
+// !!!1)Переписать функцию отрисовки попапа(через appendChild и RemoveChild.
 //    2)добавить сообщение, если в системе нет фильмов (пустая страница).
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -149,5 +151,7 @@ const filmsContainer = siteMainElement.querySelector(".films");
 render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
 
 renderBoard();
-// renderPopupFilm(filmsContainer);
-addPopup();
+
+
+addPopup(new CardFilmComponent(FILMS_CARDS[0]));
+// addPopup();
