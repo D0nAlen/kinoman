@@ -14,22 +14,8 @@ import TopRatedContainerComponent from "./components/topRatedContainer.js";
 import CardTopRatedComponent from "./components/cardTopRated.js";
 import ControlsComponent from "./components/controls.js";
 import MostCommentedContainerComponent from "./components/mostCommentedContainer.js";
-import { generateComments } from "./mock/comment.js";
-import FormDetailsTopContainerComponent from "./components/popupFilmDetails/topContainer.js";
-import FilmDetailsCloseButtonComponent from "./components/popupFilmDetails/closeButton.js";
-import FilmDetailsInfoWrap from "./components/popupFilmDetails/infoWrap.js";
-import FilmDetailsControlsComponent from "./components/popupFilmDetails/controls.js";
-import FormDetailsBottomContainerComponent from "./components/popupFilmDetails/bottomContainer.js";
-import FilmDetailsCommentsWrapComponent from "./components/popupFilmDetails/commentsWrap.js";
-import FilmDetailsCommentsListComponent from "./components/popupFilmDetails/commentList.js";
-import FilmDetailsNewCommentComponent from "./components/popupFilmDetails/newComment.js";
-import CommentComponent from "./components/popupFilmDetails/comment.js";
-import GenreTemplateComponent from "./components/popupFilmDetails/genres.js";
-// import { generateGenres } from "./mock/genres.js";
-import PopupCardFilmComponent from "./components/popupCardFilm.js";
-import { addPopup } from "./components/popupFilmDetails/popupElement.js";
+import { addPopup } from "./mock/popupElement.js";
 import CardFilmComponent from "./components/cardFilm.js";
-import FilmDetailsContainerComponent from "./components/popupFilmDetails/container.js";
 
 // !!!1)Переписать функцию отрисовки попапа(через appendChild и RemoveChild.
 //    2)добавить сообщение, если в системе нет фильмов (пустая страница).
