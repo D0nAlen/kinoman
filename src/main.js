@@ -17,8 +17,7 @@ import MostCommentedContainerComponent from "./components/mostCommentedContainer
 import { addPopup } from "./mock/popupElement.js";
 import CardFilmComponent from "./components/cardFilm.js";
 
-// !!!1)Переписать функцию отрисовки попапа(через appendChild и RemoveChild.
-//    2)добавить сообщение, если в системе нет фильмов (пустая страница).
+//    1)добавить сообщение, если в системе нет фильмов (пустая страница).
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 const siteHeaderElement = document.querySelector(".header");
@@ -139,5 +138,5 @@ render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEF
 renderBoard();
 
 
-addPopup(new CardFilmComponent(FILMS_CARDS[0]));
+addPopup(FILMS_CARDS[0]);
 // addPopup();

@@ -5,8 +5,10 @@ const popup = document.querySelector(".popup");
 
 export const addPopup = (film) => {
 
-    // popup.appendChild(new PopupComponent(film).getElement());
-    render(popup, new PopupComponent(film).getElement(), RenderPosition.BEFOREEND);
+    // render(popup, new PopupComponent(film).getElement(), RenderPosition.BEFOREEND);
+    popup.appendChild(new PopupComponent(film).getElement());
+
+    // console.log(popup);
 };
 
 export const deletePopup = (film) => {
