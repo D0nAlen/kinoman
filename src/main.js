@@ -139,4 +139,3 @@ renderBoard();
 
 
 addPopup(FILMS_CARDS[0]);
-// addPopup();

@@ -1,14 +1,30 @@
 import { RenderPosition, render } from "../utils.js";
 import PopupComponent from "../components/popupCardFilm.js";
+import { COMMENTS } from "../const.js";
+import { generateComments } from "../mock/comment.js";
+import CommentComponent from "../components/popupComponents/comment.js";
+import { generateGenres } from "./genres.js";
+import GenreTemplateComponent from "../components/popupComponents/genres.js";
 
 const popup = document.querySelector(".popup");
 
 export const addPopup = (film) => {
-
-    // render(popup, new PopupComponent(film).getElement(), RenderPosition.BEFOREEND);
+    const genres = generateGenres(film.genres);
+    const comments = generateComments(COMMENTS);
+    
     popup.appendChild(new PopupComponent(film).getElement());
 
-    // console.log(popup);
+    //genres rendering
+    const filmDetailsGenres = popup.querySelector(".film-details-genres");
+    for (let i = 0; i < genres.length; i++) {
+        filmDetailsGenres.appendChild(new GenreTemplateComponent(genres[i]).getElement());
+    }
+
+    // comments rendering
+    const commentsList = popup.querySelector(".film-details__comments-list");
+    for (let i = 0; i < comments.length; i++) {
+        commentsList.appendChild(new CommentComponent(comments[i]).getElement());
+    }
 };
 
 export const deletePopup = (film) => {
