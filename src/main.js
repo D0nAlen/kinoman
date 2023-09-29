@@ -44,7 +44,6 @@ const siteMainElement = document.querySelector(".main");
 //   const filmComponent = new CardFilmComponent(film);
 //   // render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
 //   const filmCardButton = filmComponent.getElement().querySelector(".film-card");
-//   console.log(filmCardButton);
 //   filmCardButton.addEventListener(`click`, () => {
 //     replaceFilmToPopup();
 //     document.addEventListener(`keydown`, onEscKeyDown);
@@ -60,40 +59,6 @@ const siteMainElement = document.querySelector(".main");
 
 //   render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
 // };
-
-
-// const renderPopupFilm = (filmsContainer) => {
-//   render(filmsContainer, new PopupCardFilmComponent().getElement(), RenderPosition.BEFOREEND);
-//   const filmDetailsInner = document.querySelector(".film-details__inner");
-//   const comments = generateComments(COMMENTS);
-//   render(filmDetailsInner, new FormDetailsTopContainerComponent().getElement(), RenderPosition.BEFOREEND);
-//   const formDetailsTopContainer = filmDetailsInner.querySelector(".form-details__top-container");
-
-//   render(formDetailsTopContainer, new FilmDetailsCloseButtonComponent().getElement(), RenderPosition.BEFOREEND);
-//   // пока вставлен случайный фильм из FILM_CARDS
-//   render(formDetailsTopContainer, new FilmDetailsInfoWrap(FILMS_CARDS[0]).getElement(), RenderPosition.BEFOREEND);
-
-//   //вывод жанров фильма
-//   const filmDetailsGenres = formDetailsTopContainer.querySelector(".film-details-genres");
-//   const genres = generateGenres(FILMS_CARDS[0].genres);
-//   for (let i = 0; i < genres.length; i++) {
-//     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]).getElement(), RenderPosition.BEFOREEND);
-//   }
-
-//   render(formDetailsTopContainer, new FilmDetailsControlsComponent().getElement(), RenderPosition.BEFOREEND);
-
-//   render(filmDetailsInner, new FormDetailsBottomContainerComponent().getElement(), RenderPosition.BEFOREEND);
-//   const filmDetailsCommentsWrap = filmDetailsInner.querySelector(".form-details__bottom-container");
-//   render(filmDetailsCommentsWrap, new FilmDetailsCommentsWrapComponent(comments).getElement(), RenderPosition.BEFOREEND);
-//   render(filmDetailsCommentsWrap, new FilmDetailsCommentsListComponent().getElement(), RenderPosition.BEFOREEND);
-//   // отрисовка списка комментариев
-//   const filmDetailsCommentsList = filmDetailsInner.querySelector(".film-details__comments-list");
-//   for (let i = 0; i < comments.length; i++) {
-//     render(filmDetailsCommentsList, new CommentComponent(comments[i]).getElement(), RenderPosition.BEFOREEND);
-//   }
-//   render(filmDetailsCommentsWrap, new FilmDetailsNewCommentComponent().getElement(), RenderPosition.BEFOREEND);
-// };
-
 
 const renderBoard = () => {
 
@@ -138,4 +103,4 @@ render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEF
 renderBoard();
 
 
-addPopup(FILMS_CARDS[0]);
+// addPopup(FILMS_CARDS[0]);

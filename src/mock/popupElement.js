@@ -11,7 +11,7 @@ const popup = document.querySelector(".popup");
 export const addPopup = (film) => {
     const genres = generateGenres(film.genres);
     const comments = generateComments(COMMENTS);
-    
+
     popup.appendChild(new PopupComponent(film).getElement());
 
     //genres rendering
@@ -25,8 +25,30 @@ export const addPopup = (film) => {
     for (let i = 0; i < comments.length; i++) {
         commentsList.appendChild(new CommentComponent(comments[i]).getElement());
     }
+
+
+    const closeButton = popup.querySelector(".film-details__close");
+    closeButton.addEventListener(`click`, () => {
+        deletePopup();
+        document.removeEventListener(`click`, closeButton);
+    });
+
+    // console.log(!!closeButton);
+    const onEscKeyDown = (evt) => {
+
+        const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+        if (isEscKey) {
+            document.removeEventListener(`keydown`, onEscKeyDown);
+            deletePopup();
+        }
+    };
+
+    document.addEventListener(`keydown`, onEscKeyDown);
 };
 
-export const deletePopup = (film) => {
-    // popupContainer.removeChild(new FilmDetailsContainerComponent().getElement());
+export const deletePopup = () => {
+    const filmDetails = popup.querySelector(".film-details");
+    // console.log(filmDetails);
+    popup.removeChild(filmDetails);
 };

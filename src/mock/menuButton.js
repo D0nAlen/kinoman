@@ -6,6 +6,7 @@ import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
+import { addPopup } from "./popupElement.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -18,8 +19,12 @@ export const defaultCardOutput = (siteMainElement) => {
   const films = generateFilms(FILMS_CARDS);
 
   for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-  render(filmsListContainer, new CardFilmComponent(films[i]).getElement(), RenderPosition.BEFOREEND);
+    const cardFilmComponent = new CardFilmComponent(films[i]).getElement();
+    render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+
+    listenerPopup(cardFilmComponent, films[i]);
   }
+
 
   const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) =>
@@ -99,5 +104,23 @@ const showMoreButtonElement = (filmsListContainer, filmsList, films) => {
     if (showingFilmsCount >= cardFilmsCount) {
       showMoreButton.remove();
     }
+  });
+};
+
+const listenerPopup = (cardFilmComponent, film) => {
+  cardFilmComponent.addEventListener(`click`, () => {
+    addPopup(film);
+
+    // const onEscKeyDown = (evt) => {
+
+    //   const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    //   if (isEscKey) {
+    //     document.removeEventListener(`keydown`, onEscKeyDown);
+    //     deletePopup();
+    //   }
+    // };
+
+    // document.addEventListener(`keydown`, onEscKeyDown);
   });
 };
