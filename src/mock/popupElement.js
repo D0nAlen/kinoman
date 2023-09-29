@@ -1,4 +1,3 @@
-import { RenderPosition, render } from "../utils.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import { COMMENTS } from "../const.js";
 import { generateComments } from "../mock/comment.js";
@@ -26,14 +25,8 @@ export const addPopup = (film) => {
         commentsList.appendChild(new CommentComponent(comments[i]).getElement());
     }
 
-
     const closeButton = popup.querySelector(".film-details__close");
-    closeButton.addEventListener(`click`, () => {
-        deletePopup();
-        document.removeEventListener(`click`, closeButton);
-    });
 
-    // console.log(!!closeButton);
     const onEscKeyDown = (evt) => {
 
         const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
@@ -45,10 +38,20 @@ export const addPopup = (film) => {
     };
 
     document.addEventListener(`keydown`, onEscKeyDown);
+
+    closeButton.addEventListener(`click`, () => {
+        deletePopup();
+        document.removeEventListener(`keydown`, onEscKeyDown);
+    });
 };
 
 export const deletePopup = () => {
-    const filmDetails = popup.querySelector(".film-details");
-    // console.log(filmDetails);
-    popup.removeChild(filmDetails);
+    popup.replaceChildren();
 };
+
+export const listenerPopup = (cardFilmComponent, film) => {
+    cardFilmComponent.addEventListener(`click`, () => {
+      addPopup(film);
+    });
+  };
+  

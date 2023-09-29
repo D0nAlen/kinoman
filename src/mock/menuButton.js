@@ -6,8 +6,7 @@ import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
-import { addPopup } from "./popupElement.js";
-import noDataFilmsTemplate from "../components/no-data.js";
+import {listenerPopup} from "../mock/popupElement.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -64,7 +63,9 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     }
 
     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-      render(filmsListContainer, new CardFilmComponent(films[i]).getElement(), RenderPosition.BEFOREEND);
+      const cardFilmComponent = new CardFilmComponent(films[i]).getElement();
+      render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+      listenerPopup(cardFilmComponent, films[i]);
     }
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
     controlsCardFilm.forEach((film) =>
@@ -94,8 +95,11 @@ const showMoreButtonElement = (filmsListContainer, filmsList, films) => {
     showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
     films
       .slice(prevFilmsCount, showingFilmsCount)
-      .forEach((film) =>
-        render(filmsListContainer, new CardFilmComponent(film).getElement(), RenderPosition.BEFOREEND)
+      .forEach((film) => {
+        const cardFilmComponent = new CardFilmComponent(film).getElement();
+        render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+        listenerPopup(cardFilmComponent, film);
+      }
       );
 
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
@@ -106,23 +110,5 @@ const showMoreButtonElement = (filmsListContainer, filmsList, films) => {
     if (showingFilmsCount >= cardFilmsCount) {
       showMoreButton.remove();
     }
-  });
-};
-
-const listenerPopup = (cardFilmComponent, film) => {
-  cardFilmComponent.addEventListener(`click`, () => {
-    addPopup(film);
-
-    // const onEscKeyDown = (evt) => {
-
-    //   const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-    //   if (isEscKey) {
-    //     document.removeEventListener(`keydown`, onEscKeyDown);
-    //     deletePopup();
-    //   }
-    // };
-
-    // document.addEventListener(`keydown`, onEscKeyDown);
   });
 };

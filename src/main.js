@@ -2,7 +2,7 @@ import { generateMenu } from "./mock/menu.js";
 import { generateTopRatedFilms } from "./mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
 import { defaultCardOutput, menuButtonElement } from "./mock/menuButton.js";
-import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS, COMMENTS } from "./const.js";
+import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "./const.js";
 import { render, RenderPosition } from "./utils.js";
 import HeaderProfileComponent from "./components/headerProfile.js";
 import CardMostCommentedComponent from "./components/cardMostCommented.js";
@@ -14,9 +14,8 @@ import TopRatedContainerComponent from "./components/topRatedContainer.js";
 import CardTopRatedComponent from "./components/cardTopRated.js";
 import ControlsComponent from "./components/controls.js";
 import MostCommentedContainerComponent from "./components/mostCommentedContainer.js";
-import { addPopup } from "./mock/popupElement.js";
-import CardFilmComponent from "./components/cardFilm.js";
 import noDataFilmsTemplate from "./components/no-data.js";
+import { listenerPopup } from "./mock/popupElement.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -35,7 +34,9 @@ const renderBoard = () => {
   render(filmsContainer, new TopRatedContainerComponent().getElement(), RenderPosition.BEFOREEND);
   const topRatedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[1];
   for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-    render(topRatedContainerElement, new CardTopRatedComponent(topRatedFilms[i]).getElement(), RenderPosition.BEFOREEND);
+    const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]).getElement();
+    render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
+    listenerPopup(cardFilmComponent, topRatedFilms[i]);
   }
   let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
@@ -44,7 +45,9 @@ const renderBoard = () => {
   render(filmsContainer, new MostCommentedContainerComponent().getElement(), RenderPosition.BEFOREEND);
   const mostCommentedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[2];
   for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-    render(mostCommentedContainerElement, new CardMostCommentedComponent(mostCommentedFilms[i]).getElement(), RenderPosition.BEFOREEND);
+    const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]).getElement();
+    render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
+    listenerPopup(cardFilmComponent, mostCommentedFilms[i]);
   }
   controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
