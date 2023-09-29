@@ -18,30 +18,26 @@ export const defaultCardOutput = (siteMainElement) => {
   const filmsContainer = siteMainElement.querySelector(".films");
   const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
-  // if (FILMS_CARDS.length === 0) {
-  //   render(filmsListContainer, new noDataFilmsTemplate().getElement(), RenderPosition.BEFOREEND);
-  // } else {
-    const films = generateFilms(FILMS_CARDS);
+  const films = generateFilms(FILMS_CARDS);
 
-    for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-      const cardFilmComponent = new CardFilmComponent(films[i]).getElement();
-      render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+  for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+    const cardFilmComponent = new CardFilmComponent(films[i]).getElement();
+    render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
 
-      listenerPopup(cardFilmComponent, films[i]);
-    }
+    listenerPopup(cardFilmComponent, films[i]);
+  }
 
 
-    const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-    controlsCardFilm.forEach((film) =>
-      render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND)
-    );
+  const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+  controlsCardFilm.forEach((film) =>
+    render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND)
+  );
 
-    // button "Show more"
-    const filmsList = filmsContainer.querySelector(".films-list");
-    render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
+  // button "Show more"
+  const filmsList = filmsContainer.querySelector(".films-list");
+  render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
 
-    showMoreButtonElement(filmsListContainer, filmsList, films, FILMS_CARDS.length);
-  // }
+  showMoreButtonElement(filmsListContainer, filmsList, films, FILMS_CARDS.length);
 };
 
 export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
