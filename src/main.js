@@ -16,53 +16,16 @@ import ControlsComponent from "./components/controls.js";
 import MostCommentedContainerComponent from "./components/mostCommentedContainer.js";
 import { addPopup } from "./mock/popupElement.js";
 import CardFilmComponent from "./components/cardFilm.js";
+import noDataFilmsTemplate from "./components/no-data.js";
 
-//    1)добавить сообщение, если в системе нет фильмов (пустая страница).
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
 
-// export const renderFilm = (filmListElement, film) => {
-//   const replaceFilmToPopup = () => {
-//     filmListElement.replaceChild(filmPopupComponent.getElement(), filmComponent.getElement());
-//   };
-
-//   const replacePopupToFilm = () => {
-//     filmListElement.replaceChild(filmComponent.getElement(), filmPopupComponent.getElement());
-//   };
-
-//   const onEscKeyDown = (evt) => {
-//     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-//     if (isEscKey) {
-//       replacePopupToFilm();
-//       document.removeEventListener(`keydown`, onEscKeyDown);
-//     }
-//   };
-
-//   const filmComponent = new CardFilmComponent(film);
-//   // render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
-//   const filmCardButton = filmComponent.getElement().querySelector(".film-card");
-//   filmCardButton.addEventListener(`click`, () => {
-//     replaceFilmToPopup();
-//     document.addEventListener(`keydown`, onEscKeyDown);
-//   });
-
-//   const filmPopupComponent = new PopupCardFilmComponent();
-//   // const popupWindow = filmPopupComponent.getElement().querySelector(`.film-details`);
-//   // popupWindow.addEventListener(`submit`, (evt) => {
-//   //   evt.preventDefault();
-//   //   replacePopupToFilm();
-//   //   document.removeEventListener(`keydown`, onEscKeyDown);
-//   // });
-
-//   render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
-// };
-
 const renderBoard = () => {
 
-  defaultCardOutput(siteMainElement); 
+  defaultCardOutput(siteMainElement);
   menuButtonElement(siteMainElement, "all", FILMS_CARDS);
   menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
   menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
@@ -99,8 +62,10 @@ render(siteMainElement, new FilterComponent().getElement(), RenderPosition.BEFOR
 render(siteMainElement, new FilmsContainerComponent().getElement(), RenderPosition.BEFOREEND);
 const filmsContainer = siteMainElement.querySelector(".films");
 render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
-renderBoard();
-
-
-// addPopup(FILMS_CARDS[0]);
+if (FILMS_CARDS.length === 0) {
+  render(filmsListContainer, new noDataFilmsTemplate().getElement(), RenderPosition.BEFOREEND);
+} else {
+  renderBoard();
+}
