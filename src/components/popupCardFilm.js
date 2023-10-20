@@ -1,4 +1,5 @@
-import { createElement } from "../utils.js";
+import AbstractComponent from "./abstract-component.js";
+import { createElement } from "./utils/render.js";
 
 const createPopupTemplate = (film) => {
   return `<section class="film-details">
@@ -119,24 +120,25 @@ const createPopupTemplate = (film) => {
   </section>`;
 };
 
-export default class PopupComponent {
+export default class PopupComponent extends AbstractComponent{
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+    // this._element = null;
   }
 
   getTemplate() {
     return createPopupTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
+  // getElement() {
+  //   if (!this._element) {
+  //     this._element = createElement(this.getTemplate());
+  //   }
+  //   return this._element;
+  // }
 
-  removeElement() {
-    this._element = null;
-  }
+  // removeElement() {
+  //   this._element = null;
+  // }
 };

@@ -1,4 +1,5 @@
-import { createElement } from "../utils.js";
+import AbstractComponent from "./abstract-component.js";
+// import { createElement } from "./utils/render.js";
 
 const createCardMostCommentedTemplate = (film) => {
 
@@ -16,24 +17,25 @@ const createCardMostCommentedTemplate = (film) => {
   </article>`;
 };
 
-export default class CardMostCommentedComponent {
+export default class CardMostCommentedComponent extends AbstractComponent{
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+    // this._element = null;
   }
 
   getTemplate() {
     return createCardMostCommentedTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
+  // getElement() {
+  //   if (!this._element) {
+  //     this._element = createElement(this.getTemplate());
+  //   }
+  //   return this._element;
+  // }
 
-  removeElement() {
-    this._element = null;
-  }
+  // removeElement() {
+  //   this._element = null;
+  // }
 };

@@ -1,4 +1,5 @@
-import { createElement } from "../utils.js";
+// import { createElement } from "./utils/render.js";
+import AbstractComponent from "../components/abstract-component.js";
 
 const createCardFilmTemplate = (film) => {
   //comment - массив комментариев
@@ -17,24 +18,25 @@ const createCardFilmTemplate = (film) => {
   </article>`;
 };
 
-export default class CardFilmComponent {
+export default class CardFilmComponent extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+    // this._element = null;
   }
 
   getTemplate() {
     return createCardFilmTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
+  // getElement() {
+  //   if (!this._element) {
+  //     this._element = createElement(this.getTemplate());
+  //   }
+  //   return this._element;
+  // }
 
-  removeElement() {
-    this._element = null;
-  }
+  // removeElement() {
+  //   this._element = null;
+  // }
 };

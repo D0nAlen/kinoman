@@ -1,26 +1,27 @@
-import { createElement } from "../utils.js";
+import { createElement } from "./utils/render.js";
+import AbstractComponent from "./abstract-component.js";
 
 const createShowMoreButtonTemplate = () => {
   return `<button class="films-list__show-more">Show more</button>`;
 };
 
-export default class ShowMoreButtonComponent {
-  constructor() {
-    this._element = null;
-  }
+export default class ShowMoreButtonComponent extends AbstractComponent{
+  // constructor() {
+  //   this._element = null;
+  // }
 
   getTemplate() {
     return createShowMoreButtonTemplate();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
+  // getElement() {
+  //   if (!this._element) {
+  //     this._element = createElement(this.getTemplate());
+  //   }
+  //   return this._element;
+  // }
 
-  removeElement() {
-    this._element = null;
-  }
+  // removeElement() {
+  //   this._element = null;
+  // }
 }

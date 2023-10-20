@@ -1,4 +1,5 @@
-import { createElement } from "../utils.js";
+import AbstractComponent from "./abstract-component.js";
+import { createElement } from "./utils/render.js";
 
 const createFilterTemplate = () => {
     return `<ul class="sort">
@@ -9,23 +10,23 @@ const createFilterTemplate = () => {
         `;
   };  
 
-export default class FilterComponent {
-      constructor() {
-        this._element = null;
-      }
+export default class FilterComponent extends AbstractComponent{
+      // constructor() {
+      //   this._element = null;
+      // }
     
       getTemplate() {
         return createFilterTemplate();
       }
     
-      getElement() {
-        if (!this._element) {
-          this._element = createElement(this.getTemplate());
-        }
-        return this._element;
-      }
+      // getElement() {
+      //   if (!this._element) {
+      //     this._element = createElement(this.getTemplate());
+      //   }
+      //   return this._element;
+      // }
     
-      removeElement() {
-        this._element = null;
-      }
+      // removeElement() {
+      //   this._element = null;
+      // }
 }
