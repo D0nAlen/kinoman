@@ -1,4 +1,4 @@
-import { createElement } from "../utils/render.js";
+import { createElement } from "../../utils/render.js";
 
 const createGenreTemplate = (genre) => {
     return `<span class="film-details__genre">${genre}</span>`;

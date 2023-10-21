@@ -1,7 +1,6 @@
 import { generateFilms } from "./cardFilm.js";
-import { render } from "../components/utils/render.js";
+import { render,RenderPosition } from "../utils/render.js";
 import { FILMS_CARDS } from "../const.js";
-import { RenderPosition } from "../components/utils/render.js";
 import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";

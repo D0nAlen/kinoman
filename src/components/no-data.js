@@ -1,5 +1,5 @@
 import AbstractComponent from "./abstract-component.js";
-import { createElement } from "./utils/render.js";
+// import { createElement } from "./utils/render.js";
 
 export const createNoDataFilms = () => {
   return `<h2 class="films-list__title">There are no movies in our database</h2>`;

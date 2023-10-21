@@ -3,7 +3,7 @@ import { generateTopRatedFilms } from "./mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "./mock/cardMostCommented.js";
 import { defaultCardOutput, menuButtonElement } from "./mock/menuButton.js";
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "./const.js";
-import { render, RenderPosition } from "./components/utils/render.js";
+import { render, RenderPosition } from "./utils/render.js";
 import HeaderProfileComponent from "./components/headerProfile.js";
 import CardMostCommentedComponent from "./components/cardMostCommented.js";
 import MenuComponent from "./components/menu.js";

@@ -1,5 +1,5 @@
 import AbstractComponent from "./abstract-component.js";
-import { createElement } from "./utils/render.js";
+// import { createElement } from "./utils/render.js";
 
 const createFilmsContainerTemplate = () => {
   return `<section class="films"></section>`;

@@ -1,6 +1,6 @@
 import { defaultCardOutput, menuButtonElement } from "./mock/menuButton.js";
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "./const.js";
-import { render, RenderPosition } from "./utils.js";
+import { render, RenderPosition } from "../utils/render.js";
 import CardMostCommentedComponent from "./components/cardMostCommented.js";
 import TopRatedContainerComponent from "../components/topRatedContainer.js";
 import MostCommentedContainerComponent from "../components/mostCommentedContainer.js";
