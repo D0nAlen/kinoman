@@ -1,5 +1,4 @@
 import AbstractComponent from "./abstract-component.js";
-// import { createElement} from "./utils/render.js";
 
 const createControlsTemplate = () => {
   return `<form class="film-card__controls">
@@ -11,22 +10,8 @@ const createControlsTemplate = () => {
 };
 
 export default class ControlsComponent extends AbstractComponent{
-  // constructor() {
-  //   this._element = null;
-  // }
 
   getTemplate() {
     return createControlsTemplate();
   }
-
-  // getElement() {
-  //   if (!this._element) {
-  //     this._element = createElement(this.getTemplate());
-  //   }
-  //   return this._element;
-  // }
-
-  // removeElement() {
-  //   this._element = null;
-  // }
 }

@@ -1,4 +1,3 @@
-// import { createElement } from "./utils/render.js";
 import AbstractComponent from "../components/abstract-component.js";
 
 const createCardFilmTemplate = (film) => {
@@ -22,21 +21,15 @@ export default class CardFilmComponent extends AbstractComponent {
   constructor(film) {
     super();
     this._film = film;
-    // this._element = null;
   }
 
   getTemplate() {
     return createCardFilmTemplate(this._film);
   }
 
-  // getElement() {
-  //   if (!this._element) {
-  //     this._element = createElement(this.getTemplate());
-  //   }
-  //   return this._element;
-  // }
-
-  // removeElement() {
-  //   this._element = null;
-  // }
+  setCardFilmButtonClickHandler() {
+    this.getElement().addEventListener(`click`, () => {
+      addPopup(this._film);
+    });
+  }
 };
