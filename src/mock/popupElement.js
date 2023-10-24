@@ -49,9 +49,9 @@ export const deletePopup = () => {
     popup.replaceChildren();
 };
 
-export const listenerPopup = (cardFilmComponent, film) => {
-    cardFilmComponent.addEventListener(`click`, () => {
-      addPopup(film);
-    });
-  };
+// export const listenerPopup = (cardFilmComponent, film) => {
+//     cardFilmComponent.addEventListener(`click`, () => {
+//       addPopup(film);
+//     });
+//   };
   

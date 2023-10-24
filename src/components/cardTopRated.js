@@ -1,5 +1,5 @@
 import AbstractComponent from "./abstract-component.js";
-// import { createElement } from "./utils/render.js";
+import { addPopup } from "../mock/popupElement.js";
 
 const createCardTopRatedTemplate = (film) => {
 
@@ -23,21 +23,15 @@ export default class CardTopRatedComponent extends AbstractComponent{
   constructor(film) {
     super();
     this._film = film;
-    // this._element = null;
   }
 
   getTemplate() {
     return createCardTopRatedTemplate(this._film);
   }
 
-  // getElement() {
-  //   if (!this._element) {
-  //     this._element = createElement(this.getTemplate());
-  //   }
-  //   return this._element;
-  // }
-
-  // removeElement() {
-  //   this._element = null;
-  // }
+  setCardTopRatedClickHandler() {
+    this.getElement().addEventListener(`click`, () => {
+      addPopup(this._film);
+    });
+  }
 };

@@ -5,8 +5,6 @@ import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
-import { listenerPopup } from "../mock/popupElement.js";
-import { addPopup } from "../mock/popupElement.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -23,10 +21,11 @@ export const defaultCardOutput = (siteMainElement) => {
   const films = generateFilms(FILMS_CARDS);
 
   for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-    const cardFilmComponent = new CardFilmComponent(films[i]).getElement();
-    render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+    const cardFilmComponent = new CardFilmComponent(films[i]);
+    render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
 
-    listenerPopup(cardFilmComponent, films[i]);
+    cardFilmComponent.setCardFilmClickHandler();
+
   }
 
 
@@ -37,9 +36,8 @@ export const defaultCardOutput = (siteMainElement) => {
 
   // button "Show more"
   const filmsList = filmsContainer.querySelector(".films-list");
-    // render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
-  render(filmsList, showMoreButton.getElement(), RenderPosition.BEFOREEND);
 
+  render(filmsList, showMoreButton.getElement(), RenderPosition.BEFOREEND);
   showMoreButtonElement(showMoreButton, filmsListContainer, films);
 };
 
@@ -69,11 +67,9 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
 
     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
       const cardFilmComponent = new CardFilmComponent(films[i]);
-      cardFilmComponent.setCardFilmButtonClickHandler();
-        // addPopup(cardFilmComponent);
-      // });
+      cardFilmComponent.setCardFilmClickHandler();
+     
       render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
-      // listenerPopup(cardFilmComponent, films[i]);
     }
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
     controlsCardFilm.forEach((film) =>
@@ -85,7 +81,6 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     showMoreButtonElement(showMoreButton, filmsListContainer, films);
 
     if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-      // let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
       showMoreButton.getElement().remove();
     }
   });
@@ -95,9 +90,6 @@ const showMoreButtonElement = (showMoreButton, filmsListContainer, films) => {
   let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
   let cardFilmsCount = films.length;
   let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-  // let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
-
-  // showMoreButton.addEventListener(`click`, () => {
 
   showMoreButton.setShowMoreButtonClickHandler(() => {
     const prevFilmsCount = showingFilmsCount;
@@ -107,8 +99,7 @@ const showMoreButtonElement = (showMoreButton, filmsListContainer, films) => {
       .forEach((film) => {
         const cardFilmComponent = new CardFilmComponent(film);
         render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
-        // listenerPopup(cardFilmComponent, film);
-        cardFilmComponent.setCardFilmButtonClickHandler();
+        cardFilmComponent.setCardFilmClickHandler();
       }
       );
 

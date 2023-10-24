@@ -1,5 +1,4 @@
 import AbstractComponent from "./abstract-component.js";
-// import { createElement } from "./utils/render.js";
 
 const createMenuMarkup = (menu) => {
   const { title, count } = menu;
@@ -25,21 +24,9 @@ export default class MenuComponent extends AbstractComponent{
   constructor(menuButtons) {
     super();
     this._menuButtons = menuButtons;
-    // this._element = null;
   }
 
   getTemplate() {
     return createMenuTemplate(this._menuButtons);
   }
-
-  // getElement() {
-  //   if (!this._element) {
-  //     this._element = createElement(this.getTemplate());
-  //   }
-  //   return this._element;
-  // }
-
-  // removeElement() {
-  //   this._element = null;
-  // }
 };

@@ -1,5 +1,5 @@
 import AbstractComponent from "./abstract-component.js";
-// import { createElement } from "./utils/render.js";
+import { addPopup } from "../mock/popupElement.js";
 
 const createCardMostCommentedTemplate = (film) => {
 
@@ -21,21 +21,15 @@ export default class CardMostCommentedComponent extends AbstractComponent{
   constructor(film) {
     super();
     this._film = film;
-    // this._element = null;
   }
 
   getTemplate() {
     return createCardMostCommentedTemplate(this._film);
   }
 
-  // getElement() {
-  //   if (!this._element) {
-  //     this._element = createElement(this.getTemplate());
-  //   }
-  //   return this._element;
-  // }
-
-  // removeElement() {
-  //   this._element = null;
-  // }
+  setCardMostCommentedClickHandler() {
+    this.getElement().addEventListener(`click`, () => {
+      addPopup(this._film);
+    });
+  }
 };

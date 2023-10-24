@@ -15,7 +15,6 @@ import CardTopRatedComponent from "./components/cardTopRated.js";
 import ControlsComponent from "./components/controls.js";
 import MostCommentedContainerComponent from "./components/mostCommentedContainer.js";
 import noDataFilmsTemplate from "./components/no-data.js";
-import { listenerPopup } from "./mock/popupElement.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -34,9 +33,9 @@ const renderBoard = () => {
   render(filmsContainer, new TopRatedContainerComponent().getElement(), RenderPosition.BEFOREEND);
   const topRatedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[1];
   for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-    const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]).getElement();
-    render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-    listenerPopup(cardFilmComponent, topRatedFilms[i]);
+    const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
+    render(topRatedContainerElement, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
+    cardFilmComponent.setCardTopRatedClickHandler();
   }
   let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
@@ -45,9 +44,10 @@ const renderBoard = () => {
   render(filmsContainer, new MostCommentedContainerComponent().getElement(), RenderPosition.BEFOREEND);
   const mostCommentedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[2];
   for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-    const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]).getElement();
-    render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-    listenerPopup(cardFilmComponent, mostCommentedFilms[i]);
+    const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
+    render(mostCommentedContainerElement, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
+    cardFilmComponent.setCardMostCommentedClickHandler();
+
   }
   controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
   controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
