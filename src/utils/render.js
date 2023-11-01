@@ -10,17 +10,17 @@ export const RenderPosition = {
     return newElement.firstChild;
   };
   
-  export const render = (container, element, place) => {
+  export const render = (container, component, place) => {
     switch (place) {
-      case RenderPosition.AFTERBEGIN:
-        container.prepend(element);
-        break;
-  
-      case RenderPosition.BEFOREEND:
-        container.append(element);
-        break;
+        case RenderPosition.AFTERBEGIN:
+            container.prepend(component.getElement());
+            break;
+
+        case RenderPosition.BEFOREEND:
+            container.append(component.getElement());
+            break;
     }
-  };
+};
 
   export const replace = (newComponent, oldComponent) => {
     const parentElement = oldComponent.getElement().parentElement;

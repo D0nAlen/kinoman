@@ -1,5 +1,5 @@
-import { defaultCardOutput} from "../mock/allButton.js";
-import { menuButtonElement} from "../mock/menuButton.js";
+import { defaultCardOutput } from "../mock/allButton.js";
+import { menuButtonElement } from "../mock/menuButton.js";
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "../const.js";
 import { render, RenderPosition } from "../utils/render.js";
 import CardMostCommentedComponent from "../components/cardMostCommented.js";
@@ -14,6 +14,8 @@ import ControlsComponent from "../components/controls.js";
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 
+const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
+const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 // const filmsContainer = siteMainElement.querySelector(".films");
 // render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
 // const filmsListContainer = filmsContainer.querySelector(".films-list__container");
@@ -22,6 +24,7 @@ export default class PageController {
     constructor(container) {
         this._container = container;
 
+        this._topRatedContainerComponent = new TopRatedContainerComponent();
         // this._noTasksComponent = new NoTasksComponent();
         // this._sortComponent = new SortComponent();
         // this._tasksComponent = new TasksComponent();
@@ -29,10 +32,7 @@ export default class PageController {
     }
 
     render(siteMainElement) {
-        // const menu = generateMenu();
-        const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
-        const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
-        
+    
         const filmsContainer = this._container;
 
         defaultCardOutput(siteMainElement);
@@ -41,16 +41,18 @@ export default class PageController {
         menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
         menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
 
-        // // Top Rated films
-        // render(filmsContainer, new TopRatedContainerComponent().getElement(), RenderPosition.BEFOREEND);
-        // const topRatedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[1];
-        // for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-        //     const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
-        //     render(topRatedContainerElement, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
-        //     cardFilmComponent.setCardTopRatedClickHandler();
-        // }
-        // let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-        // controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
+        // Top Rated films
+        render(filmsContainer.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
+        const topRatedContainerElement = filmsContainer.getElement().querySelectorAll(".films-list__container")[1];
+        for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
+            const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
+            // console.log(cardFilmComponent);
+            render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
+        //     // render(this._topRatedContainerComponent.getElement(), cardFilmComponent, RenderPosition.BEFOREEND);
+        //     // cardFilmComponent.setCardTopRatedClickHandler();
+        }
+        // const controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
+        // controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 
         // // Most commented films
         // render(filmsContainer, new MostCommentedContainerComponent().getElement(), RenderPosition.BEFOREEND);

@@ -17,8 +17,8 @@ import MostCommentedContainerComponent from "./components/mostCommentedContainer
 import noDataFilmsTemplate from "./components/no-data.js";
 import PageController from "./controllers/pageController.js";
 
-const CARD__TOP_RATED_COUNT = 2;
-const CARD__MOST_COMMENTED_COUNT = 2;
+// const CARD__TOP_RATED_COUNT = 2;
+// const CARD__MOST_COMMENTED_COUNT = 2;
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
 
@@ -58,18 +58,18 @@ const menu = generateMenu();
 // const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 // const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-render(siteHeaderElement, new HeaderProfileComponent().getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, new MenuComponent(menu).getElement(), RenderPosition.BEFOREEND);
+render(siteHeaderElement, new HeaderProfileComponent(), RenderPosition.BEFOREEND);
+render(siteMainElement, new MenuComponent(menu), RenderPosition.BEFOREEND);
 
-render(siteMainElement, new FilterComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, new FilterComponent(), RenderPosition.BEFOREEND);
 
-render(siteMainElement, new FilmsContainerComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
 const filmsContainer = siteMainElement.querySelector(".films");
-render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
 const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
 if (FILMS_CARDS.length === 0) {
-  render(filmsListContainer, new noDataFilmsTemplate().getElement(), RenderPosition.BEFOREEND);
+  render(filmsListContainer, new noDataFilmsTemplate(), RenderPosition.BEFOREEND);
 } else {
 
   const filmsContainerComponent = new FilmsContainerComponent();
@@ -77,5 +77,4 @@ if (FILMS_CARDS.length === 0) {
 
   render(siteMainElement, filmsContainerComponent, RenderPosition.BEFOREEND);
   pageController.render(siteMainElement);
-  // pageController.render();
 }

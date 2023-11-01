@@ -9,40 +9,10 @@ import ControlsComponent from "../components/controls.js";
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
-// ??? ф-ция повторяется, убрать
-// default card output
-// export const defaultCardOutput = (siteMainElement) => {
-//   SHOWING_FILMS_COUNT_ON_START = 5;
-//   let showMoreButton = new ShowMoreButtonComponent();
-
-//   const filmsContainer = siteMainElement.querySelector(".films");
-//   const filmsListContainer = filmsContainer.querySelector(".films-list__container");
-
-//   const films = generateFilms(FILMS_CARDS);
-
-//   for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-//     const cardFilmComponent = new CardFilmComponent(films[i]);
-//     render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
-
-//     cardFilmComponent.setCardFilmClickHandler();
-//   }
-
-//   const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-//   controlsCardFilm.forEach((film) =>
-//     render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND)
-//   );
-
-//   // button "Show more"
-//   const filmsList = filmsContainer.querySelector(".films-list");
-
-//   render(filmsList, showMoreButton.getElement(), RenderPosition.BEFOREEND);
-//   showMoreButtonElement(showMoreButton, filmsListContainer, films);
-// };
-
 export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
   const nameButton = document.getElementById(idButton);
   const films = generateFilms(FILMS_LIST);
-  let showMoreButton = new ShowMoreButtonComponent();
+  const showMoreButton = new ShowMoreButtonComponent();
   let countFilmsList = FILMS_LIST.length;
 
   nameButton.addEventListener(`click`, () => {
@@ -51,7 +21,7 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     let filmsList = filmsContainer.querySelector(".films-list");
     filmsList.remove();
 
-    render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.AFTERBEGIN);
+    render(filmsContainer, new FilmsListComponent(), RenderPosition.AFTERBEGIN);
 
     filmsList = filmsContainer.querySelector(".films-list");
 
@@ -67,15 +37,15 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
       const cardFilmComponent = new CardFilmComponent(films[i]);
       cardFilmComponent.setCardFilmClickHandler();
      
-      render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
+      render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
     }
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
     controlsCardFilm.forEach((film) =>
-      render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND)
+      render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
     );
 
     // button "Show more"
-    render(filmsList, showMoreButton.getElement(), RenderPosition.BEFOREEND);
+    render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
     showMoreButtonElement(showMoreButton, filmsListContainer, films);
 
     if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
@@ -96,14 +66,14 @@ const showMoreButtonElement = (showMoreButton, filmsListContainer, films) => {
       .slice(prevFilmsCount, showingFilmsCount)
       .forEach((film) => {
         const cardFilmComponent = new CardFilmComponent(film);
-        render(filmsListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
+        render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
         cardFilmComponent.setCardFilmClickHandler();
       }
       );
 
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
     controlsCardFilm.forEach((film) =>
-      render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND)
+      render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
     );
 
     if (showingFilmsCount >= cardFilmsCount) {
