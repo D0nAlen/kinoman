@@ -25,6 +25,7 @@ export default class PageController {
         this._container = container;
 
         this._topRatedContainerComponent = new TopRatedContainerComponent();
+        this._mostCommentedContainerComponent = new MostCommentedContainerComponent();
         // this._noTasksComponent = new NoTasksComponent();
         // this._sortComponent = new SortComponent();
         // this._tasksComponent = new TasksComponent();
@@ -32,7 +33,7 @@ export default class PageController {
     }
 
     render(siteMainElement) {
-    
+
         const filmsContainer = this._container;
 
         defaultCardOutput(siteMainElement);
@@ -43,27 +44,24 @@ export default class PageController {
 
         // Top Rated films
         render(filmsContainer.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
-        const topRatedContainerElement = filmsContainer.getElement().querySelectorAll(".films-list__container")[1];
+        const topRatedContainerElement = filmsContainer.getElement().querySelectorAll(".films-list__container")[0];
         for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
             const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
-            // console.log(cardFilmComponent);
             render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-        //     // render(this._topRatedContainerComponent.getElement(), cardFilmComponent, RenderPosition.BEFOREEND);
-        //     // cardFilmComponent.setCardTopRatedClickHandler();
+            cardFilmComponent.setCardTopRatedClickHandler();
         }
-        // const controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-        // controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
+        let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
+        controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 
-        // // Most commented films
-        // render(filmsContainer, new MostCommentedContainerComponent().getElement(), RenderPosition.BEFOREEND);
-        // const mostCommentedContainerElement = filmsContainer.querySelectorAll(".films-list__container")[2];
-        // for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-        //     const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
-        //     render(mostCommentedContainerElement, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
-        //     cardFilmComponent.setCardMostCommentedClickHandler();
-
-        // }
-        // controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
-        // controlsCardFilm.forEach((film) => render(film, new ControlsComponent().getElement(), RenderPosition.BEFOREEND));
+        // Most commented films
+        render(filmsContainer.getElement(), this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
+        const mostCommentedContainerElement = filmsContainer.getElement().querySelectorAll(".films-list__container")[1];
+        for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
+            const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
+            render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
+            cardFilmComponent.setCardMostCommentedClickHandler();
+        }
+        controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+        controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
     }
 }
