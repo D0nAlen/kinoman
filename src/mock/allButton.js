@@ -1,4 +1,4 @@
-import { render,RenderPosition } from "../utils/render.js";
+import { render, RenderPosition } from "../utils/render.js";
 import { generateFilms } from "./cardFilm.js";
 import { FILMS_CARDS } from "../const.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
@@ -11,10 +11,11 @@ const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
 const films = generateFilms(FILMS_CARDS, CARD_FILMS_COUNT);
-const showMoreButton = new ShowMoreButtonComponent();
 
 // default card output
 export const defaultCardOutput = (siteMainElement) => {
+  const showMoreButton = new ShowMoreButtonComponent();
+
   const filmsContainer = siteMainElement.querySelector(".films");
   const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
@@ -36,7 +37,7 @@ export const defaultCardOutput = (siteMainElement) => {
   const filmsList = filmsContainer.querySelector(".films-list");
 
   render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-  showMoreButtonDefault(filmsListContainer, films);
+  showMoreButtonDefault(showMoreButton, filmsListContainer);
 };
 // export const defaultCardOutput = (siteMainElement) => {
 //   const filmsContainer = siteMainElement.querySelector(".films");
@@ -54,37 +55,38 @@ export const defaultCardOutput = (siteMainElement) => {
 
 // button #All
 
+// export const allButtonElement = (siteMainElement) => {
+//   // ???почему после выбора кнопки Favorites(7) и затем All выводится всего 10 карточек, а не 20?
 
-export const allButtonElement = (siteMainElement) => {
-  const allButton = document.getElementById("all");
+//   const showMoreButton = new ShowMoreButtonComponent();
+//   const allButton = document.getElementById("all");
 
-  allButton.addEventListener(`click`, () => {
-    let filmsContainer = siteMainElement.querySelector(".films");
-    filmsContainer.remove();
-    // render(siteMainElement, new FilmsContainerComponent());
-    render(siteMainElement, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
-    filmsContainer = siteMainElement.querySelector(".films");
+//   allButton.addEventListener(`click`, () => {
+//     let filmsContainer = siteMainElement.querySelector(".films");
+//     filmsContainer.remove();
 
-    const filmsListContainer = filmsContainer.querySelector(".films-list__container");
-    const filmsList = filmsContainer.querySelector(".films-list");
-    for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-      render(filmsListContainer, new CardFilmComponent(films[i]),RenderPosition.BEFOREEND);
-    }
+//     render(siteMainElement, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
+//     filmsContainer = siteMainElement.querySelector(".films");
 
-    // button "Show more"
-    render(filmsList, new ShowMoreButtonComponent(),RenderPosition.BEFOREEND);
-    showMoreButtonDefault(filmsListContainer, filmsList);
-  });
-};
+//     const filmsListContainer = filmsContainer.querySelector(".films-list__container");
+//     const filmsList = filmsContainer.querySelector(".films-list");
+//     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+//       render(filmsListContainer, new CardFilmComponent(films[i]), RenderPosition.BEFOREEND);
+//     }
 
-// !!!навесить слушатель
-const showMoreButtonDefault = (filmsListContainer, filmsList) => {
+//     // button "Show more"
+//     // render(filmsList, new ShowMoreButtonComponent(),RenderPosition.BEFOREEND);
+//     render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
+//     showMoreButtonDefault(showMoreButton, filmsListContainer);
+//   });
+// };
+
+const showMoreButtonDefault = (showMoreButton, filmsListContainer) => {
   let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
   let cardFilmsCount = CARD_FILMS_COUNT;
   let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-  // let showMoreButton = filmsList.querySelector(`.films-list__show-more`);
 
-  showMoreButton.getElement().addEventListener(`click`, () => {
+  showMoreButton.setShowMoreButtonClickHandler(() => {
     const prevFilmsCount = showingFilmsCount;
     // let remainingCards = cardFilmsCount - showingFilmsCount;
     // if (remainingCards < showingFilmsCountByButton)
@@ -97,7 +99,7 @@ const showMoreButtonDefault = (filmsListContainer, filmsList) => {
       );
 
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-    controlsCardFilm.forEach((film) => render(film, new ControlsComponent(),RenderPosition.BEFOREEND));
+    controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 
     if (showingFilmsCount >= cardFilmsCount) {
       showMoreButton.getElement().remove();

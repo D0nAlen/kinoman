@@ -5,7 +5,6 @@ import { render, RenderPosition } from "../utils/render.js";
 import CardMostCommentedComponent from "../components/cardMostCommented.js";
 import TopRatedContainerComponent from "../components/topRatedContainer.js";
 import MostCommentedContainerComponent from "../components/mostCommentedContainer.js";
-import { generateMenu } from "../mock/menu.js";
 import { generateTopRatedFilms } from "../mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "../mock/cardMostCommented.js";
 import CardTopRatedComponent from "../components/cardTopRated.js";
@@ -16,9 +15,6 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
-// const filmsContainer = siteMainElement.querySelector(".films");
-// render(filmsContainer, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
-// const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
 export default class PageController {
     constructor(container) {
@@ -26,18 +22,17 @@ export default class PageController {
 
         this._topRatedContainerComponent = new TopRatedContainerComponent();
         this._mostCommentedContainerComponent = new MostCommentedContainerComponent();
-        // this._noTasksComponent = new NoTasksComponent();
-        // this._sortComponent = new SortComponent();
-        // this._tasksComponent = new TasksComponent();
-        // this._loadMoreButtonComponent = new LoadMoreButtonComponent();
     }
 
     render(siteMainElement) {
 
         const filmsContainer = this._container;
 
+        // !!!исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All)
         defaultCardOutput(siteMainElement);
+        // !!!неправуильно считаются карточки all после favorites!
         menuButtonElement(siteMainElement, "all", FILMS_CARDS);
+        // allButtonElement(siteMainElement);
         menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
         menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
         menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
