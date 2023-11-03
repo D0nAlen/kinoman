@@ -9,6 +9,8 @@ import { generateTopRatedFilms } from "../mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "../mock/cardMostCommented.js";
 import CardTopRatedComponent from "../components/cardTopRated.js";
 import ControlsComponent from "../components/controls.js";
+import SortingComponent from "../components/sorting.js";
+import { SortType } from "../components/sorting.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -16,10 +18,30 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
+
+const getSortedFilms = (films, sortType, from, to) => {
+    let sortedTasks = [];
+    const showingTasks = [...films];
+
+    switch (sortType) {
+        case SortType.DATE_UP:
+            sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+            break;
+        case SortType.DATE_DOWN:
+            sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+            break;
+        case SortType.DEFAULT:
+            sortedTasks = showingTasks;
+            break;
+    }
+    return sortedTasks.slice(from, to);
+};
+
 export default class PageController {
     constructor(container) {
         this._container = container;
 
+        this._sortingComponent = new SortingComponent();
         this._topRatedContainerComponent = new TopRatedContainerComponent();
         this._mostCommentedContainerComponent = new MostCommentedContainerComponent();
     }
@@ -27,15 +49,29 @@ export default class PageController {
     render(siteMainElement) {
 
         const filmsContainer = this._container;
-
-        // !!!исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All)
+// 1)нужно отрисовать сортировку здесь, в контроллере
+// 2)...для этого перенести логику отрисовки из menuButton элемент в контроллер
+// 3)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All)
         defaultCardOutput(siteMainElement);
-        // !!!неправуильно считаются карточки all после favorites!
         menuButtonElement(siteMainElement, "all", FILMS_CARDS);
-        // allButtonElement(siteMainElement);
         menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
         menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
         menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
+
+        // WIP
+        this._sortingComponent.setSortTypeChangeHandler((sortType) => {
+            showingTasksCount = SHOWING_TASKS_COUNT_BY_BUTTON;
+
+            const sortedTasks = getSortedFilms(tasks, sortType, 0, showingTasksCount);
+
+            taskListElement.innerHTML = ``;
+
+            renderTasks(taskListElement, sortedTasks);
+            // sortedTasks.slice(0, showingTasksCount).forEach((task) => {
+            //     renderTask(taskListElement, task);
+            // });
+            renderLoadMoreButton();
+        });
 
         // Top Rated films
         render(filmsContainer.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
