@@ -11,30 +11,36 @@ import CardTopRatedComponent from "../components/cardTopRated.js";
 import ControlsComponent from "../components/controls.js";
 import SortingComponent from "../components/sorting.js";
 import { SortType } from "../components/sorting.js";
+import FilmsContainerComponent from "../components/filmsContainer.js";
+import FilmsListComponent from "../components/filmsList.js";
+import noDataFilmsTemplate from "../components/no-data.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
+
+const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
+let SHOWING_FILMS_COUNT_ON_START = 5;
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
 
 const getSortedFilms = (films, sortType, from, to) => {
-    let sortedTasks = [];
-    const showingTasks = [...films];
+    let sortedFilms = [];
+    const showingFilms = [...films];
 
     switch (sortType) {
-        case SortType.DATE_UP:
-            sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+        case SortType.BY_DATE:
+            sortedFilms = showingFilms.sort((a, b) => a.dueDate - b.dueDate);
             break;
-        case SortType.DATE_DOWN:
-            sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+        case SortType.BY_RATING:
+            sortedFilms = showingFilms.sort((a, b) => b.dueDate - a.dueDate);
             break;
         case SortType.DEFAULT:
-            sortedTasks = showingTasks;
+            sortedFilms = showingFilms;
             break;
     }
-    return sortedTasks.slice(from, to);
+    return sortedFilms.slice(from, to);
 };
 
 export default class PageController {
@@ -46,53 +52,72 @@ export default class PageController {
         this._mostCommentedContainerComponent = new MostCommentedContainerComponent();
     }
 
-    render(siteMainElement) {
+    render(films) {
 
-        const filmsContainer = this._container;
-// 1)нужно отрисовать сортировку здесь, в контроллере
-// 2)...для этого перенести логику отрисовки из menuButton элемент в контроллер
-// 3)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All)
-        defaultCardOutput(siteMainElement);
-        menuButtonElement(siteMainElement, "all", FILMS_CARDS);
-        menuButtonElement(siteMainElement, "Watchlist", WATCHLIST_CARDS);
-        menuButtonElement(siteMainElement, "History", HISTORY_CARDS);
-        menuButtonElement(siteMainElement, "Favorites", FAVORITES_CARDS);
+        const container = this._container;
+        // 1)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All) - переменная с именем тек.категории
+        // 2)почему некорректно выводятся экстра разделы?
+        render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
-        // WIP
-        this._sortingComponent.setSortTypeChangeHandler((sortType) => {
-            showingTasksCount = SHOWING_TASKS_COUNT_BY_BUTTON;
+        render(container, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
+        const filmsContainer = container.querySelector(".films");
+        render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
 
-            const sortedTasks = getSortedFilms(tasks, sortType, 0, showingTasksCount);
+        if (FILMS_CARDS.length === 0) {
 
-            taskListElement.innerHTML = ``;
+            const filmsListContainer = container.querySelector(".films-list__container");
+            render(filmsListContainer, new noDataFilmsTemplate(), RenderPosition.BEFOREEND);
 
-            renderTasks(taskListElement, sortedTasks);
-            // sortedTasks.slice(0, showingTasksCount).forEach((task) => {
-            //     renderTask(taskListElement, task);
+        } else {
+            // render(container, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
+            // const filmsContainer = container.querySelector(".films");
+            // render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
+            // const filmsListContainer = filmsContainer.querySelector(".films-list__container");
+
+            defaultCardOutput(container);
+            menuButtonElement(container, "all", FILMS_CARDS);
+            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
+            menuButtonElement(container, "History", HISTORY_CARDS);
+            menuButtonElement(container, "Favorites", FAVORITES_CARDS);
+
+
+            let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+
+            // this._sortingComponent.setSortTypeChangeHandler((sortType) => {
+            //     showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
+
+            //     const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+
+            //     // taskListElement.innerHTML = ``;
+
+            //     renderFilms(taskListElement, sortedFilms);
+            //     // sortedTasks.slice(0, showingTasksCount).forEach((task) => {
+            //     //     renderTask(taskListElement, task);
+            //     // });
+            //     renderLoadMoreButton();
             // });
-            renderLoadMoreButton();
-        });
 
-        // Top Rated films
-        render(filmsContainer.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
-        const topRatedContainerElement = filmsContainer.getElement().querySelectorAll(".films-list__container")[0];
-        for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-            const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
-            render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-            cardFilmComponent.setCardTopRatedClickHandler();
-        }
-        let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-        controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
+            // Top Rated films
+            render(container, this._topRatedContainerComponent, RenderPosition.BEFOREEND);
+            const topRatedContainerElement = container.querySelectorAll(".films-list__container")[0];
+            for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
+                const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
+                render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
+                cardFilmComponent.setCardTopRatedClickHandler();
+            }
+            let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
+            controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 
-        // Most commented films
-        render(filmsContainer.getElement(), this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
-        const mostCommentedContainerElement = filmsContainer.getElement().querySelectorAll(".films-list__container")[1];
-        for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-            const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
-            render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-            cardFilmComponent.setCardMostCommentedClickHandler();
+            // Most commented films
+            render(container, this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
+            const mostCommentedContainerElement = container.querySelectorAll(".films-list__container")[1];
+            for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
+                const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
+                render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
+                cardFilmComponent.setCardMostCommentedClickHandler();
+            }
+            controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+            controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
         }
-        controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
-        controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
     }
 }

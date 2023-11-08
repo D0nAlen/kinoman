@@ -10,7 +10,7 @@ const CARD_FILMS_COUNT = 17;
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
-const films = generateFilms(FILMS_CARDS, CARD_FILMS_COUNT);
+const films = generateFilms(FILMS_CARDS);
 
 // default card output
 export const defaultCardOutput = (siteMainElement) => {
