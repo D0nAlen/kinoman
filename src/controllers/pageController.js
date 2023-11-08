@@ -59,9 +59,12 @@ export default class PageController {
         // 2)почему некорректно выводятся экстра разделы?
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
-        render(container, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
-        const filmsContainer = container.querySelector(".films");
-        render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
+        const filmsContainerComponent = new FilmsContainerComponent(); //"films"
+        render(container, filmsContainerComponent, RenderPosition.BEFOREEND);
+
+        // const filmsContainer = container.querySelector(".films");
+        // render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
+        render(filmsContainerComponent.getElement(), new FilmsListComponent(), RenderPosition.BEFOREEND);
 
         if (FILMS_CARDS.length === 0) {
 
@@ -80,6 +83,8 @@ export default class PageController {
             menuButtonElement(container, "History", HISTORY_CARDS);
             menuButtonElement(container, "Favorites", FAVORITES_CARDS);
 
+            // const filmsContainer = container.querySelector(".films");
+            // render(container, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
 
             let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
@@ -98,8 +103,8 @@ export default class PageController {
             // });
 
             // Top Rated films
-            render(container, this._topRatedContainerComponent, RenderPosition.BEFOREEND);
-            const topRatedContainerElement = container.querySelectorAll(".films-list__container")[0];
+            render(filmsContainerComponent.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
+            const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
             for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
                 const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
                 render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
@@ -109,8 +114,8 @@ export default class PageController {
             controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 
             // Most commented films
-            render(container, this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
-            const mostCommentedContainerElement = container.querySelectorAll(".films-list__container")[1];
+            render(filmsContainerComponent.getElement(), this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
+            const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
             for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
                 const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
                 render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
