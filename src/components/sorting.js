@@ -1,14 +1,14 @@
 import AbstractComponent from "./abstract-component.js";
 
 export const SortType = {
-  DEFAULT: `default`,
+  BY_DEFAULT: `default`,
   BY_DATE: `by-date`,
   BY_RATING: `by-rating`,
 };
 
 const createSortingTemplate = () => {
   return `<ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active"  data-sort-type="${SortType.DEFAULT}">Sort by default</a></li>
+    <li><a href="#" class="sort__button sort__button--active"  data-sort-type="${SortType.BY_DEFAULT}">Sort by default</a></li>
     <li><a href="#" class="sort__button" data-sort-type="${SortType.BY_DATE}">Sort by date</a></li>
     <li><a href="#" class="sort__button" data-sort-type="${SortType.BY_RATING}">Sort by rating</a></li>
   </ul>
@@ -18,7 +18,7 @@ const createSortingTemplate = () => {
 export default class SortingComponent extends AbstractComponent {
   constructor() {
     super();
-    this._currentSortType = SortType.DEFAULT;
+    this._currentSortType = SortType.BY_DEFAULT;
 
   }
 

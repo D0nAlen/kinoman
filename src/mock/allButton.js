@@ -3,7 +3,7 @@ import { generateFilms } from "./cardFilm.js";
 import { FILMS_CARDS } from "../const.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
-import FilmsContainerComponent from "../components/filmsContainer.js";
+// import FilmsContainerComponent from "../components/filmsContainer.js";
 import CardFilmComponent from "../components/cardFilm.js";
 
 const CARD_FILMS_COUNT = 17;

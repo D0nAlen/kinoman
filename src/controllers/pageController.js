@@ -14,6 +14,8 @@ import { SortType } from "../components/sorting.js";
 import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
 import noDataFilmsTemplate from "../components/no-data.js";
+import { currentMenuButton } from "../mock/menuButton.js";
+
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -24,19 +26,21 @@ let SHOWING_FILMS_COUNT_ON_START = 5;
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-
 const getSortedFilms = (films, sortType, from, to) => {
     let sortedFilms = [];
     const showingFilms = [...films];
 
+    // исправить сортировку, по дате, по рейтингу(обращаться к полям объекта фильма)
     switch (sortType) {
         case SortType.BY_DATE:
+            // sortedFilms = showingFilms.sort((a, b) => a.dueDate - b.dueDate);
             sortedFilms = showingFilms.sort((a, b) => a.dueDate - b.dueDate);
             break;
         case SortType.BY_RATING:
-            sortedFilms = showingFilms.sort((a, b) => b.dueDate - a.dueDate);
+            // sortedFilms = showingFilms.sort((a, b) => b.dueDate - a.dueDate);
+            sortedFilms = showingFilms.sort((a, b) => a.rating - b.rating);
             break;
-        case SortType.DEFAULT:
+        case SortType.BY_DEFAULT:
             sortedFilms = showingFilms;
             break;
     }
@@ -52,11 +56,10 @@ export default class PageController {
         this._mostCommentedContainerComponent = new MostCommentedContainerComponent();
     }
 
-    render(films) {
+    render() {
 
         const container = this._container;
         // 1)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All) - переменная с именем тек.категории
-        // 2)почему некорректно выводятся экстра разделы?
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
@@ -66,16 +69,14 @@ export default class PageController {
         // render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
         render(filmsContainerComponent.getElement(), new FilmsListComponent(), RenderPosition.BEFOREEND);
 
+        const filmsListContainer = container.querySelector(".films-list__container");
+        // !Должно проверяться, сколько фильмов в данном разделе, а не всего
         if (FILMS_CARDS.length === 0) {
 
-            const filmsListContainer = container.querySelector(".films-list__container");
+            // const filmsListContainer = container.querySelector(".films-list__container");
             render(filmsListContainer, new noDataFilmsTemplate(), RenderPosition.BEFOREEND);
 
         } else {
-            // render(container, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
-            // const filmsContainer = container.querySelector(".films");
-            // render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
-            // const filmsListContainer = filmsContainer.querySelector(".films-list__container");
 
             defaultCardOutput(container);
             menuButtonElement(container, "all", FILMS_CARDS);
@@ -83,24 +84,36 @@ export default class PageController {
             menuButtonElement(container, "History", HISTORY_CARDS);
             menuButtonElement(container, "Favorites", FAVORITES_CARDS);
 
-            // const filmsContainer = container.querySelector(".films");
-            // render(container, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
 
             let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+            console.log(currentMenuButton);
 
-            // this._sortingComponent.setSortTypeChangeHandler((sortType) => {
-            //     showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
+            this._sortingComponent.setSortTypeChangeHandler((sortType) => {
+                showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
+                // console.log(currentMenuButton);
 
-            //     const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+                let films = [];
+                switch (currentMenuButton) {
+                    case "all": { films = FILMS_CARDS; break; }
+                    case "Watchlist": { films = WATCHLIST_CARDS; break; }
+                    case "History": { films = HISTORY_CARDS; break; }
+                    case "Favorites": { films = FAVORITES_CARDS; break; }
+                }
 
-            //     // taskListElement.innerHTML = ``;
+                const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+                console.log(sortedFilms);
+                // filmsListContainer.innerHTML = ``;
 
-            //     renderFilms(taskListElement, sortedFilms);
-            //     // sortedTasks.slice(0, showingTasksCount).forEach((task) => {
-            //     //     renderTask(taskListElement, task);
-            //     // });
-            //     renderLoadMoreButton();
-            // });
+                // почему не отрисовывается по-новому отсортированный список?
+                menuButtonElement(container, currentMenuButton, sortedFilms);
+                // renderFilms(taskListElement, sortedFilms);
+                // sortedTasks.slice(0, showingTasksCount).forEach((task) => {
+                //     renderTask(taskListElement, task);
+                // });
+                // renderLoadMoreButton();
+            });
+
+
 
             // Top Rated films
             render(filmsContainerComponent.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);

@@ -8,6 +8,7 @@ import ControlsComponent from "../components/controls.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
+export let currentMenuButton = "all";
 
 export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
   const nameButton = document.getElementById(idButton);
@@ -16,6 +17,8 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
   let countFilmsList = FILMS_LIST.length;
 
   nameButton.addEventListener(`click`, () => {
+    currentMenuButton = idButton;
+
     SHOWING_FILMS_COUNT_ON_START = 5;
     const filmsContainer = siteMainElement.querySelector(".films");
     let filmsList = filmsContainer.querySelector(".films-list");
@@ -36,7 +39,7 @@ export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
       const cardFilmComponent = new CardFilmComponent(films[i]);
       cardFilmComponent.setCardFilmClickHandler();
-     
+
       render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
     }
     const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
