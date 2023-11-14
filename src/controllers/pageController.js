@@ -1,5 +1,5 @@
-import { defaultCardOutput } from "../mock/allButton.js";
-import { menuButtonElement } from "../mock/menuButton.js";
+// import { defaultCardOutput } from "../mock/allButton.js";
+import { menuButtonElement, renderFilms } from "../mock/menuButton.js";
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "../const.js";
 import { render, RenderPosition } from "../utils/render.js";
 import CardMostCommentedComponent from "../components/cardMostCommented.js";
@@ -30,15 +30,12 @@ const getSortedFilms = (films, sortType, from, to) => {
     let sortedFilms = [];
     const showingFilms = [...films];
 
-    // исправить сортировку, по дате, по рейтингу(обращаться к полям объекта фильма)
     switch (sortType) {
         case SortType.BY_DATE:
-            // sortedFilms = showingFilms.sort((a, b) => a.dueDate - b.dueDate);
-            sortedFilms = showingFilms.sort((a, b) => a.dueDate - b.dueDate);
+            sortedFilms = showingFilms.sort((a, b) => b.year - a.year);
             break;
         case SortType.BY_RATING:
-            // sortedFilms = showingFilms.sort((a, b) => b.dueDate - a.dueDate);
-            sortedFilms = showingFilms.sort((a, b) => a.rating - b.rating);
+            sortedFilms = showingFilms.sort((a, b) => b.rating - a.rating);
             break;
         case SortType.BY_DEFAULT:
             sortedFilms = showingFilms;
@@ -78,7 +75,18 @@ export default class PageController {
 
         } else {
 
-            defaultCardOutput(container);
+            // defaultCardOutput(container);
+
+            // // вынести в отд.ф-цию:
+            // let films = [];
+            // switch (currentMenuButton) {
+            //     case "all": { films = [...FILMS_CARDS]; break; }
+            //     case "Watchlist": { films = [...WATCHLIST_CARDS]; break; }
+            //     case "History": { films = [...HISTORY_CARDS]; break; }
+            //     case "Favorites": { films = [...FAVORITES_CARDS]; break; }
+            // }
+
+            renderFilms(container, currentMenuButton, FILMS_CARDS);//отрисовка по умолчанию и обновлению страницы
             menuButtonElement(container, "all", FILMS_CARDS);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
             menuButtonElement(container, "History", HISTORY_CARDS);
@@ -86,31 +94,27 @@ export default class PageController {
 
 
             let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-            console.log(currentMenuButton);
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
                 showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
-                // console.log(currentMenuButton);
+
 
                 let films = [];
                 switch (currentMenuButton) {
-                    case "all": { films = FILMS_CARDS; break; }
-                    case "Watchlist": { films = WATCHLIST_CARDS; break; }
-                    case "History": { films = HISTORY_CARDS; break; }
-                    case "Favorites": { films = FAVORITES_CARDS; break; }
+                    case "all": { films = [...FILMS_CARDS]; break; }
+                    case "Watchlist": { films = [...WATCHLIST_CARDS]; break; }
+                    case "History": { films = [...HISTORY_CARDS]; break; }
+                    case "Favorites": { films = [...FAVORITES_CARDS]; break; }
                 }
 
                 const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
-                console.log(sortedFilms);
-                // filmsListContainer.innerHTML = ``;
 
-                // почему не отрисовывается по-новому отсортированный список?
-                menuButtonElement(container, currentMenuButton, sortedFilms);
-                // renderFilms(taskListElement, sortedFilms);
-                // sortedTasks.slice(0, showingTasksCount).forEach((task) => {
-                //     renderTask(taskListElement, task);
-                // });
-                // renderLoadMoreButton();
+                let filmsList = container.querySelector(".films-list");
+                filmsList.innerHTML = ``;
+
+                // !!!1)не отрисовывается кнопка load more после применения сортировки!
+                // menuButtonElement(container, currentMenuButton, sortedFilms);
+                renderFilms(container, currentMenuButton, sortedFilms);
             });
 
 

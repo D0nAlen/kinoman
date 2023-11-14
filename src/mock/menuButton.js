@@ -1,6 +1,5 @@
 import { generateFilms } from "./cardFilm.js";
 import { render, RenderPosition } from "../utils/render.js";
-// import { FILMS_CARDS } from "../const.js";
 import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
@@ -10,50 +9,98 @@ let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 export let currentMenuButton = "all";
 
-export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
-  const nameButton = document.getElementById(idButton);
+export const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
+
   const films = generateFilms(FILMS_LIST);
   const showMoreButton = new ShowMoreButtonComponent();
   let countFilmsList = FILMS_LIST.length;
+  currentMenuButton = idButton;
+  SHOWING_FILMS_COUNT_ON_START = 5;
+
+  const filmsContainer = siteMainElement.querySelector(".films");
+  let filmsList = filmsContainer.querySelector(".films-list");
+  filmsList.remove();
+
+  render(filmsContainer, new FilmsListComponent(), RenderPosition.AFTERBEGIN);
+
+  filmsList = filmsContainer.querySelector(".films-list");
+
+  const filmsListContainer = filmsContainer.querySelector(
+    ".films-list__container"
+  );
+
+  if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+    SHOWING_FILMS_COUNT_ON_START = countFilmsList;
+  }
+
+  for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+    const cardFilmComponent = new CardFilmComponent(films[i]);
+    cardFilmComponent.setCardFilmClickHandler();
+
+    render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+  }
+  const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+  controlsCardFilm.forEach((film) =>
+    render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
+  );
+
+  // button "Show more"
+  render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
+  showMoreButtonElement(showMoreButton, filmsListContainer, films);
+
+  if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+    showMoreButton.getElement().remove();
+  }
+}
+
+export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
+  const nameButton = document.getElementById(idButton);
+
+  // const films = generateFilms(FILMS_LIST);
+  // const showMoreButton = new ShowMoreButtonComponent();
+  // let countFilmsList = FILMS_LIST.length;
+  // renderFilms(currentMenuButton, siteMainElement, FILMS_LIST);
 
   nameButton.addEventListener(`click`, () => {
-    currentMenuButton = idButton;
+    renderFilms(siteMainElement, idButton, FILMS_LIST);
+    // currentMenuButton = idButton;
 
-    SHOWING_FILMS_COUNT_ON_START = 5;
-    const filmsContainer = siteMainElement.querySelector(".films");
-    let filmsList = filmsContainer.querySelector(".films-list");
-    filmsList.remove();
+    // SHOWING_FILMS_COUNT_ON_START = 5;
 
-    render(filmsContainer, new FilmsListComponent(), RenderPosition.AFTERBEGIN);
+    // const filmsContainer = siteMainElement.querySelector(".films");
+    // let filmsList = filmsContainer.querySelector(".films-list");
+    // filmsList.remove();
 
-    filmsList = filmsContainer.querySelector(".films-list");
+    // render(filmsContainer, new FilmsListComponent(), RenderPosition.AFTERBEGIN);
 
-    const filmsListContainer = filmsContainer.querySelector(
-      ".films-list__container"
-    );
+    // filmsList = filmsContainer.querySelector(".films-list");
 
-    if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-      SHOWING_FILMS_COUNT_ON_START = countFilmsList;
-    }
+    // const filmsListContainer = filmsContainer.querySelector(
+    //   ".films-list__container"
+    // );
 
-    for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-      const cardFilmComponent = new CardFilmComponent(films[i]);
-      cardFilmComponent.setCardFilmClickHandler();
+    // if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+    //   SHOWING_FILMS_COUNT_ON_START = countFilmsList;
+    // }
 
-      render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
-    }
-    const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-    controlsCardFilm.forEach((film) =>
-      render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
-    );
+    // for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+    //   const cardFilmComponent = new CardFilmComponent(films[i]);
+    //   cardFilmComponent.setCardFilmClickHandler();
 
-    // button "Show more"
-    render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-    showMoreButtonElement(showMoreButton, filmsListContainer, films);
+    //   render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+    // }
+    // const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+    // controlsCardFilm.forEach((film) =>
+    //   render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
+    // );
 
-    if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-      showMoreButton.getElement().remove();
-    }
+    // // button "Show more"
+    // render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
+    // showMoreButtonElement(showMoreButton, filmsListContainer, films);
+
+    // if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+    //   showMoreButton.getElement().remove();
+    // }
   });
 };
 
