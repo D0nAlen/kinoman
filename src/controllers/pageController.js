@@ -12,15 +12,12 @@ import SortingComponent from "../components/sorting.js";
 import { SortType } from "../components/sorting.js";
 import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
-import noDataFilmsTemplate from "../components/no-data.js";
+import NoDataFilmsTemplate from "../components/no-data.js";
 import { currentMenuButton } from "../mock/menuButton.js";
 
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
-
-const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
-let SHOWING_FILMS_COUNT_ON_START = 5;
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
@@ -55,48 +52,28 @@ export default class PageController {
     render() {
 
         const container = this._container;
-        // 1)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All) - переменная с именем тек.категории
+        // 1)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All)
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
         render(container, filmsContainerComponent, RenderPosition.BEFOREEND);
 
-        // const filmsContainer = container.querySelector(".films");
-        // render(filmsContainer, new FilmsListComponent(), RenderPosition.BEFOREEND);
         render(filmsContainerComponent.getElement(), new FilmsListComponent(), RenderPosition.BEFOREEND);
 
         const filmsListContainer = container.querySelector(".films-list__container");
-        // !Должно проверяться, сколько фильмов в данном разделе, а не всего
         if (FILMS_CARDS.length === 0) {
-
-            // const filmsListContainer = container.querySelector(".films-list__container");
-            render(filmsListContainer, new noDataFilmsTemplate(), RenderPosition.BEFOREEND);
-
+            render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
         } else {
-
-            // defaultCardOutput(container);
-
-            // // вынести в отд.ф-цию:
-            // let films = [];
-            // switch (currentMenuButton) {
-            //     case "all": { films = [...FILMS_CARDS]; break; }
-            //     case "Watchlist": { films = [...WATCHLIST_CARDS]; break; }
-            //     case "History": { films = [...HISTORY_CARDS]; break; }
-            //     case "Favorites": { films = [...FAVORITES_CARDS]; break; }
-            // }
 
             renderFilms(container, currentMenuButton, FILMS_CARDS);//отрисовка по умолчанию и обновлению страницы
             menuButtonElement(container, "all", FILMS_CARDS);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
             menuButtonElement(container, "History", HISTORY_CARDS);
             menuButtonElement(container, "Favorites", FAVORITES_CARDS);
+            // console.log(currentMenuButton);
 
-
-            let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
-                // showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
-
 
                 let films = [];
                 switch (currentMenuButton) {
@@ -106,15 +83,12 @@ export default class PageController {
                     case "Favorites": { films = [...FAVORITES_CARDS]; break; }
                 }
 
-                // const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
                 const sortedFilms = getSortedFilms(films, sortType, 0);
 
 
                 let filmsList = container.querySelector(".films-list");
                 filmsList.innerHTML = ``;
 
-                // !!!1)не отрисовывается кнопка load more после применения сортировки!
-                // menuButtonElement(container, currentMenuButton, sortedFilms);
                 renderFilms(container, currentMenuButton, sortedFilms);
             });
 

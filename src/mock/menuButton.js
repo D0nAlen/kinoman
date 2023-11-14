@@ -4,6 +4,7 @@ import CardFilmComponent from "../components/cardFilm.js";
 import FilmsListComponent from "../components/filmsList.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import ControlsComponent from "../components/controls.js";
+import NoDataFilmsTemplate from "../components/no-data.js";
 
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -29,79 +30,40 @@ export const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
     ".films-list__container"
   );
 
-  if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-    SHOWING_FILMS_COUNT_ON_START = countFilmsList;
+  if (FILMS_LIST.length === 0) {
+    render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
+  } else {
+    if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+      SHOWING_FILMS_COUNT_ON_START = countFilmsList;
+    }
+
+    for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+      const cardFilmComponent = new CardFilmComponent(films[i]);
+      cardFilmComponent.setCardFilmClickHandler();
+
+      render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+    }
+    const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) =>
+      render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
+    );
+
+    // button "Show more"
+    render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
+    showMoreButtonElement(showMoreButton, filmsListContainer, films);
+
+    if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+      showMoreButton.getElement().remove();
+    }
   }
-
-  for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-    const cardFilmComponent = new CardFilmComponent(films[i]);
-    cardFilmComponent.setCardFilmClickHandler();
-
-    render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
-  }
-  const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-  controlsCardFilm.forEach((film) =>
-    render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
-  );
-
-  // button "Show more"
-  render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-  showMoreButtonElement(showMoreButton, filmsListContainer, films);
-
-  if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-    showMoreButton.getElement().remove();
-  }
-  console.log(countFilmsList);
 }
 
 export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
   const nameButton = document.getElementById(idButton);
 
-  // const films = generateFilms(FILMS_LIST);
-  // const showMoreButton = new ShowMoreButtonComponent();
-  // let countFilmsList = FILMS_LIST.length;
-  // renderFilms(currentMenuButton, siteMainElement, FILMS_LIST);
-
   nameButton.addEventListener(`click`, () => {
     renderFilms(siteMainElement, idButton, FILMS_LIST);
-    // currentMenuButton = idButton;
-
-    // SHOWING_FILMS_COUNT_ON_START = 5;
-
-    // const filmsContainer = siteMainElement.querySelector(".films");
-    // let filmsList = filmsContainer.querySelector(".films-list");
-    // filmsList.remove();
-
-    // render(filmsContainer, new FilmsListComponent(), RenderPosition.AFTERBEGIN);
-
-    // filmsList = filmsContainer.querySelector(".films-list");
-
-    // const filmsListContainer = filmsContainer.querySelector(
-    //   ".films-list__container"
-    // );
-
-    // if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-    //   SHOWING_FILMS_COUNT_ON_START = countFilmsList;
-    // }
-
-    // for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-    //   const cardFilmComponent = new CardFilmComponent(films[i]);
-    //   cardFilmComponent.setCardFilmClickHandler();
-
-    //   render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
-    // }
-    // const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-    // controlsCardFilm.forEach((film) =>
-    //   render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
-    // );
-
-    // // button "Show more"
-    // render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-    // showMoreButtonElement(showMoreButton, filmsListContainer, films);
-
-    // if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-    //   showMoreButton.getElement().remove();
-    // }
+    currentMenuButton = idButton;
   });
 };
 
