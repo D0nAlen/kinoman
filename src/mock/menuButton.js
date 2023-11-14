@@ -51,6 +51,7 @@ export const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
   if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
     showMoreButton.getElement().remove();
   }
+  console.log(countFilmsList);
 }
 
 export const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {

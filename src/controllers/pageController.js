@@ -1,4 +1,3 @@
-// import { defaultCardOutput } from "../mock/allButton.js";
 import { menuButtonElement, renderFilms } from "../mock/menuButton.js";
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "../const.js";
 import { render, RenderPosition } from "../utils/render.js";
@@ -96,7 +95,7 @@ export default class PageController {
             let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
-                showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
+                // showingFilmsCount = SHOWING_FILMS_COUNT_BY_BUTTON;
 
 
                 let films = [];
@@ -107,7 +106,9 @@ export default class PageController {
                     case "Favorites": { films = [...FAVORITES_CARDS]; break; }
                 }
 
-                const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+                // const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+                const sortedFilms = getSortedFilms(films, sortType, 0);
+
 
                 let filmsList = container.querySelector(".films-list");
                 filmsList.innerHTML = ``;
