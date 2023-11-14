@@ -22,6 +22,18 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
+const getFilms = (currentMenuButton) => {
+    let films = [];
+    switch (currentMenuButton) {
+        case "all": { films = [...FILMS_CARDS]; break; }
+        case "Watchlist": { films = [...WATCHLIST_CARDS]; break; }
+        case "History": { films = [...HISTORY_CARDS]; break; }
+        case "Favorites": { films = [...FAVORITES_CARDS]; break; }
+    }
+
+    return films;
+};
+
 const getSortedFilms = (films, sortType, from, to) => {
     let sortedFilms = [];
     const showingFilms = [...films];
@@ -52,7 +64,6 @@ export default class PageController {
     render() {
 
         const container = this._container;
-        // 1)исправить, чтобы по умолч. выводились не все карточки, а категория, которая была выбрана(по умолч. категория All)
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
@@ -61,30 +72,26 @@ export default class PageController {
         render(filmsContainerComponent.getElement(), new FilmsListComponent(), RenderPosition.BEFOREEND);
 
         const filmsListContainer = container.querySelector(".films-list__container");
+
+        const param = window.location.hash;
+        const selectedMenuButton = param.slice(1);
+
         if (FILMS_CARDS.length === 0) {
             render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
         } else {
 
-            renderFilms(container, currentMenuButton, FILMS_CARDS);//отрисовка по умолчанию и обновлению страницы
+            const films = getFilms(selectedMenuButton);
+            renderFilms(container, selectedMenuButton, films);//отрисовка по умолчанию и обновлению страницы
             menuButtonElement(container, "all", FILMS_CARDS);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
             menuButtonElement(container, "History", HISTORY_CARDS);
             menuButtonElement(container, "Favorites", FAVORITES_CARDS);
-            // console.log(currentMenuButton);
 
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
 
-                let films = [];
-                switch (currentMenuButton) {
-                    case "all": { films = [...FILMS_CARDS]; break; }
-                    case "Watchlist": { films = [...WATCHLIST_CARDS]; break; }
-                    case "History": { films = [...HISTORY_CARDS]; break; }
-                    case "Favorites": { films = [...FAVORITES_CARDS]; break; }
-                }
-
+                const films = getFilms(currentMenuButton);
                 const sortedFilms = getSortedFilms(films, sortType, 0);
-
 
                 let filmsList = container.querySelector(".films-list");
                 filmsList.innerHTML = ``;
