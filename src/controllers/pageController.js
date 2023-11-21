@@ -80,7 +80,11 @@ export default class PageController {
             render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
         } else {
 
-            const films = getFilms(selectedMenuButton);
+            let films = getFilms(selectedMenuButton);
+            if (films.length === 0) {
+                films = [...FILMS_CARDS];
+            }
+
             renderFilms(container, selectedMenuButton, films);//отрисовка по умолчанию и обновлению страницы
             menuButtonElement(container, "all", FILMS_CARDS);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
