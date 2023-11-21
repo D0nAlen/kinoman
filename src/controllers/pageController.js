@@ -1,4 +1,3 @@
-import { menuButtonElement, renderFilms } from "../mock/menuButton.js";
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "../const.js";
 import { render, RenderPosition } from "../utils/render.js";
 import CardMostCommentedComponent from "../components/cardMostCommented.js";
@@ -8,21 +7,24 @@ import { generateTopRatedFilms } from "../mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "../mock/cardMostCommented.js";
 import CardTopRatedComponent from "../components/cardTopRated.js";
 import ControlsComponent from "../components/controls.js";
-import SortingComponent from "../components/sorting.js";
-import { SortType } from "../components/sorting.js";
+import SortingComponent, { SortType } from "../components/sorting.js";
 import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
 import NoDataFilmsTemplate from "../components/no-data.js";
-import { currentMenuButton } from "../mock/menuButton.js";
-
+import ShowMoreButtonComponent from "../components/showMoreButton.js";
+import { generateFilms } from "../mock/cardFilm.js";
+import CardFilmComponent from "../components/cardFilm.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
+let SHOWING_FILMS_COUNT_ON_START = 5;
+const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
+let currentMenuButton = "all";
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-const getFilms = (currentMenuButton) => {
+const getFilms = () => {
     let films = [];
     switch (currentMenuButton) {
         case "all": { films = [...FILMS_CARDS]; break; }
@@ -32,6 +34,93 @@ const getFilms = (currentMenuButton) => {
     }
 
     return films;
+};
+
+// 1)перенесены все функции и переменные из menuButton(WIP)
+// 2)не работает сохранение категории фильмов при F5
+const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
+
+    const films = generateFilms(FILMS_LIST);
+    const showMoreButton = new ShowMoreButtonComponent();
+    let countFilmsList = FILMS_LIST.length;
+    currentMenuButton = idButton;
+    SHOWING_FILMS_COUNT_ON_START = 5;
+
+    const filmsContainer = siteMainElement.querySelector(".films");
+    let filmsList = filmsContainer.querySelector(".films-list");
+    filmsList.remove();
+
+    render(filmsContainer, new FilmsListComponent(), RenderPosition.AFTERBEGIN);
+
+    filmsList = filmsContainer.querySelector(".films-list");
+
+    const filmsListContainer = filmsContainer.querySelector(
+        ".films-list__container"
+    );
+
+    if (FILMS_LIST.length === 0) {
+        render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
+    } else {
+        if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+            SHOWING_FILMS_COUNT_ON_START = countFilmsList;
+        }
+
+        for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
+            const cardFilmComponent = new CardFilmComponent(films[i]);
+            cardFilmComponent.setCardFilmClickHandler();
+
+            render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+        }
+        const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+        controlsCardFilm.forEach((film) =>
+            render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
+        );
+
+        // button "Show more"
+        render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
+        showMoreButtonElement(showMoreButton, filmsListContainer, films);
+
+        if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
+            showMoreButton.getElement().remove();
+        }
+    }
+}
+
+const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
+    const nameButton = document.getElementById(idButton);
+
+    nameButton.addEventListener(`click`, () => {
+        renderFilms(siteMainElement, idButton, FILMS_LIST);
+        currentMenuButton = idButton;
+    });
+};
+
+const showMoreButtonElement = (showMoreButton, filmsListContainer, films) => {
+    let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
+    let cardFilmsCount = films.length;
+    let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
+
+    showMoreButton.setShowMoreButtonClickHandler(() => {
+        const prevFilmsCount = showingFilmsCount;
+        showingFilmsCount = showingFilmsCount + showingFilmsCountByButton;
+        films
+            .slice(prevFilmsCount, showingFilmsCount)
+            .forEach((film) => {
+                const cardFilmComponent = new CardFilmComponent(film);
+                render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+                cardFilmComponent.setCardFilmClickHandler();
+            }
+            );
+
+        const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
+        controlsCardFilm.forEach((film) =>
+            render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
+        );
+
+        if (showingFilmsCount >= cardFilmsCount) {
+            showMoreButton.getElement().remove();
+        }
+    });
 };
 
 const getSortedFilms = (films, sortType, from, to) => {
@@ -80,7 +169,7 @@ export default class PageController {
             render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
         } else {
 
-            let films = getFilms(selectedMenuButton);
+            let films = getFilms();
             if (films.length === 0) {
                 films = [...FILMS_CARDS];
             }
