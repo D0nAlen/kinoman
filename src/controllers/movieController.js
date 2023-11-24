@@ -10,33 +10,30 @@ import GenreTemplateComponent from "../components/popupComponents/genres.js";
 export default class MovieController {
     constructor(container) {
         this._container = container;
-
     }
 
-    // Метод render должен принимать данные одного фильма. 
-    // Также в него должен переехать код, который отвечает за отрисовку карточки фильма, показ попапа 
-    // с подробной информацией о фильме и его закрытие, а также установка связанных с этим обработчиков событий.
-    render(film) {
+    render(film, filmsListContainer, cardFilmComponent) {
 
-        const container = this._container;
-        const filmsListContainer = container.querySelector(".films-list__container");
+        // const container = this._container;
+        // const filmsListContainer = container.querySelector(".films-list__container");
         const popup = document.querySelector(".popup");
 
         renderCard();
 
 
         function renderCard() {
-            const cardFilmComponent = new CardFilmComponent(film);
-            setCardFilmClickHandler(cardFilmComponent);
+            // 1)для экстра разделов и обычных карточек свой контейнер и свой тип объекта карточки!!!
+            // const cardFilmComponent = new CardFilmComponent(film);
 
+            setCardFilmClickHandler(cardFilmComponent);
             render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
         }
 
         function setCardFilmClickHandler(cardFilmComponent) {
             cardFilmComponent.getElement().addEventListener(`click`, () => {
                 addPopup(film);
-              });
-            }
+            });
+        }
 
         function addPopup() {
             const genres = generateGenres(film.genres);
@@ -81,4 +78,8 @@ export default class MovieController {
         };
     }
 
+
+//     _renderExtraCardFilm() {
+//         render();
+//     }
 }

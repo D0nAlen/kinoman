@@ -25,6 +25,44 @@ let currentMenuButton = "all";
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
+const renderNormalCardFilm = (film, siteMainElement) => {
+    const filmsListContainer = siteMainElement.querySelector(".films-list__container");
+    const cardFilmComponent = new CardFilmComponent(film);
+
+    const movieController = new MovieController(siteMainElement);
+    movieController.render(film, filmsListContainer, cardFilmComponent);
+};
+
+const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent) => {
+    const topRatedContainerComponent = new TopRatedContainerComponent();
+    render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
+
+    const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
+    for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
+        const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
+        const movieController = new MovieController(siteMainElement);
+        movieController.render(topRatedFilms[i], topRatedContainerElement, cardFilmComponent);
+    }
+
+    let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
+};
+
+const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent) => {
+    const mostCommentedContainerComponent = new MostCommentedContainerComponent();
+    render(filmsContainerComponent.getElement(), mostCommentedContainerComponent, RenderPosition.BEFOREEND);
+
+    const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
+    for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
+        const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
+        const movieController = new MovieController(siteMainElement);
+        movieController.render(mostCommentedFilms[i], mostCommentedContainerElement, cardFilmComponent);
+    }
+
+    let controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
+    controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
+};
+
 const getFilms = () => {
     let films = [];
     switch (currentMenuButton) {
@@ -81,8 +119,9 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
         }
 
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-            const movieController = new MovieController(siteMainElement);
-            movieController.render(films[i]);
+            // const movieController = new MovieController(siteMainElement);
+            // movieController.render(films[i]);
+            renderNormalCardFilm(films[i], siteMainElement);
         }
         const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
         controlsCardFilm.forEach((film) =>
@@ -103,7 +142,7 @@ const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     const nameButton = document.getElementById(idButton);
 
     nameButton.addEventListener(`click`, () => {
-        this.renderFilms(siteMainElement, idButton, FILMS_LIST);
+        renderFilms(siteMainElement, idButton, FILMS_LIST);
     });
 };
 
@@ -119,8 +158,9 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
         films
             .slice(prevFilmsCount, showingFilmsCount)
             .forEach((film) => {
-                const movieController = new MovieController(siteMainElement);
-                movieController.render(film);
+                // const movieController = new MovieController(siteMainElement);
+                // movieController.render(film);
+                renderNormalCardFilm(film, siteMainElement);
             }
             );
 
@@ -135,14 +175,11 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
     });
 };
 
-
 export default class PageController {
     constructor(container) {
         this._container = container;
 
         this._sortingComponent = new SortingComponent();
-        this._topRatedContainerComponent = new TopRatedContainerComponent();
-        this._mostCommentedContainerComponent = new MostCommentedContainerComponent();
     }
 
     render() {
@@ -169,117 +206,27 @@ export default class PageController {
                 selectedMenuButton = "all";
             }
 
+            // 1)некорректно выводятся карточки категории при F5.
             renderFilms(container, selectedMenuButton, films);//отрисовка по умолчанию и обновлению страницы
-            // menuButtonElement(container, "all", FILMS_CARDS);
-            // menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
-            // menuButtonElement(container, "History", HISTORY_CARDS);
-            // menuButtonElement(container, "Favorites", FAVORITES_CARDS);
+            menuButtonElement(container, "all", FILMS_CARDS);
+            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
+            menuButtonElement(container, "History", HISTORY_CARDS);
+            menuButtonElement(container, "Favorites", FAVORITES_CARDS);
 
 
-            // this._sortingComponent.setSortTypeChangeHandler((sortType) => {
+            this._sortingComponent.setSortTypeChangeHandler((sortType) => {
 
-            //     const films = getFilms();
-            //     const sortedFilms = getSortedFilms(films, sortType, 0);
+                const films = getFilms();
+                const sortedFilms = getSortedFilms(films, sortType, 0);
 
-            //     let filmsList = container.querySelector(".films-list");
-            //     filmsList.innerHTML = ``;
+                let filmsList = container.querySelector(".films-list");
+                filmsList.innerHTML = ``;
 
-            //     renderFilms(container, currentMenuButton, sortedFilms);
-            // });
+                renderFilms(container, currentMenuButton, sortedFilms);
+            });
 
-
-
-            // // Top Rated films
-            // render(filmsContainerComponent.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
-            // const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
-            // for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-            //     const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
-            //     render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-            //     cardFilmComponent.setCardTopRatedClickHandler();
-            // }
-            // let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-            // controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
-
-            // // Most commented films
-            // render(filmsContainerComponent.getElement(), this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
-            // const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
-            // for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-            //     const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
-            //     render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-            //     cardFilmComponent.setCardMostCommentedClickHandler();
-            // }
-            // controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
-            // controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
+            renderCardTopRatedFilms(container, filmsContainerComponent);
+            renderCardMostCommentedFilms(container, filmsContainerComponent);
         }
     }
-
 }
-// boardCardsFilms() {
-// const container = this._container;
-// render(container, this._sortingComponent, RenderPosition.BEFOREEND);
-
-// const filmsContainerComponent = new FilmsContainerComponent(); //"films"
-// render(container, filmsContainerComponent, RenderPosition.BEFOREEND);
-
-// render(filmsContainerComponent.getElement(), new FilmsListComponent(), RenderPosition.BEFOREEND);
-
-// const filmsListContainer = container.querySelector(".films-list__container");
-
-// const param = window.location.hash;
-// let selectedMenuButton = param.slice(1);
-
-// if (FILMS_CARDS.length === 0) {
-//     render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
-// } else {
-
-//     let films = getFilms();
-//     if (selectedMenuButton === "") {
-//         selectedMenuButton = "all";
-//     }
-
-//     this.renderFilms(container, selectedMenuButton, films);//отрисовка по умолчанию и обновлению страницы
-//     menuButtonElement(container, "all", FILMS_CARDS);
-//     menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
-//     menuButtonElement(container, "History", HISTORY_CARDS);
-//     menuButtonElement(container, "Favorites", FAVORITES_CARDS);
-
-
-//     this._sortingComponent.setSortTypeChangeHandler((sortType) => {
-
-//         const films = getFilms();
-//         const sortedFilms = getSortedFilms(films, sortType, 0);
-
-//         let filmsList = container.querySelector(".films-list");
-//         filmsList.innerHTML = ``;
-
-//         renderFilms(container, currentMenuButton, sortedFilms);
-//     });
-
-
-
-//     // Top Rated films
-//     render(filmsContainerComponent.getElement(), this._topRatedContainerComponent, RenderPosition.BEFOREEND);
-//     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
-//     for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-//         const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
-//         render(topRatedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-//         cardFilmComponent.setCardTopRatedClickHandler();
-//     }
-//     let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-//     controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
-
-//     // Most commented films
-//     render(filmsContainerComponent.getElement(), this._mostCommentedContainerComponent, RenderPosition.BEFOREEND);
-//     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
-//     for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-//         const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
-//         render(mostCommentedContainerElement, cardFilmComponent, RenderPosition.BEFOREEND);
-//         cardFilmComponent.setCardMostCommentedClickHandler();
-//     }
-//     controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
-//     controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
-// }
-// }
-
-// 1)!!!переписать функцию renderFilms(по анадлогии с renderTasks()), нужно вызвать здесь MovieController
-// 2)не работает сохранение категории фильмов при F5
