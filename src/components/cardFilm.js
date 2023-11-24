@@ -1,5 +1,6 @@
 import AbstractComponent from "../components/abstract-component.js";
-import { addPopup } from "../mock/popupElement.js";
+// import { addPopup } from "../mock/popupElement.js";
+// import MovieController from "../controllers/movieController.js";
 
 const createCardFilmTemplate = (film) => {
   //comment - массив комментариев
@@ -26,11 +27,5 @@ export default class CardFilmComponent extends AbstractComponent {
 
   getTemplate() {
     return createCardFilmTemplate(this._film);
-  }
-
-  setCardFilmClickHandler() {
-    this.getElement().addEventListener(`click`, () => {
-      addPopup(this._film);
-    });
   }
 };
