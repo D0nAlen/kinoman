@@ -229,4 +229,8 @@ export default class PageController {
             renderCardMostCommentedFilms(container, filmsContainerComponent);
         }
     }
+
+    _onDataChange(filmController, oldData, newData) {
+
+    }
 }

@@ -1,6 +1,4 @@
 import AbstractComponent from "../components/abstract-component.js";
-// import { addPopup } from "../mock/popupElement.js";
-// import MovieController from "../controllers/movieController.js";
 
 const createCardFilmTemplate = (film) => {
   //comment - массив комментариев
@@ -27,5 +25,20 @@ export default class CardFilmComponent extends AbstractComponent {
 
   getTemplate() {
     return createCardFilmTemplate(this._film);
+  }
+
+  setAddToWatchlistButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, handler);
+  }
+
+  setMarkAsWatchedButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, handler);
+  }
+
+  setMarkAsFavoriteButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, handler);
   }
 };

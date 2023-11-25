@@ -1,4 +1,3 @@
-import CardFilmComponent from "../components/cardFilm.js";
 import { render, RenderPosition } from "../utils/render.js";
 import { COMMENTS } from "../const.js";
 import { generateGenres } from "../mock/genres.js";
@@ -8,23 +7,19 @@ import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
 
 export default class MovieController {
-    constructor(container) {
+    constructor(container, onDataChange) {
         this._container = container;
+        this._onDataChange = onDataChange;
     }
 
     render(film, filmsListContainer, cardFilmComponent) {
 
-        // const container = this._container;
-        // const filmsListContainer = container.querySelector(".films-list__container");
         const popup = document.querySelector(".popup");
 
         renderCard();
 
 
         function renderCard() {
-            // 1)для экстра разделов и обычных карточек свой контейнер и свой тип объекта карточки!!!
-            // const cardFilmComponent = new CardFilmComponent(film);
-
             setCardFilmClickHandler(cardFilmComponent);
             render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
         }
@@ -78,8 +73,5 @@ export default class MovieController {
         };
     }
 
-
-//     _renderExtraCardFilm() {
-//         render();
-//     }
+  
 }
