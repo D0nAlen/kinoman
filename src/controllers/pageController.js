@@ -119,8 +119,6 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
         }
 
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-            // const movieController = new MovieController(siteMainElement);
-            // movieController.render(films[i]);
             renderNormalCardFilm(films[i], siteMainElement);
         }
         const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
@@ -158,8 +156,6 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
         films
             .slice(prevFilmsCount, showingFilmsCount)
             .forEach((film) => {
-                // const movieController = new MovieController(siteMainElement);
-                // movieController.render(film);
                 renderNormalCardFilm(film, siteMainElement);
             }
             );
@@ -196,6 +192,7 @@ export default class PageController {
 
         const param = window.location.hash;
         let selectedMenuButton = param.slice(1);
+        currentMenuButton = selectedMenuButton;
 
         if (FILMS_CARDS.length === 0) {
             render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
@@ -206,7 +203,6 @@ export default class PageController {
                 selectedMenuButton = "all";
             }
 
-            // 1)некорректно выводятся карточки категории при F5.
             renderFilms(container, selectedMenuButton, films);//отрисовка по умолчанию и обновлению страницы
             menuButtonElement(container, "all", FILMS_CARDS);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
