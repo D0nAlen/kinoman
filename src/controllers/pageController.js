@@ -1,19 +1,15 @@
 import { FILMS_CARDS, WATCHLIST_CARDS, HISTORY_CARDS, FAVORITES_CARDS } from "../const.js";
 import { render, RenderPosition } from "../utils/render.js";
-import CardMostCommentedComponent from "../components/cardMostCommented.js";
 import TopRatedContainerComponent from "../components/topRatedContainer.js";
 import MostCommentedContainerComponent from "../components/mostCommentedContainer.js";
 import { generateTopRatedFilms } from "../mock/cardTopRated.js";
 import { generateMostCommentedFilms } from "../mock/cardMostCommented.js";
-import CardTopRatedComponent from "../components/cardTopRated.js";
-import ControlsComponent from "../components/controls.js";
 import SortingComponent, { SortType } from "../components/sort.js";
 import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
 import NoDataFilmsTemplate from "../components/no-data.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import { generateFilms } from "../mock/cardFilm.js";
-import CardFilmComponent from "../components/cardFilm.js";
 import MovieController from "./movieController.js";
 
 const CARD__TOP_RATED_COUNT = 2;
@@ -27,10 +23,9 @@ const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT
 
 const renderNormalCardFilm = (film, siteMainElement) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
-    const cardFilmComponent = new CardFilmComponent(film);
 
     const movieController = new MovieController(siteMainElement);
-    movieController.render(film, filmsListContainer, cardFilmComponent);
+    movieController.render(film, filmsListContainer);
 };
 
 const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent) => {
@@ -39,13 +34,9 @@ const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent) => {
 
     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
     for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-        const cardFilmComponent = new CardTopRatedComponent(topRatedFilms[i]);
         const movieController = new MovieController(siteMainElement);
-        movieController.render(topRatedFilms[i], topRatedContainerElement, cardFilmComponent);
+        movieController.render(topRatedFilms[i], topRatedContainerElement);
     }
-
-    let controlsCardFilm = topRatedContainerElement.querySelectorAll(".film-card");
-    controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 };
 
 const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent) => {
@@ -54,13 +45,9 @@ const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent) 
 
     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
     for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-        const cardFilmComponent = new CardMostCommentedComponent(mostCommentedFilms[i]);
         const movieController = new MovieController(siteMainElement);
-        movieController.render(mostCommentedFilms[i], mostCommentedContainerElement, cardFilmComponent);
+        movieController.render(mostCommentedFilms[i], mostCommentedContainerElement);
     }
-
-    let controlsCardFilm = mostCommentedContainerElement.querySelectorAll(".film-card");
-    controlsCardFilm.forEach((film) => render(film, new ControlsComponent(), RenderPosition.BEFOREEND));
 };
 
 const getFilms = () => {
@@ -72,7 +59,6 @@ const getFilms = () => {
         case "History": { films = [...HISTORY_CARDS]; break; }
         case "Favorites": { films = [...FAVORITES_CARDS]; break; }
     }
-
     return films;
 };
 
@@ -121,10 +107,6 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
             renderNormalCardFilm(films[i], siteMainElement);
         }
-        const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-        controlsCardFilm.forEach((film) =>
-            render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
-        );
 
         // button "Show more"
         render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
@@ -159,11 +141,6 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
                 renderNormalCardFilm(film, siteMainElement);
             }
             );
-
-        const controlsCardFilm = filmsListContainer.querySelectorAll(".film-card");
-        controlsCardFilm.forEach((film) =>
-            render(film, new ControlsComponent(), RenderPosition.BEFOREEND)
-        );
 
         if (showingFilmsCount >= cardFilmsCount) {
             showMoreButton.getElement().remove();

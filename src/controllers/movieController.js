@@ -5,6 +5,7 @@ import { generateComments } from "../mock/comment.js";
 import CommentComponent from "../components/popupComponents/comment.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
+import CardFilmComponent from "../components/cardFilm.js";
 
 export default class MovieController {
     constructor(container, onDataChange) {
@@ -12,17 +13,21 @@ export default class MovieController {
         this._onDataChange = onDataChange;
     }
 
-    render(film, filmsListContainer, cardFilmComponent) {
-
+    render(film, filmsListContainer) {
+        const cardFilmComponent = new CardFilmComponent(film);
         const popup = document.querySelector(".popup");
-
         renderCard();
 
 
         function renderCard() {
             setCardFilmClickHandler(cardFilmComponent);
             render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
+
+            cardFilmComponent.setAddToWatchlistButtonClickHandler();
+            cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
+            cardFilmComponent.setMarkAsWatchedButtonClickHandler();
         }
+
 
         function setCardFilmClickHandler(cardFilmComponent) {
             cardFilmComponent.getElement().addEventListener(`click`, () => {
@@ -34,7 +39,8 @@ export default class MovieController {
             const genres = generateGenres(film.genres);
             const comments = generateComments(COMMENTS);
 
-            popup.appendChild(new PopupComponent(film).getElement());
+            const popupComponent = new PopupComponent(film);
+            popup.appendChild(popupComponent.getElement());
 
             //genres rendering
             const filmDetailsGenres = popup.querySelector(".film-details-genres");
@@ -66,6 +72,10 @@ export default class MovieController {
                 deletePopup();
                 document.removeEventListener(`keydown`, onEscKeyDown);
             });
+
+            popupComponent.setAddToWatchlistButtonClickHandler();
+            popupComponent.setMarkAsWatchedButtonClickHandler();
+            popupComponent.setMarkAsFavoriteButtonClickHandler();
         };
 
         function deletePopup() {
@@ -73,5 +83,5 @@ export default class MovieController {
         };
     }
 
-  
+
 }

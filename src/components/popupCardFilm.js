@@ -119,7 +119,7 @@ const createPopupTemplate = (film) => {
   </section>`;
 };
 
-export default class PopupComponent extends AbstractComponent{
+export default class PopupComponent extends AbstractComponent {
   constructor(film) {
     super();
     this._film = film;
@@ -127,5 +127,27 @@ export default class PopupComponent extends AbstractComponent{
 
   getTemplate() {
     return createPopupTemplate(this._film);
+  }
+
+  setAddToWatchlistButtonClickHandler() {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, () => {
+        console.log("add-to-watchlist");
+      });
+  }
+
+  setMarkAsWatchedButtonClickHandler() {
+    this.getElement().querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, () => {
+        console.log("mark-as-watched");
+      });
+  }
+
+  setMarkAsFavoriteButtonClickHandler() {
+    this.getElement().querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, () => {
+        console.log("favorite");
+
+      });
   }
 };
