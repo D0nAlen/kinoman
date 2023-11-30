@@ -73,6 +73,7 @@ export default class MovieController {
                 document.removeEventListener(`keydown`, onEscKeyDown);
             });
 
+            // 1)заменить на ф-ции обработчики событий из TaskController.render().
             popupComponent.setAddToWatchlistButtonClickHandler();
             popupComponent.setMarkAsWatchedButtonClickHandler();
             popupComponent.setMarkAsFavoriteButtonClickHandler();

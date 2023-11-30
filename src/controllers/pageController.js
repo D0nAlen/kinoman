@@ -151,13 +151,16 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
 export default class PageController {
     constructor(container) {
         this._container = container;
+        this._films = [];
 
         this._sortingComponent = new SortingComponent();
+        this._onDataChange = this._onDataChange.bind(this);
     }
 
-    render() {
+    render(films) {
 
         const container = this._container;
+        this._films = films;
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
@@ -204,6 +207,15 @@ export default class PageController {
     }
 
     _onDataChange(filmController, oldData, newData) {
+        const index = this._films.findIndex((it) => it === oldData);
 
+        if (index === -1) {
+            return;
+        }
+
+        this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
+
+        // +2-й аргумент у render должен быть filmsListContainer, добавить!
+        filmController.render(this._films[index]);
     }
 }

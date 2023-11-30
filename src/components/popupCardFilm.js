@@ -1,4 +1,4 @@
-import AbstractComponent from "./abstract-component.js";
+import AbstractSmartComponent from "./abstract-smart-component";
 
 const createPopupTemplate = (film) => {
   return `<section class="film-details">
@@ -119,7 +119,7 @@ const createPopupTemplate = (film) => {
   </section>`;
 };
 
-export default class PopupComponent extends AbstractComponent {
+export default class PopupComponent extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
@@ -129,25 +129,31 @@ export default class PopupComponent extends AbstractComponent {
     return createPopupTemplate(this._film);
   }
 
+  recoveryListeners() {
+
+  }
+
   setAddToWatchlistButtonClickHandler() {
     this.getElement().querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, () => {
-        console.log("add-to-watchlist");
+        !this._film.addToWatchlist ? this._film.addToWatchlist=true :  this._film.addToWatchlist=false; 
+        console.log(this._film.addToWatchlist);
       });
   }
 
   setMarkAsWatchedButtonClickHandler() {
     this.getElement().querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, () => {
-        console.log("mark-as-watched");
+        !this._film.markAsWatchedButton ? this._film.markAsWatchedButton=true :  this._film.markAsWatchedButton=false; 
+        console.log(this._film.markAsWatchedButton);
       });
   }
 
   setMarkAsFavoriteButtonClickHandler() {
     this.getElement().querySelector(`.film-details__control-label--favorite`)
       .addEventListener(`click`, () => {
-        console.log("favorite");
-
+        !this._film.markAsFavorite ? this._film.markAsFavorite=true :  this._film.markAsFavorite=false; 
+        console.log(this._film.markAsFavorite);
       });
   }
 };
