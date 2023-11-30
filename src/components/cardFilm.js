@@ -36,21 +36,24 @@ export default class CardFilmComponent extends AbstractComponent {
   setAddToWatchlistButtonClickHandler() {
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
       .addEventListener(`click`, () => {
-        console.log("add-to-watchlist");
+        !this._film.addToWatchlist ? this._film.addToWatchlist = true : this._film.addToWatchlist = false;
+        console.log(this._film.addToWatchlist);
       });
   }
 
   setMarkAsWatchedButtonClickHandler() {
     this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
       .addEventListener(`click`, () => {
-        console.log("mark-as-watched");
+        !this._film.markAsWatchedButton ? this._film.markAsWatchedButton = true : this._film.markAsWatchedButton = false;
+        console.log(this._film.markAsWatchedButton);
       });
   }
 
   setMarkAsFavoriteButtonClickHandler() {
     this.getElement().querySelector(`.film-card__controls-item--favorite`)
       .addEventListener(`click`, () => {
-        console.log("favorite");
+        !this._film.markAsFavorite ? this._film.markAsFavorite = true : this._film.markAsFavorite = false;
+        console.log(this._film.markAsFavorite);
       });
   }
 };
