@@ -206,7 +206,7 @@ export default class PageController {
         }
     }
 
-    _onDataChange(filmController, oldData, newData) {
+    _onDataChange(movieController,filmsListContainer, oldData, newData) {
         const index = this._films.findIndex((it) => it === oldData);
 
         if (index === -1) {
@@ -216,6 +216,6 @@ export default class PageController {
         this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
 
         // +2-й аргумент у render должен быть filmsListContainer, добавить!
-        filmController.render(this._films[index]);
+        movieController.render(this._films[index], filmsListContainer);
     }
 }

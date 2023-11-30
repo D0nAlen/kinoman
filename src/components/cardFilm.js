@@ -33,27 +33,18 @@ export default class CardFilmComponent extends AbstractComponent {
     return createCardFilmTemplate(this._film);
   }
 
-  setAddToWatchlistButtonClickHandler() {
+  setAddToWatchlistButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-      .addEventListener(`click`, () => {
-        !this._film.addToWatchlist ? this._film.addToWatchlist = true : this._film.addToWatchlist = false;
-        console.log(this._film.addToWatchlist);
-      });
+      .addEventListener(`click`, handler);
   }
 
-  setMarkAsWatchedButtonClickHandler() {
+  setMarkAsWatchedButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
-      .addEventListener(`click`, () => {
-        !this._film.markAsWatchedButton ? this._film.markAsWatchedButton = true : this._film.markAsWatchedButton = false;
-        console.log(this._film.markAsWatchedButton);
-      });
+      .addEventListener(`click`, handler);
   }
 
-  setMarkAsFavoriteButtonClickHandler() {
+  setMarkAsFavoriteButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--favorite`)
-      .addEventListener(`click`, () => {
-        !this._film.markAsFavorite ? this._film.markAsFavorite = true : this._film.markAsFavorite = false;
-        console.log(this._film.markAsFavorite);
-      });
+      .addEventListener(`click`, handler);
   }
 };

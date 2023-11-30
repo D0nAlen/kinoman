@@ -11,21 +11,53 @@ export default class MovieController {
     constructor(container, onDataChange) {
         this._container = container;
         this._onDataChange = onDataChange;
+        this._cardFilmComponent = null;
     }
 
     render(film, filmsListContainer) {
-        const cardFilmComponent = new CardFilmComponent(film);
+        // 1)Что будет новым и старым компонентом?
+        // const oldTaskComponent = this._taskComponent;
+        // const oldTaskEditComponent = this._taskEditComponent;
+
+        // this._taskComponent = new TaskComponent(task);
+        // this._taskEditComponent = new TaskEditComponent(task);
+
+        this._cardFilmComponent = new CardFilmComponent(film);
         const popup = document.querySelector(".popup");
-        renderCard();
+        renderCard(this._cardFilmComponent);
 
 
-        function renderCard() {
+        this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+        .addEventListener(`click`, () => {
+            this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+                addToWatchlist: !film.addToWatchlist,
+            }));
+            // console.log(film.addToWatchlist);
+        });
+
+        function renderCard(cardFilmComponent) {
             setCardFilmClickHandler(cardFilmComponent);
             render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
 
-            cardFilmComponent.setAddToWatchlistButtonClickHandler();
-            cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
-            cardFilmComponent.setMarkAsWatchedButtonClickHandler();
+            // cardFilmComponent.setAddToWatchlistButtonClickHandler();
+            // cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
+            // cardFilmComponent.setMarkAsWatchedButtonClickHandler();
+
+            //   setMarkAsWatchedButtonClickHandler() {
+            //     this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
+            //       .addEventListener(`click`, () => {
+            //         !this._film.markAsWatchedButton ? this._film.markAsWatchedButton = true : this._film.markAsWatchedButton = false;
+            //         console.log(this._film.markAsWatchedButton);
+            //       });
+            //   }
+
+            //   setMarkAsFavoriteButtonClickHandler() {
+            //     this.getElement().querySelector(`.film-card__controls-item--favorite`)
+            //       .addEventListener(`click`, () => {
+            //         !this._film.markAsFavorite ? this._film.markAsFavorite = true : this._film.markAsFavorite = false;
+            //         console.log(this._film.markAsFavorite);
+            //       });
+            //   }
         }
 
 
@@ -35,6 +67,7 @@ export default class MovieController {
             });
         }
 
+        // 1)заменить на ф-ции обработчики событий из TaskController.render().
         function addPopup() {
             const genres = generateGenres(film.genres);
             const comments = generateComments(COMMENTS);
