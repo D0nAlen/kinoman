@@ -28,16 +28,12 @@ export default class MovieController {
 
 
         this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-        .addEventListener(`click`, () => {
-            this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-                addToWatchlist: !film.addToWatchlist,
-            }));
-            console.log(film.addToWatchlist);
-        });
-
-        this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-            addToWatchlist: !film.addToWatchlist,
-        }));
+            .addEventListener(`click`, () => {
+                this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+                    // 1)как сделать переключение значения поля(здесь не меняется почему-то)? Пока сделала в const.js доп.поле первым карточкам.
+                    addToWatchlist: !film.addToWatchlist,
+                }));
+            });
 
         function renderCard(cardFilmComponent) {
             setCardFilmClickHandler(cardFilmComponent);

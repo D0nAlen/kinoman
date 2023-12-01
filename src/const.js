@@ -61,6 +61,7 @@ export const FILMS_CARDS = [
     by her into killing her no good husband during one of their acts.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -94,6 +95,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -126,6 +128,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {

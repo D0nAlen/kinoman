@@ -178,12 +178,12 @@ export default class PageController {
             render(filmsListContainer, new NoDataFilmsTemplate(), RenderPosition.BEFOREEND);
         } else {
 
-            let films = getFilms();
+            this._films = getFilms();
             if (selectedMenuButton === "") {
                 selectedMenuButton = "all";
             }
 
-            renderFilms(container, selectedMenuButton, films, this._onDataChange);//отрисовка по умолчанию и обновлению страницы
+            renderFilms(container, selectedMenuButton, this._films, this._onDataChange); //отрисовка по умолчанию и обновлению страницы
             // menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange);
             // menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange);
             // menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange);
@@ -192,13 +192,13 @@ export default class PageController {
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
 
-                const films = getFilms();
-                const sortedFilms = getSortedFilms(films, sortType, 0);
+                this._films = getFilms();
+                const sortedFilms = getSortedFilms(this._films, sortType, 0);
 
                 let filmsList = container.querySelector(".films-list");
                 filmsList.innerHTML = ``;
 
-                renderFilms(container, currentMenuButton, sortedFilms);
+                renderFilms(container, currentMenuButton, sortedFilms, this._onDataChange);
             });
 
             renderCardTopRatedFilms(container, filmsContainerComponent, this._onDataChange);
@@ -208,14 +208,12 @@ export default class PageController {
 
     _onDataChange(movieController, filmsListContainer, oldData, newData) {
         const index = this._films.findIndex((it) => it === oldData);
-
         if (index === -1) {
             return;
         }
 
         this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
 
-        // +2-й аргумент у render должен быть filmsListContainer, добавить!
         movieController.render(this._films[index], filmsListContainer);
     }
 }
