@@ -32,8 +32,12 @@ export default class MovieController {
             this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
                 addToWatchlist: !film.addToWatchlist,
             }));
-            // console.log(film.addToWatchlist);
+            console.log(film.addToWatchlist);
         });
+
+        this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+            addToWatchlist: !film.addToWatchlist,
+        }));
 
         function renderCard(cardFilmComponent) {
             setCardFilmClickHandler(cardFilmComponent);

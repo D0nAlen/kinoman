@@ -21,31 +21,31 @@ let currentMenuButton = "all";
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-const renderNormalCardFilm = (film, siteMainElement) => {
+const renderNormalCardFilm = (film, siteMainElement, onDataChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
-    const movieController = new MovieController(siteMainElement);
+    const movieController = new MovieController(siteMainElement, onDataChange);
     movieController.render(film, filmsListContainer);
 };
 
-const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent) => {
+const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent, onDataChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
 
     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
     for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement);
+        const movieController = new MovieController(siteMainElement, onDataChange);
         movieController.render(topRatedFilms[i], topRatedContainerElement);
     }
 };
 
-const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent) => {
+const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent, onDataChange) => {
     const mostCommentedContainerComponent = new MostCommentedContainerComponent();
     render(filmsContainerComponent.getElement(), mostCommentedContainerComponent, RenderPosition.BEFOREEND);
 
     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
     for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement);
+        const movieController = new MovieController(siteMainElement, onDataChange);
         movieController.render(mostCommentedFilms[i], mostCommentedContainerElement);
     }
 };
@@ -80,7 +80,7 @@ const getSortedFilms = (films, sortType, from, to) => {
     return sortedFilms.slice(from, to);
 };
 
-const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
+const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
     const films = generateFilms(FILMS_LIST);
     const showMoreButton = new ShowMoreButtonComponent();
     let countFilmsList = FILMS_LIST.length;
@@ -105,7 +105,7 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST) => {
         }
 
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-            renderNormalCardFilm(films[i], siteMainElement);
+            renderNormalCardFilm(films[i], siteMainElement, onDataChange);
         }
 
         // button "Show more"
@@ -183,11 +183,11 @@ export default class PageController {
                 selectedMenuButton = "all";
             }
 
-            renderFilms(container, selectedMenuButton, films);//отрисовка по умолчанию и обновлению страницы
-            menuButtonElement(container, "all", FILMS_CARDS);
-            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS);
-            menuButtonElement(container, "History", HISTORY_CARDS);
-            menuButtonElement(container, "Favorites", FAVORITES_CARDS);
+            renderFilms(container, selectedMenuButton, films, this._onDataChange);//отрисовка по умолчанию и обновлению страницы
+            // menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange);
+            // menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange);
+            // menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange);
+            // menuButtonElement(container, "Favorites", FAVORITES_CARDS,this._onDataChange);
 
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
@@ -201,12 +201,12 @@ export default class PageController {
                 renderFilms(container, currentMenuButton, sortedFilms);
             });
 
-            renderCardTopRatedFilms(container, filmsContainerComponent);
-            renderCardMostCommentedFilms(container, filmsContainerComponent);
+            renderCardTopRatedFilms(container, filmsContainerComponent, this._onDataChange);
+            renderCardMostCommentedFilms(container, filmsContainerComponent, this._onDataChange);
         }
     }
 
-    _onDataChange(movieController,filmsListContainer, oldData, newData) {
+    _onDataChange(movieController, filmsListContainer, oldData, newData) {
         const index = this._films.findIndex((it) => it === oldData);
 
         if (index === -1) {
