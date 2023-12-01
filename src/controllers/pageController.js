@@ -110,7 +110,7 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
 
         // button "Show more"
         render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-        showMoreButtonElement(showMoreButton, siteMainElement, films);
+        showMoreButtonElement(showMoreButton, siteMainElement, films, onDataChange);
 
         if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
             showMoreButton.getElement().remove();
@@ -126,7 +126,7 @@ const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
     });
 };
 
-const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
+const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataChange) => {
     let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
     let cardFilmsCount = films.length;
     let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
@@ -138,7 +138,7 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films) => {
         films
             .slice(prevFilmsCount, showingFilmsCount)
             .forEach((film) => {
-                renderNormalCardFilm(film, siteMainElement);
+                renderNormalCardFilm(film, siteMainElement, onDataChange);
             }
             );
 
