@@ -6,6 +6,7 @@ import CommentComponent from "../components/popupComponents/comment.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
 import CardFilmComponent from "../components/cardFilm.js";
+import { WATCHLIST_CARDS } from "../const.js";
 
 export default class MovieController {
     constructor(container, onDataChange) {
@@ -29,10 +30,18 @@ export default class MovieController {
 
         this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
             .addEventListener(`click`, () => {
-                this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-                    // 1)как сделать переключение значения поля(здесь не меняется почему-то)? Пока сделала в const.js доп.поле первым карточкам.
-                    addToWatchlist: !film.addToWatchlist,
-                }));
+                this._onDataChange(this, filmsListContainer, film.addToWatchlist, film.addToWatchlist = !film.addToWatchlist);
+
+                // this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+                //     // 1)как сделать переключение значения поля(здесь не меняется почему-то)? Пока сделала в const.js доп.поле первым карточкам.
+                //     addToWatchlist: !film.addToWatchlist,
+                // }));
+                console.log(film.addToWatchlist);
+                // 1)добавление и удаление из списка работает, но когда обновл.страница, все возвращается как было
+                // 2)добавить всем карточкам фильма свойство addToWatchlist в const.js
+                film.addToWatchlist ? WATCHLIST_CARDS.push(film) : WATCHLIST_CARDS.pop(film);
+
+                console.log(WATCHLIST_CARDS);
             });
 
         function renderCard(cardFilmComponent) {

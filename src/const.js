@@ -95,7 +95,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
+    // addToWatchlist: false,
   },
 
   {
@@ -128,7 +128,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
+    // addToWatchlist: false,
   },
 
   {
@@ -673,7 +673,7 @@ export const FILMS_CARDS = [
 ];
 
 export const WATCHLIST_CARDS = [
-  FILMS_CARDS[0],
+  // FILMS_CARDS[0],
   FILMS_CARDS[1],
   FILMS_CARDS[2],
   FILMS_CARDS[5],

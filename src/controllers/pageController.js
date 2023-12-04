@@ -118,11 +118,11 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
     }
 };
 
-const menuButtonElement = (siteMainElement, idButton, FILMS_LIST) => {
+const menuButtonElement = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
     const nameButton = document.getElementById(idButton);
 
     nameButton.addEventListener(`click`, () => {
-        renderFilms(siteMainElement, idButton, FILMS_LIST);
+        renderFilms(siteMainElement, idButton, FILMS_LIST, onDataChange);
     });
 };
 
@@ -130,7 +130,7 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataCha
     let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
     let cardFilmsCount = films.length;
     let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
-    const filmsListContainer = siteMainElement.querySelector(".films-list__container");
+    // const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
     showMoreButton.setShowMoreButtonClickHandler(() => {
         const prevFilmsCount = showingFilmsCount;
@@ -184,10 +184,10 @@ export default class PageController {
             }
 
             renderFilms(container, selectedMenuButton, this._films, this._onDataChange); //отрисовка по умолчанию и обновлению страницы
-            // menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange);
-            // menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange);
-            // menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange);
-            // menuButtonElement(container, "Favorites", FAVORITES_CARDS,this._onDataChange);
+            menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange);
+            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange);
+            menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange);
+            menuButtonElement(container, "Favorites", FAVORITES_CARDS,this._onDataChange);
 
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
