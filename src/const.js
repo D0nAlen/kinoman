@@ -39,7 +39,7 @@ export const COMMENTS = [
 ];
 
 // 20 фильмов
-export const FILMS_CARDS = [
+export let FILMS_CARDS = [
   {
     filmName: `The Great Flamarion`,
     originalFilmName: `The Great Flamarion`,
@@ -95,7 +95,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    // addToWatchlist: false,
+    addToWatchlist: true,
   },
 
   {
@@ -128,7 +128,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    // addToWatchlist: false,
+    addToWatchlist: true,
   },
 
   {
@@ -161,6 +161,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -193,6 +194,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
 
@@ -227,6 +229,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: true,
   },
   {
     filmName: `example`,
@@ -258,6 +261,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -290,6 +294,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -322,6 +327,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -354,6 +360,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -386,6 +393,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
   {
     filmName: `example`,
@@ -417,6 +425,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
   {
     filmName: `example`,
@@ -448,6 +457,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -480,6 +490,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -512,6 +523,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -544,6 +556,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 
   {
@@ -576,6 +589,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
   {
     filmName: `example`,
@@ -607,6 +621,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
   {
     filmName: `example`,
@@ -638,6 +653,7 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
   {
     filmName: `example`,
@@ -669,11 +685,11 @@ export const FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
+    addToWatchlist: false,
   },
 ];
 
-export const WATCHLIST_CARDS = [
-  // FILMS_CARDS[0],
+export let WATCHLIST_CARDS = [
   FILMS_CARDS[1],
   FILMS_CARDS[2],
   FILMS_CARDS[5],

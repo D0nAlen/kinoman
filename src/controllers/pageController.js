@@ -187,7 +187,7 @@ export default class PageController {
             menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange);
             menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange);
-            menuButtonElement(container, "Favorites", FAVORITES_CARDS,this._onDataChange);
+            menuButtonElement(container, "Favorites", FAVORITES_CARDS, this._onDataChange);
 
 
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
@@ -207,13 +207,18 @@ export default class PageController {
     }
 
     _onDataChange(movieController, filmsListContainer, oldData, newData) {
-        const index = this._films.findIndex((it) => it === oldData);
+        let filmList = WATCHLIST_CARDS;
+        const index = filmList.findIndex((it) => it === oldData);
+
         if (index === -1) {
             return;
         }
 
-        this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
+        // работает только добавление, и некорректно
+        filmList = [].concat(filmList.slice(0, index), newData, filmList.slice(index + 1));
 
-        movieController.render(this._films[index], filmsListContainer);
+        // this._films[index].addToWatchlist ? WATCHLIST_CARDS.push(this._films[index]) : WATCHLIST_CARDS.pop(this._films[index]);
+console.log(index);
+        movieController.render(filmList[index], filmsListContainer);
     }
 }

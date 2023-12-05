@@ -28,21 +28,19 @@ export default class MovieController {
         renderCard(this._cardFilmComponent);
 
 
-        this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-            .addEventListener(`click`, () => {
-                this._onDataChange(this, filmsListContainer, film.addToWatchlist, film.addToWatchlist = !film.addToWatchlist);
+        // this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
+            this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+                .addEventListener(`click`, () => {
+            // this._onDataChange(this, filmsListContainer, film.addToWatchlist, film.addToWatchlist = !film.addToWatchlist);
+            this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+                addToWatchlist: !film.addToWatchlist,
+            }));
 
-                // this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-                //     // 1)как сделать переключение значения поля(здесь не меняется почему-то)? Пока сделала в const.js доп.поле первым карточкам.
-                //     addToWatchlist: !film.addToWatchlist,
-                // }));
-                console.log(film.addToWatchlist);
-                // 1)добавление и удаление из списка работает, но когда обновл.страница, все возвращается как было
-                // 2)добавить всем карточкам фильма свойство addToWatchlist в const.js
-                film.addToWatchlist ? WATCHLIST_CARDS.push(film) : WATCHLIST_CARDS.pop(film);
 
-                console.log(WATCHLIST_CARDS);
-            });
+
+            // 1)нужно удалять по индексу, а удаляется с конца!!!
+            // film.addToWatchlist ? WATCHLIST_CARDS.push(film) : WATCHLIST_CARDS.pop(film);
+        });
 
         function renderCard(cardFilmComponent) {
             setCardFilmClickHandler(cardFilmComponent);
