@@ -195,8 +195,8 @@ export default class PageController {
                 this._films = getFilms();
                 const sortedFilms = getSortedFilms(this._films, sortType, 0);
 
-                let filmsList = container.querySelector(".films-list");
-                filmsList.innerHTML = ``;
+                // let filmsList = container.querySelector(".films-list");
+                // filmsList.innerHTML = ``;
 
                 renderFilms(container, currentMenuButton, sortedFilms, this._onDataChange);
             });
@@ -206,19 +206,21 @@ export default class PageController {
         }
     }
 
-    _onDataChange(movieController, filmsListContainer, oldData, newData) {
-        let filmList = WATCHLIST_CARDS;
+
+    _onDataChange(movieController, filmsListContainer, oldData, newData, filmList) {
         const index = filmList.findIndex((it) => it === oldData);
 
+        // если не найден:
         if (index === -1) {
-            return;
+            filmList.push(newData);
+            // movieController.render(filmList.at(-1), filmsListContainer);
+        } else {
+            // filmList = [].concat(filmList.slice(0, index), newData, filmList.slice(index + 1));
+
+            filmList.splice(index, 1);
+
+            renderFilms(this._container, currentMenuButton, filmList, this._onDataChange); 
+            // movieController.render(filmList[index], filmsListContainer);
         }
-
-        // работает только добавление, и некорректно
-        filmList = [].concat(filmList.slice(0, index), newData, filmList.slice(index + 1));
-
-        // this._films[index].addToWatchlist ? WATCHLIST_CARDS.push(this._films[index]) : WATCHLIST_CARDS.pop(this._films[index]);
-console.log(index);
-        movieController.render(filmList[index], filmsListContainer);
     }
 }
