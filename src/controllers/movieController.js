@@ -6,7 +6,8 @@ import CommentComponent from "../components/popupComponents/comment.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
 import CardFilmComponent from "../components/cardFilm.js";
-import { WATCHLIST_CARDS, FILMS_CARDS } from "../const.js";
+import { WATCHLIST_CARDS } from "../const.js";
+import { rerenderMenu } from "./pageController.js";
 
 export default class MovieController {
     constructor(container, onDataChange) {
@@ -28,47 +29,22 @@ export default class MovieController {
         renderCard(this._cardFilmComponent);
 
 
-        // this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-        this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-            .addEventListener(`click`, () => {
-                let watchlist = WATCHLIST_CARDS;
-                this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-                    addToWatchlist: !film.addToWatchlist,
-                }), watchlist);
-                // this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-                //     addToWatchlist: !film.addToWatchlist,
-                // }), WATCHLIST_CARDS);
-
-                // console.log(Object.assign({}, film, {
-                //     addToWatchlist: !film.addToWatchlist,
-                // }));
-                // 1)нужно удалять по индексу, а удаляется с конца!!!
-                // film.addToWatchlist ? WATCHLIST_CARDS.push(film) : WATCHLIST_CARDS.pop(film);
-            });
+        // 1)некорректно работает добавление, если вызов кнопки происходит с других страниц(типо, All, History, и т.д.)
+        this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
+            // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+            // .addEventListener(`click`, () => {
+            let watchlist = WATCHLIST_CARDS;
+            this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+                addToWatchlist: !film.addToWatchlist,
+            }), watchlist);
+        });
 
         function renderCard(cardFilmComponent) {
             setCardFilmClickHandler(cardFilmComponent);
             render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
 
-            // cardFilmComponent.setAddToWatchlistButtonClickHandler();
             // cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
             // cardFilmComponent.setMarkAsWatchedButtonClickHandler();
-
-            //   setMarkAsWatchedButtonClickHandler() {
-            //     this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
-            //       .addEventListener(`click`, () => {
-            //         !this._film.markAsWatchedButton ? this._film.markAsWatchedButton = true : this._film.markAsWatchedButton = false;
-            //         console.log(this._film.markAsWatchedButton);
-            //       });
-            //   }
-
-            //   setMarkAsFavoriteButtonClickHandler() {
-            //     this.getElement().querySelector(`.film-card__controls-item--favorite`)
-            //       .addEventListener(`click`, () => {
-            //         !this._film.markAsFavorite ? this._film.markAsFavorite = true : this._film.markAsFavorite = false;
-            //         console.log(this._film.markAsFavorite);
-            //       });
-            //   }
         }
 
 
