@@ -133,27 +133,18 @@ export default class PopupComponent extends AbstractSmartComponent {
 
   }
 
-  setAddToWatchlistButtonClickHandler() {
+  setAddToWatchlistButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__control-label--watchlist`)
-      .addEventListener(`click`, () => {
-        !this._film.addToWatchlist ? this._film.addToWatchlist=true :  this._film.addToWatchlist=false; 
-        console.log(this._film.addToWatchlist);
-      });
+      .addEventListener(`click`, handler);
   }
 
-  setMarkAsWatchedButtonClickHandler() {
+  setMarkAsWatchedButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__control-label--watched`)
-      .addEventListener(`click`, () => {
-        !this._film.markAsWatchedButton ? this._film.markAsWatchedButton=true :  this._film.markAsWatchedButton=false; 
-        console.log(this._film.markAsWatchedButton);
-      });
+      .addEventListener(`click`, handler);
   }
 
-  setMarkAsFavoriteButtonClickHandler() {
+  setMarkAsFavoriteButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__control-label--favorite`)
-      .addEventListener(`click`, () => {
-        !this._film.markAsFavorite ? this._film.markAsFavorite=true :  this._film.markAsFavorite=false; 
-        console.log(this._film.markAsFavorite);
-      });
+      .addEventListener(`click`, handler);
   }
 };

@@ -11,6 +11,8 @@ import NoDataFilmsTemplate from "../components/no-data.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import { generateFilms } from "../mock/cardFilm.js";
 import MovieController from "./movieController.js";
+import { generateMenu } from "../mock/menu.js";
+import MenuComponent from "../components/menu.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -20,6 +22,7 @@ let currentMenuButton = "all";
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
+const siteMainElement = document.querySelector(".main");
 
 const renderNormalCardFilm = (film, siteMainElement, onDataChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
@@ -206,21 +209,16 @@ export default class PageController {
         }
     }
 
-
     _onDataChange(movieController, filmsListContainer, oldData, newData, filmList) {
         const index = filmList.findIndex((it) => it === oldData);
 
-        // если не найден:
+        // если не найден, добавление в список:
         if (index === -1) {
             filmList.push(newData);
-            // movieController.render(filmList.at(-1), filmsListContainer);
         } else {
-            // filmList = [].concat(filmList.slice(0, index), newData, filmList.slice(index + 1));
-
             filmList.splice(index, 1);
-
-            renderFilms(this._container, currentMenuButton, filmList, this._onDataChange); 
-            // movieController.render(filmList[index], filmsListContainer);
+            //MovieController вызывается в renderFilms()
+            renderFilms(this._container, currentMenuButton, filmList, this._onDataChange);
         }
     }
 }
