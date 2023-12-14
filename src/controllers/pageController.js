@@ -210,15 +210,31 @@ export default class PageController {
     }
 
     _onDataChange(movieController, filmsListContainer, oldData, newData, filmList) {
-        const index = filmList.findIndex((it) => it === oldData);
 
-        // если не найден, добавление в список:
-        if (index === -1) {
-            filmList.push(newData);
+        if (oldData.addToWatchlist) {
+            filmList.push(oldData);
         } else {
+            const index = filmList.findIndex((it) => it === oldData);
             filmList.splice(index, 1);
-            //MovieController вызывается в renderFilms()
-            renderFilms(this._container, currentMenuButton, filmList, this._onDataChange);
+
+            if (currentMenuButton === "Watchlist") {
+                console.log(currentMenuButton);
+
+                renderFilms(this._container, currentMenuButton, filmList, this._onDataChange); //отрисовка по умолчанию и обновлению страницы
+            }
         }
+
+        // const index = filmList.findIndex((it) => it === oldData);
+
+        // console.log(index);
+        // // если не найден, добавление в список:
+        // if (index === -1) {
+        //     filmList.push(newData);
+        // } else {
+        //     filmList.splice(index, 1);
+        //     // console.log(currentMenuButton);
+        //     // renderFilms(this._container, currentMenuButton, this._films, this._onDataChange); //отрисовка по умолчанию и обновлению страницы
+        //     // renderFilms(this._container, currentMenuButton, filmList, this._onDataChange);
+        // }  
     }
 }

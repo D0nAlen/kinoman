@@ -7,7 +7,6 @@ import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
 import CardFilmComponent from "../components/cardFilm.js";
 import { WATCHLIST_CARDS } from "../const.js";
-import { rerenderMenu } from "./pageController.js";
 
 export default class MovieController {
     constructor(container, onDataChange) {
@@ -26,33 +25,33 @@ export default class MovieController {
 
         this._cardFilmComponent = new CardFilmComponent(film);
         const popup = document.querySelector(".popup");
-        renderCard(this._cardFilmComponent);
 
+        render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
+
+        this._cardFilmComponent.getElement().addEventListener(`click`, () => {
+            addPopup();
+        });
 
         // 1)некорректно работает добавление, если вызов кнопки происходит с других страниц(типо, All, History, и т.д.)
+        // this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
+        //     // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+        //     // .addEventListener(`click`, () => {
+        //     let watchlist = WATCHLIST_CARDS;
+        //     this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+        //         addToWatchlist: !film.addToWatchlist,
+        //     }), WATCHLIST_CARDS);
+        //     console.log(film.addToWatchlist);
+        // });
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
             // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
             // .addEventListener(`click`, () => {
-            let watchlist = WATCHLIST_CARDS;
-            this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-                addToWatchlist: !film.addToWatchlist,
-            }), watchlist);
+            // let watchlist = WATCHLIST_CARDS;
+
+            // film.addToWatchlist = !film.addToWatchlist
+            this._onDataChange(this, filmsListContainer, film, film.addToWatchlist = !film.addToWatchlist, WATCHLIST_CARDS);
         });
-
-        function renderCard(cardFilmComponent) {
-            setCardFilmClickHandler(cardFilmComponent);
-            render(filmsListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
-
-            // cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
-            // cardFilmComponent.setMarkAsWatchedButtonClickHandler();
-        }
-
-
-        function setCardFilmClickHandler(cardFilmComponent) {
-            cardFilmComponent.getElement().addEventListener(`click`, () => {
-                addPopup(film);
-            });
-        }
+        // cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
+        // cardFilmComponent.setMarkAsWatchedButtonClickHandler();
 
         // 1)заменить на ф-ции обработчики событий из TaskController.render()(по аналогии 
         // с "this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {" выше).
@@ -94,8 +93,16 @@ export default class MovieController {
                 document.removeEventListener(`keydown`, onEscKeyDown);
             });
 
-            // 1)заменить на ф-ции обработчики событий из TaskController.render().
-            popupComponent.setAddToWatchlistButtonClickHandler();
+            // 1)не все переменные инициализированы!
+            // popupComponent.setAddToWatchlistButtonClickHandler(() => {
+            //     // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+            //     // .addEventListener(`click`, () => {
+            //     let watchlist = WATCHLIST_CARDS;
+            //     onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
+            //         addToWatchlist: !film.addToWatchlist,
+            //     }), watchlist);
+            // });
+
             popupComponent.setMarkAsWatchedButtonClickHandler();
             popupComponent.setMarkAsFavoriteButtonClickHandler();
         };
