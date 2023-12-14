@@ -29,33 +29,17 @@ export default class MovieController {
         render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
 
         this._cardFilmComponent.getElement().addEventListener(`click`, () => {
-            addPopup();
+            addPopup(this._onDataChange);
         });
 
-        // 1)некорректно работает добавление, если вызов кнопки происходит с других страниц(типо, All, History, и т.д.)
-        // this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-        //     // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-        //     // .addEventListener(`click`, () => {
-        //     let watchlist = WATCHLIST_CARDS;
-        //     this._onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-        //         addToWatchlist: !film.addToWatchlist,
-        //     }), WATCHLIST_CARDS);
-        //     console.log(film.addToWatchlist);
-        // });
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-            // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-            // .addEventListener(`click`, () => {
-            // let watchlist = WATCHLIST_CARDS;
-
-            // film.addToWatchlist = !film.addToWatchlist
-            this._onDataChange(this, filmsListContainer, film, film.addToWatchlist = !film.addToWatchlist, WATCHLIST_CARDS);
+            film.addToWatchlist = !film.addToWatchlist;
+            this._onDataChange(film, WATCHLIST_CARDS);
         });
         // cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
         // cardFilmComponent.setMarkAsWatchedButtonClickHandler();
 
-        // 1)заменить на ф-ции обработчики событий из TaskController.render()(по аналогии 
-        // с "this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {" выше).
-        function addPopup() {
+        function addPopup(onDataChange) {
             const genres = generateGenres(film.genres);
             const comments = generateComments(COMMENTS);
 
@@ -93,15 +77,10 @@ export default class MovieController {
                 document.removeEventListener(`keydown`, onEscKeyDown);
             });
 
-            // 1)не все переменные инициализированы!
-            // popupComponent.setAddToWatchlistButtonClickHandler(() => {
-            //     // this._cardFilmComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-            //     // .addEventListener(`click`, () => {
-            //     let watchlist = WATCHLIST_CARDS;
-            //     onDataChange(this, filmsListContainer, film, Object.assign({}, film, {
-            //         addToWatchlist: !film.addToWatchlist,
-            //     }), watchlist);
-            // });
+            popupComponent.setAddToWatchlistButtonClickHandler(() => {
+                film.addToWatchlist = !film.addToWatchlist;
+                onDataChange(film, WATCHLIST_CARDS);
+            });
 
             popupComponent.setMarkAsWatchedButtonClickHandler();
             popupComponent.setMarkAsFavoriteButtonClickHandler();
