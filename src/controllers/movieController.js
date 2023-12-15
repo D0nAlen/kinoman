@@ -1,5 +1,5 @@
 import { render, RenderPosition } from "../utils/render.js";
-import { COMMENTS } from "../const.js";
+import { COMMENTS, FAVORITES_CARDS, HISTORY_CARDS } from "../const.js";
 import { generateGenres } from "../mock/genres.js";
 import { generateComments } from "../mock/comment.js";
 import CommentComponent from "../components/popupComponents/comment.js";
@@ -15,6 +15,7 @@ export default class MovieController {
         this._cardFilmComponent = null;
     }
 
+    // 1)по клику на кнопках addTo... не должен открываться попап.
     render(film, filmsListContainer) {
         // 1)Что будет новым и старым компонентом?
         // const oldTaskComponent = this._taskComponent;
@@ -34,10 +35,18 @@ export default class MovieController {
 
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
             film.addToWatchlist = !film.addToWatchlist;
-            this._onDataChange(film, WATCHLIST_CARDS);
+            this._onDataChange(film, WATCHLIST_CARDS, "Watchlist");
         });
-        // cardFilmComponent.setMarkAsFavoriteButtonClickHandler();
-        // cardFilmComponent.setMarkAsWatchedButtonClickHandler();
+
+        this._cardFilmComponent.setMarkAsWatchedButtonClickHandler(() => {
+            film.markAsWatched = !film.markAsWatched;
+            this._onDataChange(film, HISTORY_CARDS, "History");
+        });
+
+        this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
+            film.markAsFavorite = !film.markAsFavorite;
+            this._onDataChange(film, FAVORITES_CARDS, "Favorites");
+        });
 
         function addPopup(onDataChange) {
             const genres = generateGenres(film.genres);
@@ -79,11 +88,17 @@ export default class MovieController {
 
             popupComponent.setAddToWatchlistButtonClickHandler(() => {
                 film.addToWatchlist = !film.addToWatchlist;
-                onDataChange(film, WATCHLIST_CARDS);
+                onDataChange(film, WATCHLIST_CARDS, "Watchlist");
             });
 
-            popupComponent.setMarkAsWatchedButtonClickHandler();
-            popupComponent.setMarkAsFavoriteButtonClickHandler();
+            popupComponent.setMarkAsWatchedButtonClickHandler(() => {
+                film.markAsWatched = !film.markAsWatched;
+                onDataChange(film, HISTORY_CARDS, "History");
+            });
+            popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
+                film.markAsFavorite = !film.markAsFavorite;
+                onDataChange(film, FAVORITES_CARDS, "Favorites");
+            });
         };
 
         function deletePopup() {

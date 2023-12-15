@@ -62,6 +62,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: true,
+    markAsWatched: true,
   },
 
   {
@@ -96,6 +98,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: true,
+    markAsFavorite: true,
+    markAsWatched: false,
   },
 
   {
@@ -129,6 +133,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: true,
+    markAsFavorite: false,
+    markAsWatched: true,
   },
 
   {
@@ -162,6 +168,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -195,6 +203,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: true,
+    markAsWatched: true,
   },
 
 
@@ -230,6 +240,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: true,
+    markAsFavorite: false,
+    markAsWatched: true,
   },
   {
     filmName: `example`,
@@ -262,6 +274,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -295,6 +309,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -328,6 +344,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -361,6 +379,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -394,6 +414,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
   {
     filmName: `example`,
@@ -426,6 +448,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
   {
     filmName: `example`,
@@ -458,6 +482,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -491,6 +517,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -524,6 +552,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -557,6 +587,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 
   {
@@ -590,6 +622,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
   {
     filmName: `example`,
@@ -622,6 +656,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
   {
     filmName: `example`,
@@ -654,6 +690,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
   {
     filmName: `example`,
@@ -686,6 +724,8 @@ export let FILMS_CARDS = [
     comment: COMMENTS,
     age: "18+",
     addToWatchlist: false,
+    markAsFavorite: false,
+    markAsWatched: false,
   },
 ];
 
@@ -695,39 +735,39 @@ export let WATCHLIST_CARDS = [
   FILMS_CARDS[5],
 ];
 
-export const HISTORY_CARDS = [
+export let HISTORY_CARDS = [
   FILMS_CARDS[0],
-  FILMS_CARDS[1],
+  // FILMS_CARDS[1],
   FILMS_CARDS[2],
-  FILMS_CARDS[3],
+  // FILMS_CARDS[3],
   FILMS_CARDS[4],
   FILMS_CARDS[5],
-  FILMS_CARDS[6],
-  FILMS_CARDS[7],
-  FILMS_CARDS[8],
-  FILMS_CARDS[9],
-  FILMS_CARDS[10],
-  FILMS_CARDS[11],
+  // FILMS_CARDS[6],
+  // FILMS_CARDS[7],
+  // FILMS_CARDS[8],
+  // FILMS_CARDS[9],
+  // FILMS_CARDS[10],
+  // FILMS_CARDS[11],
 ];
 
-export const FAVORITES_CARDS = [
-  FILMS_CARDS[12],
-  FILMS_CARDS[13],
-  FILMS_CARDS[14],
-  FILMS_CARDS[15],
-  FILMS_CARDS[16],
-  FILMS_CARDS[17],
-  FILMS_CARDS[18],
+export let FAVORITES_CARDS = [
+  FILMS_CARDS[0],
+  FILMS_CARDS[1],
+  FILMS_CARDS[4],
+  // FILMS_CARDS[15],
+  // FILMS_CARDS[16],
+  // FILMS_CARDS[17],
+  // FILMS_CARDS[18],
 ];
 
-export const MOST_COMMENTED_CARDS = [
+export let MOST_COMMENTED_CARDS = [
   FILMS_CARDS[12],
   FILMS_CARDS[13],
   FILMS_CARDS[18],
   FILMS_CARDS[19],
 ];
 
-export const TOP_RATED_CARDS = [
+export let TOP_RATED_CARDS = [
   FILMS_CARDS[18],
   FILMS_CARDS[19],
   FILMS_CARDS[11],

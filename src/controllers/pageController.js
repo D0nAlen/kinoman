@@ -209,17 +209,23 @@ export default class PageController {
         }
     }
 
-    _onDataChange(filmCard, filmList) {
-        // _onDataChange(movieController, filmsListContainer, oldData, newData, filmList) {
 
-        if (filmCard.addToWatchlist) {
+    _onDataChange(filmCard, filmList, typeButton) {
+        let property = null;
+        switch (typeButton) {
+            case "Watchlist": { property = filmCard.addToWatchlist; break; }
+            case "History": { property = filmCard.markAsWatched; break; }
+            case "Favorites": { property = filmCard.markAsFavorite; break; }
+        }
+
+        if (property) {
             filmList.push(filmCard);
         } else {
             const index = filmList.findIndex((it) => it === filmCard);
             filmList.splice(index, 1);
 
-            if (currentMenuButton === "Watchlist") {
-                renderFilms(this._container, currentMenuButton, filmList, this._onDataChange); //отрисовка по умолчанию и обновлению страницы
+            if (currentMenuButton === typeButton) {
+                renderFilms(this._container, currentMenuButton, filmList, this._onDataChange);
             }
         }
     }
