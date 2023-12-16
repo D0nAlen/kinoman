@@ -1,12 +1,13 @@
 import { render, RenderPosition } from "../utils/render.js";
-import { COMMENTS, FAVORITES_CARDS, HISTORY_CARDS } from "../const.js";
+import { COMMENTS, FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS, EMOJIS } from "../const.js";
 import { generateGenres } from "../mock/genres.js";
 import { generateComments } from "../mock/comment.js";
 import CommentComponent from "../components/popupComponents/comment.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
 import CardFilmComponent from "../components/cardFilm.js";
-import { WATCHLIST_CARDS } from "../const.js";
+import { generateEmojis } from "../mock/emojis.js";
+import EmojiComponent from "../components/popupComponents/emoji.js";
 
 export default class MovieController {
     constructor(container, onDataChange) {
@@ -53,22 +54,43 @@ export default class MovieController {
             const comments = generateComments(COMMENTS);
 
             const popupComponent = new PopupComponent(film);
-            popup.appendChild(popupComponent.getElement());
+            render(popup, popupComponent, RenderPosition.BEFOREEND);
+            // popup.appendChild(popupComponent.getElement());
 
             //genres rendering
             const filmDetailsGenres = popup.querySelector(".film-details-genres");
             for (let i = 0; i < genres.length; i++) {
-                filmDetailsGenres.appendChild(new GenreTemplateComponent(genres[i]).getElement());
+                render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
+                // filmDetailsGenres.appendChild(new GenreTemplateComponent(genres[i]).getElement());
             }
 
             // comments rendering
             const commentsList = popup.querySelector(".film-details__comments-list");
             for (let i = 0; i < comments.length; i++) {
-                commentsList.appendChild(new CommentComponent(comments[i]).getElement());
+                render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
+                // commentsList.appendChild(new CommentComponent(comments[i]).getElement());
             }
 
-            const closeButton = popup.querySelector(".film-details__close");
+            // 1)нужно, чтобы по клику на эмодзи, смайлик подставлялся в кружок слева от поля с комментарием.
+            // 2)emoji должен быть объектом класса!!!
+            //   setEmotionButtonClickHandler() {
+            let emojiIcon = popup.querySelector(".film-details__add-emoji-label");
+            let emojiList = popup.querySelector(".film-details__emoji-list");
 
+            const emojis = generateEmojis(EMOJIS);
+            emojis.forEach((emoji) => {
+                // render(emojiList, new EmojiComponent(emoji), RenderPosition.BEFOREEND);
+                console.log((new EmojiComponent(emoji)).getElement());
+            });
+
+            // this.getElement().querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
+            //     emoji.addEventListener(`click`, () => {
+            //         render(emojiIcon, emoji, RenderPosition.BEFOREEND);
+            //     });
+            // });
+            //   }
+
+            const closeButton = popup.querySelector(".film-details__close");
             const onEscKeyDown = (evt) => {
 
                 const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
@@ -99,6 +121,8 @@ export default class MovieController {
                 film.markAsFavorite = !film.markAsFavorite;
                 onDataChange(film, FAVORITES_CARDS, "Favorites");
             });
+
+            // popupComponent.setEmotionButtonClickHandler();
         };
 
         function deletePopup() {

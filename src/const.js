@@ -38,6 +38,28 @@ export const COMMENTS = [
   },
 ];
 
+export const EMOJIS = [
+  {
+    type: "smile",
+    src: "./images/emoji/smile.png",
+  },
+
+  {
+    type: "sleeping",
+    src: "./images/emoji/sleeping.png",
+  },
+
+  {
+    type: "puke",
+    src: "./images/emoji/puke.png",
+  },
+
+  {
+    type: "angry",
+    src: "./images/emoji/angry.png",
+  },
+];
+
 // 20 фильмов
 export let FILMS_CARDS = [
   {

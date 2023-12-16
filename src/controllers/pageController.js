@@ -198,9 +198,6 @@ export default class PageController {
                 this._films = getFilms();
                 const sortedFilms = getSortedFilms(this._films, sortType, 0);
 
-                // let filmsList = container.querySelector(".films-list");
-                // filmsList.innerHTML = ``;
-
                 renderFilms(container, currentMenuButton, sortedFilms, this._onDataChange);
             });
 
