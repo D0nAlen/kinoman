@@ -71,24 +71,17 @@ export default class MovieController {
                 // commentsList.appendChild(new CommentComponent(comments[i]).getElement());
             }
 
-            // 1)нужно, чтобы по клику на эмодзи, смайлик подставлялся в кружок слева от поля с комментарием.
-            // 2)emoji должен быть объектом класса!!!
-            //   setEmotionButtonClickHandler() {
-            let emojiIcon = popup.querySelector(".film-details__add-emoji-label");
-            let emojiList = popup.querySelector(".film-details__emoji-list");
+            // // popupComponent.setEmotionButtonClickHandler();
+            // let emojiIcon = popup.querySelector(".film-details__add-emoji-label");
+            // let emojiList = popup.querySelector(".film-details__emoji-list");
 
-            const emojis = generateEmojis(EMOJIS);
-            emojis.forEach((emoji) => {
-                // render(emojiList, new EmojiComponent(emoji), RenderPosition.BEFOREEND);
-                console.log((new EmojiComponent(emoji)).getElement());
-            });
-
-            // this.getElement().querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
-            //     emoji.addEventListener(`click`, () => {
-            //         render(emojiIcon, emoji, RenderPosition.BEFOREEND);
-            //     });
+            // // 1)почему в <div>, список эмодзи рисуется вертикально а не горизонтально?
+            // const emojis = generateEmojis(EMOJIS);
+            // emojis.forEach((emoji) => {
+            //     // render(emojiList, new EmojiComponent(emoji), RenderPosition.BEFOREEND);
+            //     emojiList.append(new EmojiComponent(emoji).getElement());
+            //     console.log(emojiList);
             // });
-            //   }
 
             const closeButton = popup.querySelector(".film-details__close");
             const onEscKeyDown = (evt) => {
@@ -122,7 +115,7 @@ export default class MovieController {
                 onDataChange(film, FAVORITES_CARDS, "Favorites");
             });
 
-            // popupComponent.setEmotionButtonClickHandler();
+            popupComponent.setEmotionButtonClickHandler();
         };
 
         function deletePopup() {
