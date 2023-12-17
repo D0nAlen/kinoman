@@ -253,7 +253,7 @@ export default class PopupComponent extends AbstractSmartComponent {
       .addEventListener(`click`, handler);
   }
 
-  // 1)выровнять смайлик в иконке по центру!!!
+  // 1)вывести на первый план смайлик в иконке
   setEmotionButtonClickHandler() {
     let emojiIcon = this.getElement().querySelector(".film-details__add-emoji-label");
     this.getElement().querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
@@ -261,17 +261,16 @@ export default class PopupComponent extends AbstractSmartComponent {
       emoji.addEventListener(`click`, () => {
         let cloneEmoji = emoji.cloneNode(true);
         let emojiImage = cloneEmoji.querySelector("img");
-        // emojiImage.style.height = '70px';
-        // emojiImage.style.width = '70px';
+
+        emojiIcon.style = `border: none;
+                           background-color: rgba(255, 255, 255, 0);`;
+        cloneEmoji.style = `opacity: 1; 
+                            margin: 0px;`;
+        emojiImage.style = `height: 70px;
+                            width: 70px;`;
 
         emojiIcon.innerHTML = ``;
         emojiIcon.appendChild(cloneEmoji);
-        emojiImage.style = `width: 30px; 
-           height: 30px;
-           align-content: center;`
-
-        console.log(cloneEmoji);
-
       });
     });
   }
