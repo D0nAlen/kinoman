@@ -17,6 +17,7 @@ export default class MovieController {
         this._cardFilmComponent = null;
         this._popupComponent = null;
         this._popup = null;
+        
         this._film = null;
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -29,14 +30,14 @@ export default class MovieController {
         this._film = film;
 
         this._cardFilmComponent = new CardFilmComponent(film);
-        this._popupComponent = new PopupComponent(film);
+        // this._popupComponent = new PopupComponent(film);
 
         this._popup = document.querySelector(".popup");
 
         render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
 
-        this._cardFilmComponent.getElement().addEventListener(`click`, () => {
-            this._addPopup(this._onDataChange, this._popupComponent);
+        this._cardFilmComponent.setCardFilmClickHandler(() => {
+            this._addPopup();
         });
 
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
@@ -54,21 +55,20 @@ export default class MovieController {
             this._onDataChange(film, FAVORITES_CARDS, "Favorites");
         });
 
-        if (oldPopupComponent && oldFilmComponent) {
-            replace(this._cardFilmComponent, oldFilmComponent);
-            replace(this._popupComponent, oldPopupComponent);
-        } else {
-            render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
-        }
-
-
+        // if (oldPopupComponent && oldFilmComponent) {
+        //     replace(this._cardFilmComponent, oldFilmComponent);
+        //     replace(this._popupComponent, oldPopupComponent);
+        // } else {
+        //     render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
+        // }
     }
 
-    _addPopup(onDataChange, popupComponent) {
+    _addPopup() {
+        this._popupComponent = new PopupComponent(this._film);
         const genres = generateGenres(this._film.genres);
         const comments = generateComments(COMMENTS);
 
-        render(this._popup, popupComponent, RenderPosition.BEFOREEND);
+        render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
 
         //genres rendering
         const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
@@ -83,15 +83,6 @@ export default class MovieController {
         }
 
         const closeButton = this._popup.querySelector(".film-details__close");
-        // const onEscKeyDown = (evt) => {
-
-        //     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-        //     if (isEscKey) {
-        //         document.removeEventListener(`keydown`, onEscKeyDown);
-        //         deletePopup();
-        //     }
-        // };
 
         document.addEventListener(`keydown`, this._onEscKeyDown);
 
@@ -100,21 +91,21 @@ export default class MovieController {
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         });
 
-        popupComponent.setAddToWatchlistButtonClickHandler(() => {
+        this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
             this._film.addToWatchlist = !this._film.addToWatchlist;
-            onDataChange(this._film, WATCHLIST_CARDS, "Watchlist");
+            this._onDataChange(this._film, WATCHLIST_CARDS, "Watchlist");
         });
 
-        popupComponent.setMarkAsWatchedButtonClickHandler(() => {
+        this._popupComponent.setMarkAsWatchedButtonClickHandler(() => {
             this._film.markAsWatched = !this._film.markAsWatched;
-            onDataChange(this._film, HISTORY_CARDS, "History");
+            this._onDataChange(this._film, HISTORY_CARDS, "History");
         });
-        popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
+        this._popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
             this._film.markAsFavorite = !this._film.markAsFavorite;
-            onDataChange(this._film, FAVORITES_CARDS, "Favorites");
+            this._onDataChange(this._film, FAVORITES_CARDS, "Favorites");
         });
 
-        popupComponent.setEmotionButtonClickHandler();
+        this._popupComponent.setEmotionButtonClickHandler();
     };
 
     _deletePopup() {

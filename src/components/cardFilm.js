@@ -33,6 +33,10 @@ export default class CardFilmComponent extends AbstractComponent {
     return createCardFilmTemplate(this._film);
   }
 
+  setCardFilmClickHandler(handler) {
+    this.getElement().addEventListener(`click`, handler);
+  }
+
   setAddToWatchlistButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
       .addEventListener(`click`, handler);

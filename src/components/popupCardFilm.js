@@ -176,8 +176,6 @@ export default class PopupComponent extends AbstractSmartComponent {
     element.querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, () => {
         this._isAddToWatchlist = !this._isAddToWatchlist;
-        // console.log(this._isAddToWatchlist);
-
         
         this.rerender();
       });
