@@ -22,11 +22,13 @@ let currentMenuButton = "all";
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
-const siteMainElement = document.querySelector(".main");
 
 const renderNormalCardFilm = (film, siteMainElement, onDataChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
+    // 1)должно быть так? убрать лишнюю переменную-конструктор, сделать рефакторинг везде.
+    // const movieController = new MovieController(filmsListContainer, onDataChange);
+    // movieController.render(film);
     const movieController = new MovieController(siteMainElement, onDataChange);
     movieController.render(film, filmsListContainer);
 };

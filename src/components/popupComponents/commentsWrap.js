@@ -1,4 +1,5 @@
 import { createElement } from "../../utils/render.js";
+import AbstractComponent from "../abstract-component.js";
 
 const createCommentsListTemplate = (comments) => {
   return `<section class="film-details__comments-wrap">
@@ -6,9 +7,10 @@ const createCommentsListTemplate = (comments) => {
   </section>`;
 };
 
-export default class FilmDetailsCommentsWrapComponent {
+export default class FilmDetailsCommentsWrapComponent extends AbstractComponent{
 
   constructor(comments) {
+    super();
     this._comments = comments;
     this._element = null;
   }
@@ -16,14 +18,15 @@ export default class FilmDetailsCommentsWrapComponent {
   getTemplate() {
     return createCommentsListTemplate(this._comments);
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
 
-  removeElement() {
-    this._element = null;
-  }
+  // getElement() {
+  //   if (!this._element) {
+  //     this._element = createElement(this.getTemplate());
+  //   }
+  //   return this._element;
+  // }
+
+  // removeElement() {
+  //   this._element = null;
+  // }
 }

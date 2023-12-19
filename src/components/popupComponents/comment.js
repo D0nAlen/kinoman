@@ -1,4 +1,5 @@
 import { createElement } from "../../utils/render.js";
+import AbstractComponent from "../abstract-component.js";
 
 const createCommentTemplate = (comment) => {
     const { text, emotion, author, date } = comment;
@@ -18,8 +19,9 @@ const createCommentTemplate = (comment) => {
   </li>`;
   };
   
-  export default class CommentComponent {
+  export default class CommentComponent extends AbstractComponent{
     constructor(comment) {
+      super();
       this._comment = comment;
       this._element = null;
     }
@@ -28,15 +30,15 @@ const createCommentTemplate = (comment) => {
       return createCommentTemplate(this._comment);
     }
   
-    getElement() {
-      if (!this._element) {
-        this._element = createElement(this.getTemplate());
-      }
-      return this._element;
-    }
+    // getElement() {
+    //   if (!this._element) {
+    //     this._element = createElement(this.getTemplate());
+    //   }
+    //   return this._element;
+    // }
   
-    removeElement() {
-      this._element = null;
-    }
+    // removeElement() {
+    //   this._element = null;
+    // }
   };
   

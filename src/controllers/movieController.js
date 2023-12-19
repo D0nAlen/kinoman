@@ -1,4 +1,4 @@
-import { render, RenderPosition } from "../utils/render.js";
+import { render, RenderPosition, replace } from "../utils/render.js";
 import { COMMENTS, FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS, EMOJIS } from "../const.js";
 import { generateGenres } from "../mock/genres.js";
 import { generateComments } from "../mock/comment.js";
@@ -6,32 +6,37 @@ import CommentComponent from "../components/popupComponents/comment.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import GenreTemplateComponent from "../components/popupComponents/genres.js";
 import CardFilmComponent from "../components/cardFilm.js";
-import { generateEmojis } from "../mock/emojis.js";
-import EmojiComponent from "../components/popupComponents/emoji.js";
 
+// 1)this._container - нужен или нет? (в pageController запись о рефакторинге)
+// 2)+добавлены старый и новый компонент - интегрировать!!!
 export default class MovieController {
     constructor(container, onDataChange) {
         this._container = container;
         this._onDataChange = onDataChange;
+
         this._cardFilmComponent = null;
+        this._popupComponent = null;
+        this._popup = null;
+        this._film = null;
+
+        this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
-    // 1)по клику на кнопках addTo... не должен открываться попап.
     render(film, filmsListContainer) {
-        // 1)Что будет новым и старым компонентом?
-        // const oldTaskComponent = this._taskComponent;
-        // const oldTaskEditComponent = this._taskEditComponent;
 
-        // this._taskComponent = new TaskComponent(task);
-        // this._taskEditComponent = new TaskEditComponent(task);
+        const oldFilmComponent = this._cardFilmComponent;
+        const oldPopupComponent = this._popupComponent;
+        this._film = film;
 
         this._cardFilmComponent = new CardFilmComponent(film);
-        const popup = document.querySelector(".popup");
+        this._popupComponent = new PopupComponent(film);
+
+        this._popup = document.querySelector(".popup");
 
         render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
 
         this._cardFilmComponent.getElement().addEventListener(`click`, () => {
-            addPopup(this._onDataChange);
+            this._addPopup(this._onDataChange, this._popupComponent);
         });
 
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
@@ -49,79 +54,80 @@ export default class MovieController {
             this._onDataChange(film, FAVORITES_CARDS, "Favorites");
         });
 
-        function addPopup(onDataChange) {
-            const genres = generateGenres(film.genres);
-            const comments = generateComments(COMMENTS);
+        if (oldPopupComponent && oldFilmComponent) {
+            replace(this._cardFilmComponent, oldFilmComponent);
+            replace(this._popupComponent, oldPopupComponent);
+        } else {
+            render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
+        }
 
-            const popupComponent = new PopupComponent(film);
-            render(popup, popupComponent, RenderPosition.BEFOREEND);
-            // popup.appendChild(popupComponent.getElement());
 
-            //genres rendering
-            const filmDetailsGenres = popup.querySelector(".film-details-genres");
-            for (let i = 0; i < genres.length; i++) {
-                render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
-                // filmDetailsGenres.appendChild(new GenreTemplateComponent(genres[i]).getElement());
-            }
-
-            // comments rendering
-            const commentsList = popup.querySelector(".film-details__comments-list");
-            for (let i = 0; i < comments.length; i++) {
-                render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
-                // commentsList.appendChild(new CommentComponent(comments[i]).getElement());
-            }
-
-            // // popupComponent.setEmotionButtonClickHandler();
-            // let emojiIcon = popup.querySelector(".film-details__add-emoji-label");
-            // let emojiList = popup.querySelector(".film-details__emoji-list");
-
-            // // 1)почему в <div>, список эмодзи рисуется вертикально а не горизонтально?
-            // const emojis = generateEmojis(EMOJIS);
-            // emojis.forEach((emoji) => {
-            //     // render(emojiList, new EmojiComponent(emoji), RenderPosition.BEFOREEND);
-            //     emojiList.append(new EmojiComponent(emoji).getElement());
-            //     console.log(emojiList);
-            // });
-
-            const closeButton = popup.querySelector(".film-details__close");
-            const onEscKeyDown = (evt) => {
-
-                const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-                if (isEscKey) {
-                    document.removeEventListener(`keydown`, onEscKeyDown);
-                    deletePopup();
-                }
-            };
-
-            document.addEventListener(`keydown`, onEscKeyDown);
-
-            closeButton.addEventListener(`click`, () => {
-                deletePopup();
-                document.removeEventListener(`keydown`, onEscKeyDown);
-            });
-
-            popupComponent.setAddToWatchlistButtonClickHandler(() => {
-                film.addToWatchlist = !film.addToWatchlist;
-                onDataChange(film, WATCHLIST_CARDS, "Watchlist");
-            });
-
-            popupComponent.setMarkAsWatchedButtonClickHandler(() => {
-                film.markAsWatched = !film.markAsWatched;
-                onDataChange(film, HISTORY_CARDS, "History");
-            });
-            popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
-                film.markAsFavorite = !film.markAsFavorite;
-                onDataChange(film, FAVORITES_CARDS, "Favorites");
-            });
-
-            popupComponent.setEmotionButtonClickHandler();
-        };
-
-        function deletePopup() {
-            popup.replaceChildren();
-        };
     }
 
+    _addPopup(onDataChange, popupComponent) {
+        const genres = generateGenres(this._film.genres);
+        const comments = generateComments(COMMENTS);
 
+        render(this._popup, popupComponent, RenderPosition.BEFOREEND);
+
+        //genres rendering
+        const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
+        for (let i = 0; i < genres.length; i++) {
+            render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
+        }
+
+        // comments rendering
+        const commentsList = this._popup.querySelector(".film-details__comments-list");
+        for (let i = 0; i < comments.length; i++) {
+            render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
+        }
+
+        const closeButton = this._popup.querySelector(".film-details__close");
+        // const onEscKeyDown = (evt) => {
+
+        //     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+        //     if (isEscKey) {
+        //         document.removeEventListener(`keydown`, onEscKeyDown);
+        //         deletePopup();
+        //     }
+        // };
+
+        document.addEventListener(`keydown`, this._onEscKeyDown);
+
+        closeButton.addEventListener(`click`, () => {
+            this._deletePopup();
+            document.removeEventListener(`keydown`, this._onEscKeyDown);
+        });
+
+        popupComponent.setAddToWatchlistButtonClickHandler(() => {
+            this._film.addToWatchlist = !this._film.addToWatchlist;
+            onDataChange(this._film, WATCHLIST_CARDS, "Watchlist");
+        });
+
+        popupComponent.setMarkAsWatchedButtonClickHandler(() => {
+            this._film.markAsWatched = !this._film.markAsWatched;
+            onDataChange(this._film, HISTORY_CARDS, "History");
+        });
+        popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
+            this._film.markAsFavorite = !this._film.markAsFavorite;
+            onDataChange(this._film, FAVORITES_CARDS, "Favorites");
+        });
+
+        popupComponent.setEmotionButtonClickHandler();
+    };
+
+    _deletePopup() {
+        this._popup.replaceChildren();
+    };
+
+    _onEscKeyDown = (evt) => {
+
+        const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+        if (isEscKey) {
+            document.removeEventListener(`keydown`, this._onEscKeyDown);
+            this._deletePopup();
+        }
+    };
 }

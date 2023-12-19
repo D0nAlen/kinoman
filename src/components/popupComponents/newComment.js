@@ -1,4 +1,5 @@
 import { createElement } from "../../utils/render.js";
+import AbstractComponent from "../abstract-component.js";
 
 const createFilmDetailsNewCommentTemplate = () => {
   return `<div class="film-details__new-comment">
@@ -32,23 +33,23 @@ const createFilmDetailsNewCommentTemplate = () => {
   </div>`;
 };
 
-export default class FilmDetailsNewCommentComponent {
-  constructor() {
-    this._element = null;
-  }
+export default class FilmDetailsNewCommentComponent extends AbstractComponent {
+  // constructor() {
+  //   this._element = null;
+  // }
 
   getTemplate() {
     return createFilmDetailsNewCommentTemplate();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
+  // getElement() {
+  //   if (!this._element) {
+  //     this._element = createElement(this.getTemplate());
+  //   }
+  //   return this._element;
+  // }
 
-  removeElement() {
-    this._element = null;
-  }
+  // removeElement() {
+  //   this._element = null;
+  // }
 }
