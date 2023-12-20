@@ -1,4 +1,10 @@
 import AbstractSmartComponent from "./abstract-smart-component.js";
+import { generateGenres } from "../mock/genres.js";
+import { generateComments } from "../mock/comment.js";
+import { COMMENTS } from "../const.js";
+import GenreTemplateComponent from "./popupComponents/genres.js";
+import { RenderPosition, render } from "../utils/render.js";
+import CommentComponent from "./popupComponents/comment.js";
 
 const createPopupTemplate = (film) => {
   return `<section class="film-details">
@@ -135,10 +141,28 @@ export default class PopupComponent extends AbstractSmartComponent {
 
     // this._applyFlatpickr();
     this._subscribeOnEvents();
+    this._renderPopup();
   }
 
   getTemplate() {
     return createPopupTemplate(this._film);
+  }
+
+  _renderPopup() {
+    const genres = generateGenres(this._film.genres);
+    const comments = generateComments(COMMENTS);
+    //genres rendering
+    const filmDetailsGenres = this.getElement().querySelector(".film-details-genres");
+
+    for (let i = 0; i < genres.length; i++) {
+      render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
+    }
+
+    // comments rendering
+    const commentsList = this.getElement().querySelector(".film-details__comments-list");
+    for (let i = 0; i < comments.length; i++) {
+        render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
+    }
   }
 
   // 1)нужно заново навесить обработчики событий(только в попап),
@@ -148,6 +172,30 @@ export default class PopupComponent extends AbstractSmartComponent {
   recoveryListeners() {
     this.setSubmitHandler(this._submitHandler);
     this._subscribeOnEvents();
+  }
+
+  rerender() {
+    super.rerender();
+this._renderPopup();
+    // const genres = generateGenres(this._film.genres);
+    // const comments = generateComments(COMMENTS);
+
+    // // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
+    // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
+
+    // // 1)список комментов и жанров стирается при перерисовке!!!
+    // //genres rendering
+    // const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
+    // for (let i = 0; i < genres.length; i++) {
+    //     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
+    // }
+
+    // // comments rendering
+    // const commentsList = this._popup.querySelector(".film-details__comments-list");
+    // for (let i = 0; i < comments.length; i++) {
+    //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
+    // }
+    // this._applyFlatpickr();
   }
 
   // нужен рефакторинг!
@@ -175,11 +223,15 @@ export default class PopupComponent extends AbstractSmartComponent {
     // 1)почему удаляется список смайликов?
     element.querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, () => {
-        this._isAddToWatchlist = !this._isAddToWatchlist;
-        
+        // this.isAddToWatchlist = !this.isAddToWatchlist;
         this.rerender();
       });
 
+
+    // element.querySelector(`.film-details__control-label--watchlist`)
+    //   .addEventListener(`click`, () => {
+
+    //   });
     // element.querySelector(`.card__repeat-toggle`)
     //   .addEventListener(`click`, () => {
     //     this._isRepeatingTask = !this._isRepeatingTask;
