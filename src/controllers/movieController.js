@@ -1,10 +1,6 @@
 import { render, RenderPosition } from "../utils/render.js";
-import { COMMENTS, FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS, EMOJIS } from "../const.js";
-import { generateGenres } from "../mock/genres.js";
-import { generateComments } from "../mock/comment.js";
-import CommentComponent from "../components/popupComponents/comment.js";
+import { FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS } from "../const.js";
 import PopupComponent from "../components/popupCardFilm.js";
-import GenreTemplateComponent from "../components/popupComponents/genres.js";
 import CardFilmComponent from "../components/cardFilm.js";
 
 // 1)this._container - нужен или нет? (в pageController запись о рефакторинге)
@@ -17,7 +13,6 @@ export default class MovieController {
         this._cardFilmComponent = null;
         this._popupComponent = null;
         this._popup = null;
-
         this._film = null;
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -25,15 +20,18 @@ export default class MovieController {
 
     render(film, filmsListContainer) {
 
-        const oldFilmComponent = this._cardFilmComponent;
-        const oldPopupComponent = this._popupComponent;
+
+        // const oldFilmComponent = this._cardFilmComponent;
+        // const oldPopupComponent = this._popupComponent;
         this._film = film;
 
-        this._cardFilmComponent = new CardFilmComponent(film);
+        this._cardFilmComponent = new CardFilmComponent(this._film);
+        // this._popupComponent = new PopupComponent(this._film);
 
         this._popup = document.querySelector(".popup");
 
         render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
+
 
         this._cardFilmComponent.setCardFilmClickHandler(() => {
             this._addPopup();
@@ -60,40 +58,16 @@ export default class MovieController {
         // } else {
         //     render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
         // }
+
     }
 
     _addPopup() {
+
         this._popupComponent = new PopupComponent(this._film);
-        // const genres = generateGenres(this._film.genres);
-        // const comments = generateComments(COMMENTS);
 
         render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
 
-        // //genres rendering
-        //         const filmDetailsGenres = this._popupComponent.getElement().querySelector(".film-details-genres");
-        // // const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
-        // for (let i = 0; i < genres.length; i++) {
-        //     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
-        // }
-
-        // comments rendering
-        // const commentsList = this._popupComponent.getElement().querySelector(".film-details__comments-list");
-        // // const commentsList = this._popup.querySelector(".film-details__comments-list");
-        // for (let i = 0; i < comments.length; i++) {
-        //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
-        // }
-
-
-
-
-        // const closeButton = this._popupComponent.getElement().querySelector(".film-details__close");
-
         document.addEventListener(`keydown`, this._onEscKeyDown);
-
-        // closeButton.addEventListener(`click`, () => {
-        //     this._deletePopup();
-        //     document.removeEventListener(`keydown`, this._onEscKeyDown);
-        // });
 
         this._popupComponent.setCloseButtonClickHandler(() => {
             this._deletePopup();

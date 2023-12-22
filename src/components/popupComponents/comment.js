@@ -1,4 +1,3 @@
-import { createElement } from "../../utils/render.js";
 import AbstractComponent from "../abstract-component.js";
 
 const createCommentTemplate = (comment) => {
