@@ -208,7 +208,19 @@ export default class PageController {
         }
     }
 
+// 1)логика по изменению данных должна быть в  _subscribeOnEvents() в popupCardfIlm ????????
+// 2)здесь тупо поиск и вставка нового элемента?
+// _onDataChange(movieController, oldData, newData, filmList) {
+//     const index = this._films.findIndex((it) => it === oldData);
 
+//     if (index === -1) {
+//         return;
+//     }
+
+//     filmList = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
+
+//     movieController.render(this._films[index]);
+// }
     _onDataChange(filmCard, filmList, typeButton) {
         let property = null;
         switch (typeButton) {

@@ -17,7 +17,7 @@ export default class MovieController {
         this._cardFilmComponent = null;
         this._popupComponent = null;
         this._popup = null;
-        
+
         this._film = null;
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -69,7 +69,6 @@ export default class MovieController {
 
         render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
 
-        // // 1)список комментов и жанров стирается при перерисовке!!!
         // //genres rendering
         //         const filmDetailsGenres = this._popupComponent.getElement().querySelector(".film-details-genres");
         // // const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
@@ -84,11 +83,19 @@ export default class MovieController {
         //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
         // }
 
-        const closeButton = this._popupComponent.getElement().querySelector(".film-details__close");
+
+
+
+        // const closeButton = this._popupComponent.getElement().querySelector(".film-details__close");
 
         document.addEventListener(`keydown`, this._onEscKeyDown);
 
-        closeButton.addEventListener(`click`, () => {
+        // closeButton.addEventListener(`click`, () => {
+        //     this._deletePopup();
+        //     document.removeEventListener(`keydown`, this._onEscKeyDown);
+        // });
+
+        this._popupComponent.setCloseButtonClickHandler(() => {
             this._deletePopup();
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         });
