@@ -88,7 +88,7 @@ export default class MovieController {
             this._onDataChange(this._film, FAVORITES_CARDS, "Favorites");
         });
 
-        this._popupComponent.setEmotionButtonClickHandler();
+        // this._popupComponent.setEmotionButtonClickHandler();
     };
 
     _deletePopup() {

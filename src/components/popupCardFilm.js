@@ -3,7 +3,7 @@ import { generateGenres } from "../mock/genres.js";
 import { generateComments } from "../mock/comment.js";
 import { COMMENTS } from "../const.js";
 import GenreTemplateComponent from "./popupComponents/genres.js";
-import { RenderPosition, render, remove } from "../utils/render.js";
+import { RenderPosition, render, remove, replace } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
 
 const createCloseButtonTemplate = () => {
@@ -258,6 +258,7 @@ export default class PopupComponent extends AbstractSmartComponent {
     this._isAddToWatchlist = !!film.addToWatchlist;
     this._isMarkAsFavorite = !!film.markAsFavorite;
     this._isMarkAsWatched = !!film.markAsWatched;
+    this._currentEmoji = null;
 
 
     // this._isAddToWatchlist = Object.values(film.addToWatchlist).some(Boolean);
@@ -296,6 +297,17 @@ export default class PopupComponent extends AbstractSmartComponent {
     const commentsList = this.getElement().querySelector(".film-details__comments-list");
     for (let i = 0; i < comments.length; i++) {
       render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
+    }
+
+    if (this._currentEmoji) {
+      let emojiIcon = this.getElement().querySelector(".film-details__add-emoji-label");
+
+      emojiIcon.style = `border: none;
+                         background-color: rgba(255, 255, 255, 0);
+                         height: 70px;
+                         width: 70px;`;
+
+      emojiIcon.appendChild(this._currentEmoji);
     }
   }
 
@@ -348,7 +360,7 @@ export default class PopupComponent extends AbstractSmartComponent {
 
 
   // 1)нужно заново навесить обработчики событий(только в попап),
-  // 2)обработчики кнопок эмодзи,
+  // 2)обработчики кнопок эмодзи
   _subscribeOnEvents() {
     const element = this.getElement();
 
@@ -374,13 +386,29 @@ export default class PopupComponent extends AbstractSmartComponent {
     element.querySelector(`.film-details__close`)
       .addEventListener('click', () => {
         remove(this);
+        this.rerender();
       });
 
-    // element.querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
-    //   emoji.addEventListener(`click`, () => {
-    //     this.rerender();
-    //   });
-    // });
+    element.querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
+      emoji.addEventListener(`click`, () => {
+        let emojiIcon = this.getElement().querySelector(".film-details__add-emoji-label");
+
+        let cloneEmoji = emoji.cloneNode(true);
+        let emojiImage = cloneEmoji.querySelector("img");
+        emojiIcon.innerHTML = ``;
+
+        emojiIcon.style = `border: none;
+        background-color: rgba(255, 255, 255, 0);`;
+        cloneEmoji.style = `opacity: 1; 
+         margin: 0px;`;
+        emojiImage.style = `height: 70px;
+                 width: 70px;`;
+        emojiIcon.appendChild(cloneEmoji);
+        this._currentEmoji = emojiIcon;
+
+        this.rerender();
+      });
+    });
   }
 
   setCloseButtonClickHandler(handler) {
@@ -403,25 +431,32 @@ export default class PopupComponent extends AbstractSmartComponent {
       .addEventListener(`click`, handler);
   }
 
-  // перенести логику функции в MovieController?
-  setEmotionButtonClickHandler() {
-    let emojiIcon = this.getElement().querySelector(".film-details__add-emoji-label");
-    this.getElement().querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
+  // setEmotionButtonClickHandler(handler) {
+  //   this.getElement().querySelector(`.film-details__control-label--favorite`)
+  //     .addEventListener(`click`, handler);
+  // }
 
-      emoji.addEventListener(`click`, () => {
-        let cloneEmoji = emoji.cloneNode(true);
-        let emojiImage = cloneEmoji.querySelector("img");
+  // 1)стартовая отрисовка и слушатель кнопки друг друга перебивают!!!
+  // setEmotionButtonClickHandler() {
+  //   let emojiIcon = this.getElement().querySelector(".film-details__add-emoji-label");
+  //   this.getElement().querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
 
-        emojiIcon.style = `border: none;
-                           background-color: rgba(255, 255, 255, 0);`;
-        cloneEmoji.style = `opacity: 1; 
-                            margin: 0px;`;
-        emojiImage.style = `height: 70px;
-                            width: 70px;`;
+  //     emoji.addEventListener(`click`, () => {
+  //       let cloneEmoji = emoji.cloneNode(true);
+  //       let emojiImage = cloneEmoji.querySelector("img");
 
-        emojiIcon.innerHTML = ``;
-        emojiIcon.appendChild(cloneEmoji);
-      });
-    });
-  }
+  //       emojiIcon.style = `border: none;
+  //                          background-color: rgba(255, 255, 255, 0);`;
+  //       cloneEmoji.style = `opacity: 1; 
+  //                           margin: 0px;`;
+  //       emojiImage.style = `height: 70px;
+  //                           width: 70px;`;
+
+  //       emojiIcon.innerHTML = ``;
+  //       emojiIcon.appendChild(cloneEmoji);
+  //       // this._currentEmoji = cloneEmoji;
+  //       // console.log(this._currentEmoji);
+  //     });
+  //   });
+  // }
 };
