@@ -23,34 +23,34 @@ let currentMenuButton = "all";
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-const renderNormalCardFilm = (film, siteMainElement, onDataChange) => {
+const renderNormalCardFilm = (film, siteMainElement, onDataChange,onViewChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
     // 1)должно быть так? убрать лишнюю переменную-конструктор, сделать рефакторинг везде.
     // const movieController = new MovieController(filmsListContainer, onDataChange);
     // movieController.render(film);
-    const movieController = new MovieController(siteMainElement, onDataChange);
+    const movieController = new MovieController(siteMainElement, onDataChange,onViewChange);
     movieController.render(film, filmsListContainer);
 };
 
-const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent, onDataChange) => {
+const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent, onDataChange,onViewChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
 
     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
     for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement, onDataChange);
+        const movieController = new MovieController(siteMainElement, onDataChange,onViewChange);
         movieController.render(topRatedFilms[i], topRatedContainerElement);
     }
 };
 
-const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent, onDataChange) => {
+const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent, onDataChange,onViewChange) => {
     const mostCommentedContainerComponent = new MostCommentedContainerComponent();
     render(filmsContainerComponent.getElement(), mostCommentedContainerComponent, RenderPosition.BEFOREEND);
 
     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
     for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement, onDataChange);
+        const movieController = new MovieController(siteMainElement, onDataChange,onViewChange);
         movieController.render(mostCommentedFilms[i], mostCommentedContainerElement);
     }
 };
@@ -157,9 +157,11 @@ export default class PageController {
     constructor(container) {
         this._container = container;
         this._films = [];
+        this._showedMovieControllers = [];
 
         this._sortingComponent = new SortingComponent();
         this._onDataChange = this._onDataChange.bind(this);
+        this._onViewChange = this._onViewChange.bind(this);
     }
 
     render(films) {
@@ -239,5 +241,9 @@ export default class PageController {
                 renderFilms(this._container, currentMenuButton, filmList, this._onDataChange);
             }
         }
+    }
+
+    _onViewChange() {
+        this._showedMovieControllers.forEach((it) => it.setDefaultView());
     }
 }

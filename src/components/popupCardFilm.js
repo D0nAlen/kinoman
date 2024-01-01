@@ -271,7 +271,6 @@ export default class PopupComponent extends AbstractSmartComponent {
     this._subscribeOnEvents();
   }
 
-  // 1)навесить оставшиеся обработчики событий, сделать их интерактивными
   getTemplate() {
     return createPopupTemplate(this._film, {
       watchlistCheckbox: this._isAddToWatchlist ? "checked" : "unchecked",
@@ -358,9 +357,6 @@ export default class PopupComponent extends AbstractSmartComponent {
     this._submitHandler = handler;
   }
 
-
-  // 1)нужно заново навесить обработчики событий(только в попап),
-  // 2)обработчики кнопок эмодзи
   _subscribeOnEvents() {
     const element = this.getElement();
 

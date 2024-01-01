@@ -3,17 +3,24 @@ import { FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS } from "../const.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import CardFilmComponent from "../components/cardFilm.js";
 
+const Mode = {
+    DEFAULT: `default`,
+    EDIT: `edit`,
+};
+
 // 1)this._container - нужен или нет? (в pageController запись о рефакторинге)
 // 2)+добавлены старый и новый компонент - интегрировать!!!
 export default class MovieController {
-    constructor(container, onDataChange) {
+    constructor(container, onDataChange, onViewChange) {
         this._container = container;
         this._onDataChange = onDataChange;
+        this._onViewChange = onViewChange;
 
         this._cardFilmComponent = null;
         this._popupComponent = null;
         this._popup = null;
         this._film = null;
+        this._mode = Mode.DEFAULT;
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
@@ -34,6 +41,7 @@ export default class MovieController {
 
 
         this._cardFilmComponent.setCardFilmClickHandler(() => {
+            // this._onViewChange();
             this._addPopup();
         });
 
@@ -61,24 +69,49 @@ export default class MovieController {
 
     }
 
+    setDefaultView() {
+        if (this._mode !== Mode.DEFAULT) {
+            this._deletePopup();
+            // this._replaceEditToTask();
+        }
+    }
+
+    // // нужен рефакторинг! (закрыть редактирование)
+    //     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    //     this._taskEditComponent.reset();
+    //     replace(this._taskComponent, this._taskEditComponent);
+    //     this._mode = Mode.DEFAULT;
+    // };
+
+    // _replaceTaskToEdit = () => {
+    //     this._onViewChange();
+    //     replace(this._taskEditComponent, this._taskComponent);
+    //     this._mode = Mode.EDIT;
+    // };
+
+
+
+
+    
+    // 1)рефакторинг этой и след.функции
+    // 2)настроить reset() в popupCardFilm
+    // 3)может нужна отдельная функция, вызывающая addPopup()? Наподобие _replaceTaskToEdit().
+    //  _replaceTaskToEdit
     _addPopup() {
 
         this._popupComponent = new PopupComponent(this._film);
 
         render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
-
         document.addEventListener(`keydown`, this._onEscKeyDown);
 
         this._popupComponent.setCloseButtonClickHandler(() => {
             this._deletePopup();
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         });
-
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
             this._film.addToWatchlist = !this._film.addToWatchlist;
             this._onDataChange(this._film, WATCHLIST_CARDS, "Watchlist");
         });
-
         this._popupComponent.setMarkAsWatchedButtonClickHandler(() => {
             this._film.markAsWatched = !this._film.markAsWatched;
             this._onDataChange(this._film, HISTORY_CARDS, "History");
@@ -87,12 +120,16 @@ export default class MovieController {
             this._film.markAsFavorite = !this._film.markAsFavorite;
             this._onDataChange(this._film, FAVORITES_CARDS, "Favorites");
         });
-
-        // this._popupComponent.setEmotionButtonClickHandler();
     };
 
+    // _replaceEditToTask()
     _deletePopup() {
+        // this._popup.replaceChildren();
+
+        document.removeEventListener(`keydown`, this._onEscKeyDown);
+        this._taskEditComponent.reset();
         this._popup.replaceChildren();
+        this._mode = Mode.DEFAULT;
     };
 
     _onEscKeyDown = (evt) => {
@@ -100,8 +137,8 @@ export default class MovieController {
         const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
         if (isEscKey) {
-            document.removeEventListener(`keydown`, this._onEscKeyDown);
             this._deletePopup();
+            document.removeEventListener(`keydown`, this._onEscKeyDown);
         }
     };
 }
