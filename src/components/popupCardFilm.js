@@ -339,7 +339,7 @@ export default class PopupComponent extends AbstractSmartComponent {
     // this._applyFlatpickr();
   }
 
-  // нужен рефакторинг!
+  // 1)какие данные попапа должны быть сброшены?
   reset() {
     // const film = this._film;
 
@@ -347,7 +347,7 @@ export default class PopupComponent extends AbstractSmartComponent {
     // this._isRepeatingTask = Object.values(task.repeatingDays).some(Boolean);
     // this._activeRepeatingDays = Object.assign({}, task.repeatingDays);
 
-    // this.rerender();
+    this.rerender();
   }
 
   setSubmitHandler(handler) {

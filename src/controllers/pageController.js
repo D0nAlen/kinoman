@@ -23,34 +23,42 @@ let currentMenuButton = "all";
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-const renderNormalCardFilm = (film, siteMainElement, onDataChange,onViewChange) => {
+
+// const renderTasks = (taskListElement, tasks, onDataChange, onViewChange) => {
+//     return tasks.map((task) => {
+//         const taskController = new TaskController(taskListElement, onDataChange, onViewChange);
+//         taskController.render(task);
+
+//         return taskController;
+//     });
+// };
+
+// 1)функция должеа возвращать movieController,
+const renderNormalCardFilm = (film, siteMainElement, onDataChange, onViewChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
-    // 1)должно быть так? убрать лишнюю переменную-конструктор, сделать рефакторинг везде.
-    // const movieController = new MovieController(filmsListContainer, onDataChange);
-    // movieController.render(film);
-    const movieController = new MovieController(siteMainElement, onDataChange,onViewChange);
+    const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
     movieController.render(film, filmsListContainer);
 };
 
-const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent, onDataChange,onViewChange) => {
+const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent, onDataChange, onViewChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
 
     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
     for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement, onDataChange,onViewChange);
+        const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
         movieController.render(topRatedFilms[i], topRatedContainerElement);
     }
 };
 
-const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent, onDataChange,onViewChange) => {
+const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent, onDataChange, onViewChange) => {
     const mostCommentedContainerComponent = new MostCommentedContainerComponent();
     render(filmsContainerComponent.getElement(), mostCommentedContainerComponent, RenderPosition.BEFOREEND);
 
     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
     for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement, onDataChange,onViewChange);
+        const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
         movieController.render(mostCommentedFilms[i], mostCommentedContainerElement);
     }
 };
@@ -85,7 +93,7 @@ const getSortedFilms = (films, sortType, from, to) => {
     return sortedFilms.slice(from, to);
 };
 
-const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
+const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange) => {
     const films = generateFilms(FILMS_LIST);
     const showMoreButton = new ShowMoreButtonComponent();
     let countFilmsList = FILMS_LIST.length;
@@ -110,12 +118,12 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
         }
 
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-            renderNormalCardFilm(films[i], siteMainElement, onDataChange);
+            renderNormalCardFilm(films[i], siteMainElement, onDataChange, onViewChange);
         }
 
         // button "Show more"
         render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-        showMoreButtonElement(showMoreButton, siteMainElement, films, onDataChange);
+        showMoreButtonElement(showMoreButton, siteMainElement, films, onDataChange, onViewChange);
 
         if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
             showMoreButton.getElement().remove();
@@ -123,15 +131,15 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
     }
 };
 
-const menuButtonElement = (siteMainElement, idButton, FILMS_LIST, onDataChange) => {
+const menuButtonElement = (siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange) => {
     const nameButton = document.getElementById(idButton);
 
     nameButton.addEventListener(`click`, () => {
-        renderFilms(siteMainElement, idButton, FILMS_LIST, onDataChange);
+        renderFilms(siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange);
     });
 };
 
-const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataChange) => {
+const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataChange, onViewChange) => {
     let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
     let cardFilmsCount = films.length;
     let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
@@ -143,7 +151,7 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataCha
         films
             .slice(prevFilmsCount, showingFilmsCount)
             .forEach((film) => {
-                renderNormalCardFilm(film, siteMainElement, onDataChange);
+                renderNormalCardFilm(film, siteMainElement, onDataChange, onViewChange);
             }
             );
 
@@ -190,39 +198,31 @@ export default class PageController {
                 selectedMenuButton = "all";
             }
 
-            renderFilms(container, selectedMenuButton, this._films, this._onDataChange); //отрисовка по умолчанию и обновлению страницы
-            menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange);
-            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange);
-            menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange);
-            menuButtonElement(container, "Favorites", FAVORITES_CARDS, this._onDataChange);
+            // const newFilms = renderFilms(container, selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
+            renderFilms(container, selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
+            menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange, this._onViewChange);
+            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange, this._onViewChange);
+            menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange, this._onViewChange);
+            menuButtonElement(container, "Favorites", FAVORITES_CARDS, this._onDataChange, this._onViewChange);
 
 
+            // const newFilms = renderTasks(taskListElement, this._tasks.slice(0, this._showingTasksCount), this._onDataChange, this._onViewChange);
+            // this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
+
+            // 1)вынести сортировку в отдельную функцию!!!
             this._sortingComponent.setSortTypeChangeHandler((sortType) => {
 
                 this._films = getFilms();
                 const sortedFilms = getSortedFilms(this._films, sortType, 0);
 
-                renderFilms(container, currentMenuButton, sortedFilms, this._onDataChange);
+                renderFilms(container, currentMenuButton, sortedFilms, this._onDataChange, this._onViewChange);
             });
 
-            renderCardTopRatedFilms(container, filmsContainerComponent, this._onDataChange);
-            renderCardMostCommentedFilms(container, filmsContainerComponent, this._onDataChange);
+            renderCardTopRatedFilms(container, filmsContainerComponent, this._onDataChange, this._onViewChange);
+            renderCardMostCommentedFilms(container, filmsContainerComponent, this._onDataChange, this._onViewChange);
         }
     }
 
-// 1)логика по изменению данных должна быть в  _subscribeOnEvents() в popupCardfIlm ????????
-// 2)здесь тупо поиск и вставка нового элемента?
-// _onDataChange(movieController, oldData, newData, filmList) {
-//     const index = this._films.findIndex((it) => it === oldData);
-
-//     if (index === -1) {
-//         return;
-//     }
-
-//     filmList = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
-
-//     movieController.render(this._films[index]);
-// }
     _onDataChange(filmCard, filmList, typeButton) {
         let property = null;
         switch (typeButton) {
