@@ -33,7 +33,19 @@ const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT
 //     });
 // };
 
-// 1)функция должеа возвращать movieController,
+// 1)функция должна возвращать movieController(создавать не по одному контроллеру и фильму за раз,
+//  а по контроллеру для каждой карточки перебором, всем сразу(в заданном списке карточек фильмов)),
+// const renderFilms_all = (films, siteMainElement, onDataChange, onViewChange) => {
+//     return films.map((film) => {
+//         const filmsListContainer = siteMainElement.querySelector(".films-list__container");
+
+//         const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
+//         movieController.render(film, filmsListContainer);
+
+//         return movieController;
+//     });
+// };
+
 const renderNormalCardFilm = (film, siteMainElement, onDataChange, onViewChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
@@ -93,7 +105,7 @@ const getSortedFilms = (films, sortType, from, to) => {
     return sortedFilms.slice(from, to);
 };
 
-const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange) => {
+const renderStandardCardFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange) => {
     const films = generateFilms(FILMS_LIST);
     const showMoreButton = new ShowMoreButtonComponent();
     let countFilmsList = FILMS_LIST.length;
@@ -117,6 +129,7 @@ const renderFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange, onView
             SHOWING_FILMS_COUNT_ON_START = countFilmsList;
         }
 
+        // renderFilms_all(films, siteMainElement, onDataChange, onViewChange);
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
             renderNormalCardFilm(films[i], siteMainElement, onDataChange, onViewChange);
         }
@@ -135,7 +148,7 @@ const menuButtonElement = (siteMainElement, idButton, FILMS_LIST, onDataChange, 
     const nameButton = document.getElementById(idButton);
 
     nameButton.addEventListener(`click`, () => {
-        renderFilms(siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange);
+        renderStandardCardFilms(siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange);
     });
 };
 
@@ -198,8 +211,7 @@ export default class PageController {
                 selectedMenuButton = "all";
             }
 
-            // const newFilms = renderFilms(container, selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
-            renderFilms(container, selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
+            renderStandardCardFilms(container, selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
             menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange, this._onViewChange);
             menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange, this._onViewChange);
             menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange, this._onViewChange);
@@ -238,7 +250,7 @@ export default class PageController {
             filmList.splice(index, 1);
 
             if (currentMenuButton === typeButton) {
-                renderFilms(this._container, currentMenuButton, filmList, this._onDataChange);
+                renderStandardCardFilms(this._container, currentMenuButton, filmList, this._onDataChange);
             }
         }
     }
