@@ -11,14 +11,14 @@ import NoDataFilmsTemplate from "../components/no-data.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
 import { generateFilms } from "../mock/cardFilm.js";
 import MovieController from "./movieController.js";
-import { generateMenu } from "../mock/menu.js";
-import MenuComponent from "../components/menu.js";
+
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 let currentMenuButton = "all";
+const siteMainElement = document.querySelector(".main");
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
@@ -46,32 +46,32 @@ const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT
 //     });
 // };
 
-const renderNormalCardFilm = (film, siteMainElement, onDataChange, onViewChange) => {
+const renderNormalCardFilm = (film, onDataChange, onViewChange) => {
     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
 
-    const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
-    movieController.render(film, filmsListContainer);
+    const movieController = new MovieController(filmsListContainer, onDataChange, onViewChange);
+    movieController.render(film);
 };
 
-const renderCardTopRatedFilms = (siteMainElement, filmsContainerComponent, onDataChange, onViewChange) => {
+const renderCardTopRatedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
 
     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
     for (let i = 0; i < CARD__TOP_RATED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
-        movieController.render(topRatedFilms[i], topRatedContainerElement);
+        const movieController = new MovieController(topRatedContainerElement, onDataChange, onViewChange);
+        movieController.render(topRatedFilms[i]);
     }
 };
 
-const renderCardMostCommentedFilms = (siteMainElement, filmsContainerComponent, onDataChange, onViewChange) => {
+const renderCardMostCommentedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
     const mostCommentedContainerComponent = new MostCommentedContainerComponent();
     render(filmsContainerComponent.getElement(), mostCommentedContainerComponent, RenderPosition.BEFOREEND);
 
     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
     for (let i = 0; i < CARD__MOST_COMMENTED_COUNT; i++) {
-        const movieController = new MovieController(siteMainElement, onDataChange, onViewChange);
-        movieController.render(mostCommentedFilms[i], mostCommentedContainerElement);
+        const movieController = new MovieController(mostCommentedContainerElement, onDataChange, onViewChange);
+        movieController.render(mostCommentedFilms[i]);
     }
 };
 
@@ -105,7 +105,7 @@ const getSortedFilms = (films, sortType, from, to) => {
     return sortedFilms.slice(from, to);
 };
 
-const renderStandardCardFilms = (siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange) => {
+const renderStandardCardFilms = (idButton, FILMS_LIST, onDataChange, onViewChange) => {
     const films = generateFilms(FILMS_LIST);
     const showMoreButton = new ShowMoreButtonComponent();
     let countFilmsList = FILMS_LIST.length;
@@ -131,12 +131,12 @@ const renderStandardCardFilms = (siteMainElement, idButton, FILMS_LIST, onDataCh
 
         // renderFilms_all(films, siteMainElement, onDataChange, onViewChange);
         for (let i = 0; i < SHOWING_FILMS_COUNT_ON_START; i++) {
-            renderNormalCardFilm(films[i], siteMainElement, onDataChange, onViewChange);
+            renderNormalCardFilm(films[i], onDataChange, onViewChange);
         }
 
         // button "Show more"
         render(filmsList, showMoreButton, RenderPosition.BEFOREEND);
-        showMoreButtonElement(showMoreButton, siteMainElement, films, onDataChange, onViewChange);
+        showMoreButtonElement(showMoreButton, films, onDataChange, onViewChange);
 
         if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
             showMoreButton.getElement().remove();
@@ -144,15 +144,15 @@ const renderStandardCardFilms = (siteMainElement, idButton, FILMS_LIST, onDataCh
     }
 };
 
-const menuButtonElement = (siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange) => {
+const menuButtonElement = (idButton, FILMS_LIST, onDataChange, onViewChange) => {
     const nameButton = document.getElementById(idButton);
 
     nameButton.addEventListener(`click`, () => {
-        renderStandardCardFilms(siteMainElement, idButton, FILMS_LIST, onDataChange, onViewChange);
+        renderStandardCardFilms(idButton, FILMS_LIST, onDataChange, onViewChange);
     });
 };
 
-const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataChange, onViewChange) => {
+const showMoreButtonElement = (showMoreButton, films, onDataChange, onViewChange) => {
     let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
     let cardFilmsCount = films.length;
     let showingFilmsCountByButton = SHOWING_FILMS_COUNT_BY_BUTTON;
@@ -164,7 +164,7 @@ const showMoreButtonElement = (showMoreButton, siteMainElement, films, onDataCha
         films
             .slice(prevFilmsCount, showingFilmsCount)
             .forEach((film) => {
-                renderNormalCardFilm(film, siteMainElement, onDataChange, onViewChange);
+                renderNormalCardFilm(film, onDataChange, onViewChange);
             }
             );
 
@@ -211,11 +211,11 @@ export default class PageController {
                 selectedMenuButton = "all";
             }
 
-            renderStandardCardFilms(container, selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
-            menuButtonElement(container, "all", FILMS_CARDS, this._onDataChange, this._onViewChange);
-            menuButtonElement(container, "Watchlist", WATCHLIST_CARDS, this._onDataChange, this._onViewChange);
-            menuButtonElement(container, "History", HISTORY_CARDS, this._onDataChange, this._onViewChange);
-            menuButtonElement(container, "Favorites", FAVORITES_CARDS, this._onDataChange, this._onViewChange);
+            renderStandardCardFilms(selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
+            menuButtonElement("all", FILMS_CARDS, this._onDataChange, this._onViewChange);
+            menuButtonElement("Watchlist", WATCHLIST_CARDS, this._onDataChange, this._onViewChange);
+            menuButtonElement("History", HISTORY_CARDS, this._onDataChange, this._onViewChange);
+            menuButtonElement("Favorites", FAVORITES_CARDS, this._onDataChange, this._onViewChange);
 
 
             // const newFilms = renderTasks(taskListElement, this._tasks.slice(0, this._showingTasksCount), this._onDataChange, this._onViewChange);
@@ -227,35 +227,35 @@ export default class PageController {
                 this._films = getFilms();
                 const sortedFilms = getSortedFilms(this._films, sortType, 0);
 
-                renderFilms(container, currentMenuButton, sortedFilms, this._onDataChange, this._onViewChange);
+                renderStandardCardFilms(currentMenuButton, sortedFilms, this._onDataChange, this._onViewChange);
             });
 
-            renderCardTopRatedFilms(container, filmsContainerComponent, this._onDataChange, this._onViewChange);
-            renderCardMostCommentedFilms(container, filmsContainerComponent, this._onDataChange, this._onViewChange);
+            renderCardTopRatedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
+            renderCardMostCommentedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
         }
     }
 
     _onDataChange(filmCard, filmList, typeButton) {
-        let property = null;
-        switch (typeButton) {
-            case "Watchlist": { property = filmCard.addToWatchlist; break; }
-            case "History": { property = filmCard.markAsWatched; break; }
-            case "Favorites": { property = filmCard.markAsFavorite; break; }
-        }
+        // let property = null;
+        // switch (typeButton) {
+        //     case "Watchlist": { property = filmCard.addToWatchlist; break; }
+        //     case "History": { property = filmCard.markAsWatched; break; }
+        //     case "Favorites": { property = filmCard.markAsFavorite; break; }
+        // }
 
-        if (property) {
-            filmList.push(filmCard);
-        } else {
-            const index = filmList.findIndex((it) => it === filmCard);
-            filmList.splice(index, 1);
+        // if (property) {
+        //     filmList.push(filmCard);
+        // } else {
+        //     const index = filmList.findIndex((it) => it === filmCard);
+        //     filmList.splice(index, 1);
 
-            if (currentMenuButton === typeButton) {
-                renderStandardCardFilms(this._container, currentMenuButton, filmList, this._onDataChange);
-            }
-        }
+        //     if (currentMenuButton === typeButton) {
+        //         renderStandardCardFilms( currentMenuButton, filmList, this._onDataChange);
+        //     }
+        // }
     }
 
     _onViewChange() {
-        this._showedMovieControllers.forEach((it) => it.setDefaultView());
+        // this._showedMovieControllers.forEach((it) => it.setDefaultView());
     }
 }

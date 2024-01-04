@@ -8,10 +8,9 @@ const Mode = {
     EDIT: `edit`,
 };
 
-// 1)this._container - нужен или нет?
 export default class MovieController {
     constructor(container, onDataChange, onViewChange) {
-        // this._container = container;
+        this._container = container;
         this._onDataChange = onDataChange;
         this._onViewChange = onViewChange;
 
@@ -25,9 +24,8 @@ export default class MovieController {
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
-    render(film, filmsListContainer) {
-
-
+    // render(film, filmsListContainer) {
+    render(film) {
         // const oldFilmComponent = this._cardFilmComponent;
         // const oldPopupComponent = this._popupComponent;
         this._film = film;
@@ -37,7 +35,7 @@ export default class MovieController {
 
         this._popup = document.querySelector(".popup");
 
-        render(filmsListContainer, this._cardFilmComponent, RenderPosition.BEFOREEND);
+        render(this._container, this._cardFilmComponent, RenderPosition.BEFOREEND);
 
 
         this._cardFilmComponent.setCardFilmClickHandler(() => {
