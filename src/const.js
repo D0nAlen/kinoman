@@ -135,7 +135,7 @@ export let FILMS_CARDS = [
     rating: 5.7,
     year: 1945,
     duration: "54m",
-    poster: `"./images/posters/made-for-each-other.png"`,
+    poster: `"./images/posters/popeye-meets-sinbad.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
       varius magna, non porta ligula feugiat 

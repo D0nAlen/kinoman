@@ -16,6 +16,7 @@ export default class MovieController {
 
         this._cardFilmComponent = null;
         this._popupComponent = null;
+
         this._popup = null;
         this._film = null;
         this._mode = Mode.DEFAULT;
@@ -24,20 +25,19 @@ export default class MovieController {
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
-    // render(film, filmsListContainer) {
     render(film) {
         // const oldFilmComponent = this._cardFilmComponent;
         // const oldPopupComponent = this._popupComponent;
         this._film = film;
 
         this._cardFilmComponent = new CardFilmComponent(this._film);
+
         // this._popupComponent = new PopupComponent(this._film);
 
         this._popup = document.querySelector(".popup");
 
         render(this._container, this._cardFilmComponent, RenderPosition.BEFOREEND);
-
-
+        
         this._cardFilmComponent.setCardFilmClickHandler(() => {
             this._onViewChange();
             this._addPopup();
@@ -45,17 +45,17 @@ export default class MovieController {
 
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
             film.addToWatchlist = !film.addToWatchlist;
-            this._onDataChange(film, WATCHLIST_CARDS, "Watchlist");
+            // this._onDataChange(film, WATCHLIST_CARDS, "Watchlist");
         });
 
         this._cardFilmComponent.setMarkAsWatchedButtonClickHandler(() => {
             film.markAsWatched = !film.markAsWatched;
-            this._onDataChange(film, HISTORY_CARDS, "History");
+            // this._onDataChange(film, HISTORY_CARDS, "History");
         });
 
         this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
             film.markAsFavorite = !film.markAsFavorite;
-            this._onDataChange(film, FAVORITES_CARDS, "Favorites");
+            // this._onDataChange(film, FAVORITES_CARDS, "Favorites");
         });
 
         // if (oldPopupComponent && oldFilmComponent) {
@@ -74,7 +74,6 @@ export default class MovieController {
     }
 
     _addPopup() {
-        this._onViewChange();
         this._popupComponent = new PopupComponent(this._film);
 
         render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
@@ -85,16 +84,16 @@ export default class MovieController {
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         });
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
-            this._film.addToWatchlist = !this._film.addToWatchlist;
-            this._onDataChange(this._film, WATCHLIST_CARDS, "Watchlist");
+            // this._film.addToWatchlist = !this._film.addToWatchlist;
+            // this._onDataChange(this._film, WATCHLIST_CARDS, "Watchlist");
         });
         this._popupComponent.setMarkAsWatchedButtonClickHandler(() => {
-            this._film.markAsWatched = !this._film.markAsWatched;
-            this._onDataChange(this._film, HISTORY_CARDS, "History");
+            // this._film.markAsWatched = !this._film.markAsWatched;
+            // this._onDataChange(this._film, HISTORY_CARDS, "History");
         });
         this._popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            this._film.markAsFavorite = !this._film.markAsFavorite;
-            this._onDataChange(this._film, FAVORITES_CARDS, "Favorites");
+            // this._film.markAsFavorite = !this._film.markAsFavorite;
+            // this._onDataChange(this._film, FAVORITES_CARDS, "Favorites");
         });
 
         this._mode = Mode.EDIT;

@@ -4,7 +4,7 @@ export const createNoDataFilms = () => {
   return `<h2 class="films-list__title">There are no movies in our database</h2>`;
 }
 
-export default class NoDataFilmsTemplate extends AbstractComponent{
+export default class NoDataFilmsComponent extends AbstractComponent{
 
   getTemplate() {
     return createNoDataFilms();
