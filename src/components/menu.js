@@ -20,7 +20,7 @@ const createMenuTemplate = (menuButtons) => {
   </nav>`;
 };
 
-export default class MenuComponent extends AbstractComponent{
+export default class MenuComponent extends AbstractComponent {
   constructor(menuButtons) {
     super();
     this._menuButtons = menuButtons;
@@ -28,5 +28,9 @@ export default class MenuComponent extends AbstractComponent{
 
   getTemplate() {
     return createMenuTemplate(this._menuButtons);
+  }
+
+  setMenuComponentClickHandler(handler) {
+    this.getElement().addEventListener(`click`, handler);
   }
 };

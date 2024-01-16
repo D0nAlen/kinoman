@@ -10,7 +10,10 @@ const siteMainElement = document.querySelector(".main");
 const menu = generateMenu();
 
 render(siteHeaderElement, new HeaderProfileComponent(), RenderPosition.BEFOREEND);
-render(siteMainElement, new MenuComponent(menu), RenderPosition.BEFOREEND);
 
-const pageController = new PageController(siteMainElement);
+// 1)можно ли отрисовать меню в самом контроллере?
+const menuComponent = new MenuComponent(menu);
+render(siteMainElement, menuComponent, RenderPosition.BEFOREEND);
+
+const pageController = new PageController(siteMainElement, menuComponent);
 pageController.render();

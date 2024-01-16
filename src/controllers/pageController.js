@@ -18,30 +18,19 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 let currentMenuButton = "all";
-// const siteMainElement = document.querySelector(".main");
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
-// 1)функция должна возвращать movieController(создавать не по одному контроллеру и фильму за раз,
-//  а по контроллеру для каждой карточки перебором, всем сразу(в заданном списке карточек фильмов)),
 const renderFilms = (filmsListComponent, films, onDataChange, onViewChange) => {
     // const filmsListContainer = filmsListComponent.querySelector(".films-list__container");
     return films.map((film) => {
-        // const movieController = new MovieController(filmsListComponent, onDataChange, onViewChange);
         const movieController = new MovieController(filmsListComponent, onDataChange, onViewChange);
         movieController.render(film);
 
         return movieController;
     });
 };
-
-// const renderNormalCardFilm = (film, onDataChange, onViewChange) => {
-//     const filmsListContainer = siteMainElement.querySelector(".films-list__container");
-
-//     const movieController = new MovieController(filmsListContainer, onDataChange, onViewChange);
-//     movieController.render(film);
-// };
 
 const renderCardTopRatedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
@@ -169,9 +158,10 @@ const getSortedFilms = (films, sortType, from, to) => {
 // };
 
 export default class PageController {
-    constructor(container) {
+    constructor(container, menuComponent) {
         this._container = container;
         this._films = [];
+        this._menuComponent = menuComponent;
 
         this._showedMovieControllers = [];
         this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
@@ -189,7 +179,6 @@ export default class PageController {
 
     render() {
         const container = this._container;
-        // this._films = films;
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
@@ -197,63 +186,64 @@ export default class PageController {
 
         render(filmsContainerComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
 
+
         const filmsListContainer = this._filmsListComponent.getElement().querySelector(".films-list__container");
 
         const param = window.location.hash;
         let selectedMenuButton = param.slice(1);
         currentMenuButton = selectedMenuButton;
 
-        // if (FILMS_CARDS.length === 0) {
-        //     render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
-        // } else {
-        this._films = getFilms();
-        if (selectedMenuButton === "") {
-            selectedMenuButton = "all";
+        if (FILMS_CARDS.length === 0) {
+            render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
+        } else {
+            this._films = getFilms();
+            if (selectedMenuButton === "") {
+                selectedMenuButton = "all";
+            }
+            // 1)после нажатия на кнопку меню не везде срабатывает сортировка!
+            const panelMenuButtons = container.querySelector(".main-navigation__items");
+            panelMenuButtons.querySelectorAll(`.main-navigation__item`).forEach(menuItem => {
+                menuItem.addEventListener(`click`, () => {
+
+                    currentMenuButton = menuItem.getAttribute("id");
+                    this._films = getFilms();
+                    console.log(this._films);
+                    filmsListContainer.innerHTML = ``;
+                    const newFilms = renderFilms(filmsListContainer, this._films.slice(0, this._showingFilmsCount), this._onDataChange, this._onViewChange);
+                    this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
+                    this._renderShowMoreButton();
+                });
+            });
+
+
+            const newFilms = renderFilms(filmsListContainer, this._films.slice(0, this._showingFilmsCount), this._onDataChange, this._onViewChange);
+            this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
+
+            this._renderShowMoreButton();
+
+            // 1)нет обновления страницы при выборе другой вкладки, но логика переключения вкладок работает верно после F5!
+            // renderStandardCardFilms(selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
+            // menuButtonElement("all", FILMS_CARDS, this._onDataChange, this._onViewChange);
+            // menuButtonElement("Watchlist", WATCHLIST_CARDS, this._onDataChange, this._onViewChange);
+            // menuButtonElement("History", HISTORY_CARDS, this._onDataChange, this._onViewChange);
+            // menuButtonElement("Favorites", FAVORITES_CARDS, this._onDataChange, this._onViewChange);
+
+
+            // const newFilms = renderTasks(taskListElement, this._tasks.slice(0, this._showingTasksCount), this._onDataChange, this._onViewChange);
+            // this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
+
+            // 1)вынести сортировку в отдельную функцию!!!
+            // this._sortingComponent.setSortTypeChangeHandler((sortType) => {
+
+            //     this._films = getFilms();
+            //     const sortedFilms = getSortedFilms(this._films, sortType, 0);
+
+            //     renderStandardCardFilms(currentMenuButton, sortedFilms, this._onDataChange, this._onViewChange);
+            // });
+
+            // renderCardTopRatedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
+            // renderCardMostCommentedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
         }
-
-        // 1)не отрисовывается вывод фильмов по кнопке ShowMore
-        const newFilms = renderFilms(filmsListContainer, this._films.slice(0, this._showingFilmsCount), this._onDataChange, this._onViewChange);
-
-        this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
-
-        this._renderShowMoreButton();
-
-        // button "Show more"
-        // const filmsListContainer = container.querySelector(".films-list");
-        // const showMoreButton = new ShowMoreButtonComponent();
-        // render(filmsListContainer, showMoreButton, RenderPosition.BEFOREEND);
-        // this._renderShowMoreButton();
-
-
-
-
-        // if (countFilmsList <= SHOWING_FILMS_COUNT_ON_START) {
-        //     showMoreButton.getElement().remove();
-        // }
-        // 1)нет обновления страницы при выборе другой вкладки, но логика переключения вкладок работает верно после F5!
-        // 2)навесить обработчики событий на кнопки-вкладки  all,watchlist и т.д., чтобы срабатывал рендеринг страницы
-        // renderStandardCardFilms(selectedMenuButton, this._films, this._onDataChange, this._onViewChange); //отрисовка по умолчанию и обновлению страницы
-        // menuButtonElement("all", FILMS_CARDS, this._onDataChange, this._onViewChange);
-        // menuButtonElement("Watchlist", WATCHLIST_CARDS, this._onDataChange, this._onViewChange);
-        // menuButtonElement("History", HISTORY_CARDS, this._onDataChange, this._onViewChange);
-        // menuButtonElement("Favorites", FAVORITES_CARDS, this._onDataChange, this._onViewChange);
-
-
-        // const newFilms = renderTasks(taskListElement, this._tasks.slice(0, this._showingTasksCount), this._onDataChange, this._onViewChange);
-        // this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
-
-        // 1)вынести сортировку в отдельную функцию!!!
-        // this._sortingComponent.setSortTypeChangeHandler((sortType) => {
-
-        //     this._films = getFilms();
-        //     const sortedFilms = getSortedFilms(this._films, sortType, 0);
-
-        //     renderStandardCardFilms(currentMenuButton, sortedFilms, this._onDataChange, this._onViewChange);
-        // });
-
-        // renderCardTopRatedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
-        // renderCardMostCommentedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
-        // }
     }
 
     _renderShowMoreButton() {
@@ -267,7 +257,6 @@ export default class PageController {
         this._showMoreButtonComponent.setShowMoreButtonClickHandler(() => {
 
             const prevFilmsCount = this._showingFilmsCount;
-            // const filmListElement = this._filmsListComponent.getElement();
             const filmsListContainer = this._filmsListComponent.getElement().querySelector(".films-list__container");
 
             this._showingFilmsCount = this._showingFilmsCount + SHOWING_FILMS_COUNT_BY_BUTTON;
@@ -318,16 +307,14 @@ export default class PageController {
         this._showedMovieControllers.forEach((it) => it.setDefaultView());
     }
 
-    // 1)сортировка отрисовывается не в тот контейнер!
     _onSortTypeChange(sortType) {
         this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
         const sortedFilms = getSortedFilms(this._films, sortType, 0, this._showingFilmsCount);
-        const filmListElement = this._filmsListComponent.getElement();
+        const filmsListContainer = this._filmsListComponent.getElement().querySelector(".films-list__container");
+        filmsListContainer.innerHTML = ``;
 
-        filmListElement.innerHTML = ``;
-
-        const newFilms = renderFilms(filmListElement, sortedFilms, this._onDataChange, this._onViewChange);
+        const newFilms = renderFilms(filmsListContainer, sortedFilms, this._onDataChange, this._onViewChange);
         this._showedMovieControllers = newFilms;
 
         this._renderShowMoreButton();

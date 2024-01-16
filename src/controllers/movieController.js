@@ -44,17 +44,17 @@ export default class MovieController {
         });
 
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-            film.addToWatchlist = !film.addToWatchlist;
+            // film.addToWatchlist = !film.addToWatchlist;
             // this._onDataChange(film, WATCHLIST_CARDS, "Watchlist");
         });
 
         this._cardFilmComponent.setMarkAsWatchedButtonClickHandler(() => {
-            film.markAsWatched = !film.markAsWatched;
+            // film.markAsWatched = !film.markAsWatched;
             // this._onDataChange(film, HISTORY_CARDS, "History");
         });
 
         this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            film.markAsFavorite = !film.markAsFavorite;
+            // film.markAsFavorite = !film.markAsFavorite;
             // this._onDataChange(film, FAVORITES_CARDS, "Favorites");
         });
 
