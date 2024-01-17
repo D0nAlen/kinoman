@@ -73,7 +73,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 8.9,
     year: `1943`,
-    duration: "1-18",
+    duration: `90`,
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `The film opens following a murder at a cabaret in Mexico City in 1936,
     and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim)
