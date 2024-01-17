@@ -3,6 +3,8 @@ import { render, RenderPosition } from "./utils/render.js";
 import HeaderProfileComponent from "./components/headerProfile.js";
 import MenuComponent from "./components/menu.js";
 import PageController from "./controllers/pageController.js";
+import { formatTime } from "./utils/common.js";
+// import moment from "moment/moment.js";
 
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
@@ -17,3 +19,7 @@ render(siteMainElement, menuComponent, RenderPosition.BEFOREEND);
 
 const pageController = new PageController(siteMainElement, menuComponent);
 pageController.render();
+
+console.log(formatTime(5-31)); 
+
+

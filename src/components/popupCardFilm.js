@@ -3,8 +3,9 @@ import { generateGenres } from "../mock/genres.js";
 import { generateComments } from "../mock/comment.js";
 import { COMMENTS } from "../const.js";
 import GenreTemplateComponent from "./popupComponents/genres.js";
-import { RenderPosition, render, remove, replace } from "../utils/render.js";
+import { RenderPosition, render, remove } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
+import { formatDate, formatTime } from "../utils/common.js";
 
 const createCloseButtonTemplate = () => {
   return `<div class="film-details__close">
@@ -172,11 +173,11 @@ const createPopupTemplate = (film, options = {}) => {
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Release Date</td>
-            <td class="film-details__cell">${film.releaseDate}</td>
+            <td class="film-details__cell">${formatDate(film.releaseDate)}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>
-            <td class="film-details__cell">${film.duration}</td>
+            <td class="film-details__cell">${formatTime(film.duration)}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Country</td>

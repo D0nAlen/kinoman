@@ -125,7 +125,8 @@ export default class PageController {
             this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
             this._renderShowMoreButton();
 
-            // 1)восстановить логику добавления фильмов в разные разделы
+            // 1)восстановить логику добавления фильмов в разные разделы(не работает)
+            // 2)добавить библиотеку Moment(2-е задание, 1-е завершено)
             const panelMenuButtons = container.querySelector(".main-navigation__items");
             panelMenuButtons.querySelectorAll(`.main-navigation__item`).forEach(menuItem => {
                 menuItem.addEventListener(`click`, () => {
