@@ -73,7 +73,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 8.9,
     year: `1943`,
-    duration: `90`,
+    duration: "90",
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `The film opens following a murder at a cabaret in Mexico City in 1936,
     and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim)
@@ -99,7 +99,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "54",
     poster: `"./images/posters/sagebrush-trail.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -134,7 +134,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 5.7,
     year: `1945`,
-    duration: "54m",
+    duration: "101",
     poster: `"./images/posters/popeye-meets-sinbad.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -169,7 +169,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.9,
     year: `1998`,
-    duration: "54m",
+    duration: "120",
     poster: `"./images/posters/the-dance-of-life.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -204,7 +204,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "186",
     poster: `"./images/posters/the-man-with-the-golden-arm.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -240,7 +240,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1931`,
-    duration: "54m",
+    duration: "54",
     genre: "Western",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
@@ -275,7 +275,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1930`,
-    duration: "54m",
+    duration: "120",
     poster: `"./images/posters/sagebrush-trail.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -310,7 +310,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "135",
     poster: `"./images/posters/made-for-each-other.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -345,7 +345,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1833`,
-    duration: "54m",
+    duration: "65",
     poster: `"./images/posters/the-dance-of-life.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -380,7 +380,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "70",
     poster: `"./images/posters/the-man-with-the-golden-arm.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -415,7 +415,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1932`,
-    duration: "54m",
+    duration: "80",
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -449,7 +449,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "85",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -483,7 +483,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "60",
     poster: `"./images/posters/sagebrush-trail.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -518,7 +518,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1935`,
-    duration: "54m",
+    duration: "45",
     poster: `"./images/posters/made-for-each-other.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -553,7 +553,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "75",
     poster: `"./images/posters/the-dance-of-life.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -588,7 +588,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "120",
     poster: `"./images/posters/the-man-with-the-golden-arm.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -623,7 +623,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "125",
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -657,7 +657,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "130",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -691,7 +691,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "100",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -725,7 +725,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54m",
+    duration: "90",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 

@@ -1,5 +1,5 @@
 import AbstractComponent from "../components/abstract-component.js";
-import { formatTime, formatDate, formatFilmDuration } from "../utils/common.js";
+import { formatFilmDuration } from "../utils/common.js";
 
 const createCardFilmTemplate = (film) => {
   //comment - массив комментариев

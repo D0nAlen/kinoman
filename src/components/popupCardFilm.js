@@ -5,7 +5,7 @@ import { COMMENTS } from "../const.js";
 import GenreTemplateComponent from "./popupComponents/genres.js";
 import { RenderPosition, render, remove } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
-import { formatDate, formatFilmDuration, formatTime } from "../utils/common.js";
+import { formatDate, formatFilmDuration } from "../utils/common.js";
 
 const createCloseButtonTemplate = () => {
   return `<div class="film-details__close">
@@ -177,7 +177,7 @@ const createPopupTemplate = (film, options = {}) => {
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>
-            <td class="film-details__cell">${film.duration}</td>
+            <td class="film-details__cell">${formatFilmDuration(film.duration)}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Country</td>
