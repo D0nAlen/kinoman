@@ -17,6 +17,7 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 let currentMenuButton = "all";
+const siteMainElement = document.querySelector(".main");
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
@@ -77,8 +78,8 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 export default class PageController {
-    constructor(container, menuComponent) {
-        this._container = container;
+    constructor(menuComponent) {
+        // this._container = container;
         this._films = [];
         this._menuComponent = menuComponent;
 
@@ -86,7 +87,7 @@ export default class PageController {
         this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
         this._noDataFilmsComponent = new NoDataFilmsComponent();
         this._sortingComponent = new SortingComponent();
-        this._filmsListComponent = new FilmsListComponent();// this._tasksComponent = new TasksComponent();
+        this._filmsListComponent = new FilmsListComponent();
         this._showMoreButtonComponent = new ShowMoreButtonComponent();
 
         this._onDataChange = this._onDataChange.bind(this);
@@ -97,11 +98,11 @@ export default class PageController {
     }
 
     render() {
-        const container = this._container;
-        render(container, this._sortingComponent, RenderPosition.BEFOREEND);
+        // const container = siteMainElement;
+        render(siteMainElement, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
-        render(container, filmsContainerComponent, RenderPosition.BEFOREEND);
+        render(siteMainElement, filmsContainerComponent, RenderPosition.BEFOREEND);
 
         render(filmsContainerComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
 
@@ -125,21 +126,32 @@ export default class PageController {
             this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
             this._renderShowMoreButton();
 
+
+
+            // console.log(this._films[0].id);
+
             // 1)восстановить логику добавления фильмов в разные разделы(не работает)
-            // 2)добавить библиотеку Moment(2-е задание, 1-е завершено)
-            const panelMenuButtons = container.querySelector(".main-navigation__items");
-            panelMenuButtons.querySelectorAll(`.main-navigation__item`).forEach(menuItem => {
-                menuItem.addEventListener(`click`, () => {
+            // const panelMenuButtons = container.querySelector(".main-navigation__items");
+            // panelMenuButtons.querySelectorAll(`.main-navigation__item`).forEach(menuItem => {
+            //     menuItem.addEventListener(`click`, () => {
 
-                    currentMenuButton = menuItem.getAttribute("id");
-                    this._films = getFilms();
+            //         currentMenuButton = menuItem.getAttribute("id");
+            //         this._films = getFilms();
 
-                    filmsListContainer.innerHTML = ``;
-                    const newFilms = renderFilms(filmsListContainer, this._films.slice(0, this._showingFilmsCount), this._onDataChange, this._onViewChange);
-                    this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
-                    this._renderShowMoreButton();
-                });
-            });
+            //         filmsListContainer.innerHTML = ``;
+
+            //         // 1)получить список с отфильтрованными по флагам фильмам, добавить только по нему
+            //         let categoryFilmList = this._films.slice(0, this._showingFilmsCount);
+            //         categoryFilmList.map((film) => {
+
+            //         });
+
+
+            //         const newFilms = renderFilms(filmsListContainer, this._films.slice(0, this._showingFilmsCount), this._onDataChange, this._onViewChange);
+            //         this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
+            //         this._renderShowMoreButton();
+            //     });
+            // });
 
             renderCardTopRatedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
             renderCardMostCommentedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
@@ -151,8 +163,8 @@ export default class PageController {
             return;
         }
 
-        const container = this._container.querySelector(".films-list");
-        render(container, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+        const FilmListContainer = siteMainElement.querySelector(".films-list");
+        render(FilmListContainer, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
 
         this._showMoreButtonComponent.setShowMoreButtonClickHandler(() => {
 

@@ -63,6 +63,7 @@ export const EMOJIS = [
 // 20 фильмов
 export let FILMS_CARDS = [
   {
+    id: String(new Date() + Math.random()),
     filmName: `The Great Flamarion`,
     originalFilmName: `The Great Flamarion`,
     director: `Anthony Mann`,
@@ -73,7 +74,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 8.9,
     year: `1943`,
-    duration: "90",
+    duration: 90,
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `The film opens following a murder at a cabaret in Mexico City in 1936,
     and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim)
@@ -89,6 +90,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `Sagebrush Trail`,
     originalFilmName: `Sagebrush Trail`,
     director: `Lorem ipsum dolor sit amet`,
@@ -99,7 +101,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "54",
+    duration: 54,
     poster: `"./images/posters/sagebrush-trail.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -125,6 +127,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -134,7 +137,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 5.7,
     year: `1945`,
-    duration: "101",
+    duration: 101,
     poster: `"./images/posters/popeye-meets-sinbad.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -160,6 +163,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -169,7 +173,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.9,
     year: `1998`,
-    duration: "120",
+    duration: 20,
     poster: `"./images/posters/the-dance-of-life.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -195,6 +199,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -204,7 +209,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "186",
+    duration: 186,
     poster: `"./images/posters/the-man-with-the-golden-arm.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -231,6 +236,7 @@ export let FILMS_CARDS = [
 
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -240,7 +246,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1931`,
-    duration: "54",
+    duration: 54,
     genre: "Western",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
@@ -266,6 +272,7 @@ export let FILMS_CARDS = [
     markAsWatched: true,
   },
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -275,7 +282,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1930`,
-    duration: "120",
+    duration: 120,
     poster: `"./images/posters/sagebrush-trail.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -301,6 +308,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -310,7 +318,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "135",
+    duration: 135,
     poster: `"./images/posters/made-for-each-other.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -336,6 +344,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -345,7 +354,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1833`,
-    duration: "65",
+    duration: 65,
     poster: `"./images/posters/the-dance-of-life.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -371,6 +380,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -380,7 +390,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "70",
+    duration: 70,
     poster: `"./images/posters/the-man-with-the-golden-arm.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -406,6 +416,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -415,7 +426,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1932`,
-    duration: "80",
+    duration: 80,
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -440,6 +451,7 @@ export let FILMS_CARDS = [
     markAsWatched: false,
   },
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -449,7 +461,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "85",
+    duration: 85,
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -474,6 +486,7 @@ export let FILMS_CARDS = [
     markAsWatched: false,
   },
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -483,7 +496,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "60",
+    duration: 60,
     poster: `"./images/posters/sagebrush-trail.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -509,6 +522,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -518,7 +532,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1935`,
-    duration: "45",
+    duration: 45,
     poster: `"./images/posters/made-for-each-other.png"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -544,6 +558,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -553,7 +568,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "75",
+    duration: 75,
     poster: `"./images/posters/the-dance-of-life.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -579,6 +594,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -588,7 +604,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "120",
+    duration: 120,
     poster: `"./images/posters/the-man-with-the-golden-arm.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -614,6 +630,7 @@ export let FILMS_CARDS = [
   },
 
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -623,7 +640,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "125",
+    duration: 125,
     poster: `"./images/posters/the-great-flamarion.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -648,6 +665,7 @@ export let FILMS_CARDS = [
     markAsWatched: false,
   },
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -657,7 +675,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "130",
+    duration: 130,
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -682,6 +700,7 @@ export let FILMS_CARDS = [
     markAsWatched: false,
   },
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -691,7 +710,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "100",
+    duration: 100,
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -716,6 +735,7 @@ export let FILMS_CARDS = [
     markAsWatched: false,
   },
   {
+    id: String(new Date() + Math.random()),
     filmName: `example`,
     originalFilmName: `example`,
     writers: `Anne Wigton, Heinz Herald, Richard Weil`,
@@ -725,7 +745,7 @@ export let FILMS_CARDS = [
     genres: [`Drama`, `Film-Noir`, `Mystery`],
     rating: 3.2,
     year: `1933`,
-    duration: "90",
+    duration: 90,
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
