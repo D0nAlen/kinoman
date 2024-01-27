@@ -17,7 +17,6 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 let SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 let currentMenuButton = "all";
-const siteMainElement = document.querySelector(".main");
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
@@ -78,8 +77,8 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 export default class PageController {
-    constructor(menuComponent) {
-        // this._container = container;
+    constructor(container, menuComponent) {
+        this._container = container;
         this._films = [];
         this._menuComponent = menuComponent;
 
@@ -98,11 +97,11 @@ export default class PageController {
     }
 
     render() {
-        // const container = siteMainElement;
-        render(siteMainElement, this._sortingComponent, RenderPosition.BEFOREEND);
+        const container = this._container;
+        render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
         const filmsContainerComponent = new FilmsContainerComponent(); //"films"
-        render(siteMainElement, filmsContainerComponent, RenderPosition.BEFOREEND);
+        render(container, filmsContainerComponent, RenderPosition.BEFOREEND);
 
         render(filmsContainerComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
 
@@ -125,11 +124,8 @@ export default class PageController {
             const newFilms = renderFilms(filmsListContainer, this._films.slice(0, this._showingFilmsCount), this._onDataChange, this._onViewChange);
             this._showedMovieControllers = this._showedMovieControllers.concat(newFilms);
             this._renderShowMoreButton();
-
-
-
+            
             // console.log(this._films[0].id);
-
             // 1)восстановить логику добавления фильмов в разные разделы(не работает)
             // const panelMenuButtons = container.querySelector(".main-navigation__items");
             // panelMenuButtons.querySelectorAll(`.main-navigation__item`).forEach(menuItem => {
@@ -163,8 +159,8 @@ export default class PageController {
             return;
         }
 
-        const FilmListContainer = siteMainElement.querySelector(".films-list");
-        render(FilmListContainer, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+        const container = this._container.querySelector(".films-list");
+        render(container, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
 
         this._showMoreButtonComponent.setShowMoreButtonClickHandler(() => {
 
