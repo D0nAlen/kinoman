@@ -20,5 +20,5 @@ render(siteMainElement, menuComponent, RenderPosition.BEFOREEND);
 const moviesModel = new MoviesModel();
 moviesModel.setFilms(films);
 
-const pageController = new PageController(siteMainElement, menuComponent);
+const pageController = new PageController(siteMainElement, moviesModel);
 pageController.render();

@@ -8,16 +8,16 @@ export default class MoviesModel {
     }
 
     getFilms() {
-        // return getTasksByFilter(this._tasks, this._activeFilterType);
-    }
-
-    getFilmsAll() {
         return this._films;
     }
 
+    // getFilmsAll() {
+    //     return this._films;
+    // }
+
     setFilms(films) {
         this._films = Array.from(films);
-        // this._callHandlers(this._dataChangeHandlers);
+        this._callHandlers(this._dataChangeHandlers);
     }
 
     updateFilm(id, film) {
@@ -32,5 +32,13 @@ export default class MoviesModel {
         this._callHandlers(this._dataChangeHandlers);
 
         return true;
+    }
+
+    setDataChangeHandler(handler) {
+        this._dataChangeHandlers.push(handler);
+    }
+
+    _callHandlers(handlers) {
+        handlers.forEach((handler) => handler());
     }
 }
