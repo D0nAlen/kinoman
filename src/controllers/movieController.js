@@ -3,7 +3,7 @@ import { FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS } from "../const.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import CardFilmComponent from "../components/cardFilm.js";
 
-const Mode = {
+export const Mode = {
     DEFAULT: `default`,
     EDIT: `edit`,
 };

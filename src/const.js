@@ -84,9 +84,9 @@ export let FILMS_CARDS = [
     by her into killing her no good husband during one of their acts.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: true,
-    markAsWatched: true,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: true,
+    isMarkAsWatched: true,
   },
 
   {
@@ -121,9 +121,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: true,
-    markAsFavorite: true,
-    markAsWatched: false,
+    isAddToWatchlist: true,
+    isMarkAsFavorite: true,
+    isMarkAsWatched: false,
   },
 
   {
@@ -157,9 +157,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: true,
-    markAsFavorite: false,
-    markAsWatched: true,
+    isAddToWatchlist: true,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: true,
   },
 
   {
@@ -193,9 +193,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -229,9 +229,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: true,
-    markAsWatched: true,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: true,
+    isMarkAsWatched: true,
   },
 
 
@@ -267,9 +267,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: true,
-    markAsFavorite: false,
-    markAsWatched: true,
+    isAddToWatchlist: true,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: true,
   },
   {
     id: String(new Date() + Math.random()),
@@ -302,9 +302,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -338,9 +338,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -374,9 +374,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -410,9 +410,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -446,9 +446,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
   {
     id: String(new Date() + Math.random()),
@@ -481,9 +481,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
   {
     id: String(new Date() + Math.random()),
@@ -516,9 +516,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -552,9 +552,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -588,9 +588,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -624,9 +624,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 
   {
@@ -660,9 +660,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
   {
     id: String(new Date() + Math.random()),
@@ -695,9 +695,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
   {
     id: String(new Date() + Math.random()),
@@ -730,9 +730,9 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
   {
     id: String(new Date() + Math.random()),
@@ -765,42 +765,42 @@ export let FILMS_CARDS = [
       tempus.`,
     comment: COMMENTS,
     age: "18+",
-    addToWatchlist: false,
-    markAsFavorite: false,
-    markAsWatched: false,
+    isAddToWatchlist: false,
+    isMarkAsFavorite: false,
+    isMarkAsWatched: false,
   },
 ];
 
-export let WATCHLIST_CARDS = [
-  FILMS_CARDS[1],
-  FILMS_CARDS[2],
-  FILMS_CARDS[5],
-];
+// export let WATCHLIST_CARDS = [
+//   FILMS_CARDS[1],
+//   FILMS_CARDS[2],
+//   FILMS_CARDS[5],
+// ];
 
-export let HISTORY_CARDS = [
-  FILMS_CARDS[0],
-  // FILMS_CARDS[1],
-  FILMS_CARDS[2],
-  // FILMS_CARDS[3],
-  FILMS_CARDS[4],
-  FILMS_CARDS[5],
-  // FILMS_CARDS[6],
-  // FILMS_CARDS[7],
-  // FILMS_CARDS[8],
-  // FILMS_CARDS[9],
-  // FILMS_CARDS[10],
-  // FILMS_CARDS[11],
-];
+// export let HISTORY_CARDS = [
+//   FILMS_CARDS[0],
+//   // FILMS_CARDS[1],
+//   FILMS_CARDS[2],
+//   // FILMS_CARDS[3],
+//   FILMS_CARDS[4],
+//   FILMS_CARDS[5],
+//   // FILMS_CARDS[6],
+//   // FILMS_CARDS[7],
+//   // FILMS_CARDS[8],
+//   // FILMS_CARDS[9],
+//   // FILMS_CARDS[10],
+//   // FILMS_CARDS[11],
+// ];
 
-export let FAVORITES_CARDS = [
-  FILMS_CARDS[0],
-  FILMS_CARDS[1],
-  FILMS_CARDS[4],
-  // FILMS_CARDS[15],
-  // FILMS_CARDS[16],
-  // FILMS_CARDS[17],
-  // FILMS_CARDS[18],
-];
+// export let FAVORITES_CARDS = [
+//   FILMS_CARDS[0],
+//   FILMS_CARDS[1],
+//   FILMS_CARDS[4],
+//   // FILMS_CARDS[15],
+//   // FILMS_CARDS[16],
+//   // FILMS_CARDS[17],
+//   // FILMS_CARDS[18],
+// ];
 
 export let MOST_COMMENTED_CARDS = [
   FILMS_CARDS[12],
@@ -815,3 +815,10 @@ export let TOP_RATED_CARDS = [
   FILMS_CARDS[11],
   FILMS_CARDS[7],
 ];
+
+export const FilterType = {
+  ALL: `All`,
+  WATCHLIST: `Watchlist`,
+  HISTORY: `History`,
+  FAVORITES: `Favorites`,
+};

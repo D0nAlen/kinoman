@@ -1,24 +1,33 @@
+import {FilterType} from "../const.js";
+import { getFilmsByFilter } from "../utils/filter.js";
 
 export default class MoviesModel {
 
     constructor() {
         this._films = [];
+        this._activeFilterType = FilterType.ALL;
 
         this._dataChangeHandlers = [];
+        this._filterChangeHandlers = [];
     }
 
     getFilms() {
-        return this._films;
+        return getFilmsByFilter(this._films, this._activeFilterType);
     }
 
-    // getFilmsAll() {
-    //     return this._films;
-    // }
+    getFilmsAll() {
+        return this._films;
+    }
 
     setFilms(films) {
         this._films = Array.from(films);
         this._callHandlers(this._dataChangeHandlers);
     }
+
+    setFilter(filterType) {
+        this._activeFilterType = filterType;
+        this._callHandlers(this._filterChangeHandlers);
+      }
 
     updateFilm(id, film) {
         const index = this._films.findIndex((it) => it.id === id);
@@ -33,6 +42,10 @@ export default class MoviesModel {
 
         return true;
     }
+
+    setFilterChangeHandler(handler) {
+        this._filterChangeHandlers.push(handler);
+      }
 
     setDataChangeHandler(handler) {
         this._dataChangeHandlers.push(handler);

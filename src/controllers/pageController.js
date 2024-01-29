@@ -9,7 +9,7 @@ import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
 import NoDataFilmsComponent from "../components/no-data.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
-import MovieController from "./movieController.js";
+import MovieController, {Mode as MovieControllerMode} from "./movieController.js";
 
 
 const CARD__TOP_RATED_COUNT = 2;
@@ -142,6 +142,7 @@ export default class PageController {
     }
 
     _renderShowMoreButton() {
+        remove(this._showMoreButtonComponent);
         const films = this._moviesModel.getFilms();
         if (this._showingFilmsCount >= films.length) {
             return;
@@ -169,15 +170,19 @@ export default class PageController {
     }
 
     _onDataChange(movieController, oldData, newData) {
-        const index = this._films.findIndex((it) => it === oldData);
+        // const index = this._films.findIndex((it) => it === oldData);
+        const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
 
-        if (index === -1) {
-            return;
-        }
+        if (isSuccess) {
+            movieController.render(newData, MovieControllerMode.DEFAULT);
+          }
+        // if (index === -1) {
+        //     return;
+        // }
 
-        this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
+        // this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
 
-        movieController.render(this._films[index]);
+        // movieController.render(this._films[index]);
     }
 
     _onViewChange() {
