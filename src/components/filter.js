@@ -36,10 +36,6 @@ export default class FilterComponent extends AbstractComponent {
     return createFilterTemplate(this._filterButtons);
   }
 
-  setFilterComponentClickHandler(handler) {
-    this.getElement().addEventListener(`click`, handler);
-  }
-
   setFilterChangeHandler(handler) {
     this.getElement().addEventListener(`change`, (evt) => {
       const filterName = getFilterNameById(evt.target.id);

@@ -1,6 +1,5 @@
 import { FilterType } from "../const.js";
 
-// как правильно оформить этот фильтр?
 export const getAllFilms = (films) => {
     return films;
 };

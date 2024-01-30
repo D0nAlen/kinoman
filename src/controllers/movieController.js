@@ -1,5 +1,4 @@
-import { render, RenderPosition } from "../utils/render.js";
-import { FAVORITES_CARDS, HISTORY_CARDS, WATCHLIST_CARDS } from "../const.js";
+import { render, remove, RenderPosition } from "../utils/render.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import CardFilmComponent from "../components/cardFilm.js";
 
@@ -16,22 +15,16 @@ export default class MovieController {
 
         this._cardFilmComponent = null;
         this._popupComponent = null;
-
         this._popup = null;
         this._film = null;
         this._mode = Mode.DEFAULT;
-
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
     render(film) {
         this._film = film;
-
         this._cardFilmComponent = new CardFilmComponent(this._film);
-
-        // this._popupComponent = new PopupComponent(this._film);
-
         this._popup = document.querySelector(".popup");
 
         render(this._container, this._cardFilmComponent, RenderPosition.BEFOREEND);
@@ -61,6 +54,12 @@ export default class MovieController {
         }
     }
 
+    destroy() {
+        remove(this._cardFilmComponent);
+        // remove(this._popupComponent);
+        document.removeEventListener(`keydown`, this._onEscKeyDown);
+    }
+
     _addPopup() {
         this._popupComponent = new PopupComponent(this._film);
 
@@ -71,7 +70,7 @@ export default class MovieController {
             this._deletePopup();
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         });
-        
+
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
             this._film.addToWatchlist = !this._film.addToWatchlist;
         });
