@@ -1,19 +1,18 @@
 import AbstractComponent from "./abstract-component.js";
 
-const FILTER_ID_PREFIX = `filter__`;
+// const FILTER_ID_PREFIX = `filter__`;
 
-const getFilterNameById = (id) => {
-  return id.substring(FILTER_ID_PREFIX.length);
-}
+// const getFilterNameById = (id) => {
+//   // return id.substring(FILTER_ID_PREFIX.length);
+//   return id;
+// }
 
 // 1)вместо метки isChecked должен добавляться класс "main-navigation__item--active"(или убираться) по клику на кнопку
 const createFilterMarkup = (filter, isChecked) => {
   const { name, count } = filter;
 
-  return `<a 
-  href="#${name}" class="main-navigation__item ${isChecked ? ` main-navigation__item--active` : ``}" 
-        id="${name}">${name === "All" ? `All movies` : name} ${name !== "All" ? `<span class="main-navigation__item-count">${count}` : ``}</span>
-  </a>`;
+  return `<a href="#${name}" class="main-navigation__item ${isChecked ? ` main-navigation__item--active` : ``}" 
+  id="${name}">${name === "All" ? `All movies` : name} ${name !== "All" ? `<span class="main-navigation__item-count">${count}` : ``}</span></a>`;
 };
 
 const createFilterTemplate = (filters) => {
@@ -36,9 +35,9 @@ export default class FilterComponent extends AbstractComponent {
     return createFilterTemplate(this._filterButtons);
   }
 
-  setFilterChangeHandler(handler) {
-    this.getElement().addEventListener(`change`, (evt) => {
-      const filterName = getFilterNameById(evt.target.id);
+  setFilterComponentClickHandler(handler) {
+    this.getElement().addEventListener(`click`, (evt) => {
+      const filterName = evt.target.id;
       handler(filterName);
     });
   }
