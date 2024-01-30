@@ -771,37 +771,6 @@ export let FILMS_CARDS = [
   },
 ];
 
-// export let WATCHLIST_CARDS = [
-//   FILMS_CARDS[1],
-//   FILMS_CARDS[2],
-//   FILMS_CARDS[5],
-// ];
-
-// export let HISTORY_CARDS = [
-//   FILMS_CARDS[0],
-//   // FILMS_CARDS[1],
-//   FILMS_CARDS[2],
-//   // FILMS_CARDS[3],
-//   FILMS_CARDS[4],
-//   FILMS_CARDS[5],
-//   // FILMS_CARDS[6],
-//   // FILMS_CARDS[7],
-//   // FILMS_CARDS[8],
-//   // FILMS_CARDS[9],
-//   // FILMS_CARDS[10],
-//   // FILMS_CARDS[11],
-// ];
-
-// export let FAVORITES_CARDS = [
-//   FILMS_CARDS[0],
-//   FILMS_CARDS[1],
-//   FILMS_CARDS[4],
-//   // FILMS_CARDS[15],
-//   // FILMS_CARDS[16],
-//   // FILMS_CARDS[17],
-//   // FILMS_CARDS[18],
-// ];
-
 export let MOST_COMMENTED_CARDS = [
   FILMS_CARDS[12],
   FILMS_CARDS[13],

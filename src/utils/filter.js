@@ -6,7 +6,7 @@ export const getAllFilms = (films) => {
 
 // 1)// добавить фильтры для экстра разделов
 export const getWatchlistFilms = (films) => {
-    return films.filter((film) => !film.isAddToWatchlist);
+    return films.filter((film) => film.isAddToWatchlist);
 };
 
 export const getHistoryFilms = (films) => {

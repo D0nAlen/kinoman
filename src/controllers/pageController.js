@@ -103,6 +103,7 @@ export default class PageController {
         // let selectedMenuButton = param.slice(1);
         // currentMenuButton = selectedMenuButton;
 
+        // 1)не выводится сообщение если нет фильмов по выбранному фильтру(надо вставить проверку в фильтр)
         if (FILMS_CARDS.length === 0) {
             render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
         } else {

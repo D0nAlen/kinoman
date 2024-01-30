@@ -1,11 +1,5 @@
 import AbstractComponent from "./abstract-component.js";
 
-// const FILTER_ID_PREFIX = `filter__`;
-
-// const getFilterNameById = (id) => {
-//   // return id.substring(FILTER_ID_PREFIX.length);
-//   return id;
-// }
 
 // 1)вместо метки isChecked должен добавляться класс "main-navigation__item--active"(или убираться) по клику на кнопку
 const createFilterMarkup = (filter, isChecked) => {

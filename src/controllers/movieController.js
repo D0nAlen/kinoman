@@ -22,6 +22,7 @@ export default class MovieController {
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
+    // 1)почему счетчики не изменяются при изменении данных фильтов?
     render(film) {
         this._film = film;
         this._cardFilmComponent = new CardFilmComponent(this._film);
@@ -35,15 +36,15 @@ export default class MovieController {
         });
 
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-            film.addToWatchlist = !film.addToWatchlist;
+            film.isAddToWatchlist = !film.isAddToWatchlist;
         });
 
         this._cardFilmComponent.setMarkAsWatchedButtonClickHandler(() => {
-            film.markAsWatched = !film.markAsWatched;
+            film.isMarkAsWatched = !film.isMarkAsWatched;
         });
 
         this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            film.markAsFavorite = !film.markAsFavorite;
+            film.isMarkAsFavorite = !film.isMarkAsFavorite;
         });
 
     }
@@ -72,13 +73,13 @@ export default class MovieController {
         });
 
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
-            this._film.addToWatchlist = !this._film.addToWatchlist;
+            this._film.isAddToWatchlist = !this._film.isAddToWatchlist;
         });
         this._popupComponent.setMarkAsWatchedButtonClickHandler(() => {
-            this._film.markAsWatched = !this._film.markAsWatched;
+            this._film.isMarkAsWatched = !this._film.isMarkAsWatched;
         });
         this._popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            this._film.markAsFavorite = !this._film.markAsFavorite;
+            this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
         });
 
         this._mode = Mode.EDIT;

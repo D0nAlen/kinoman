@@ -139,15 +139,14 @@ export default class PopupComponent extends AbstractSmartComponent {
     super();
     this._film = film;
 
-    this._isAddToWatchlist = !!film.addToWatchlist;
-    this._isMarkAsFavorite = !!film.markAsFavorite;
-    this._isMarkAsWatched = !!film.markAsWatched;
+    this._isAddToWatchlist = !!film.isAddToWatchlist;
+    this._isMarkAsFavorite = !!film.isMarkAsFavorite;
+    this._isMarkAsWatched = !!film.isMarkAsWatched;
     this._currentEmoji = null;
 
 
     // this._isAddToWatchlist = Object.values(film.addToWatchlist).some(Boolean);
 
-    this._flatpickr = null;
     this._submitHandler = null;
 
     this._renderPopup();
@@ -225,8 +224,6 @@ export default class PopupComponent extends AbstractSmartComponent {
   // 1)какие данные попапа должны быть сброшены?
   reset() {
     // const film = this._film;
-
-
     this.rerender();
   }
 
