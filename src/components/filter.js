@@ -1,7 +1,6 @@
 import AbstractComponent from "./abstract-component.js";
 
 
-// 1)вместо метки isChecked должен добавляться класс "main-navigation__item--active"(или убираться) по клику на кнопку
 const createFilterMarkup = (filter, isChecked) => {
   const { name, count } = filter;
 
@@ -34,5 +33,10 @@ export default class FilterComponent extends AbstractComponent {
       const filterName = evt.target.id;
       handler(filterName);
     });
+  }
+
+  setStatisticsButtonClickHandler(handler) {
+    this.getElement().querySelector(`.main-navigation__additional`)
+      .addEventListener(`click`, handler);
   }
 };

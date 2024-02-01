@@ -17,7 +17,7 @@ export default class FilterController {
         this._moviesModel.setDataChangeHandler(this._onDataChange);
 
     }
-    // 1)нужно вызвать повторную перерисовку при изменении числа карточек по фильтру!!!
+
     render() {
         const container = this._container;
         const allFilms = this._moviesModel.getFilmsAll();
@@ -28,11 +28,14 @@ export default class FilterController {
                 checked: filterType === this._activeFilterType,
             };
         });
-        
+
         const oldComponent = this._filterComponent;
 
         this._filterComponent = new FilterComponent(filters);
         this._filterComponent.setFilterComponentClickHandler(this._onFilterChange);
+        // this._filterController.setStatisticsButtonClickHandler(() => {
+
+        // });
 
         if (oldComponent) {
             replace(this._filterComponent, oldComponent);
@@ -49,5 +52,9 @@ export default class FilterController {
 
     _onDataChange() {
         this.render();
+    }
+
+    setStatisticsButtonClickHandler(handler) {
+        this._filterComponent.setStatisticsButtonClickHandler(handler);
     }
 }
