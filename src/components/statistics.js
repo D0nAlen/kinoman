@@ -1,6 +1,6 @@
 import AbstractComponent from "./abstract-component.js";
 
-const createStatisticsTemplate = () => {
+const createStatisticsTemplate = (films) => {
 
   return `<section class="statistic">
   <p class="statistic__rank">
@@ -57,8 +57,8 @@ export default class StatisticsComponent extends AbstractComponent {
 
     this._films = films;
 
-    this._daysChart = null;
-    this._colorsChart = null;
+    // this._daysChart = null;
+    // this._colorsChart = null;
 
     // this._renderCharts();
   }
@@ -70,7 +70,7 @@ export default class StatisticsComponent extends AbstractComponent {
   show() {
     super.show();
 
-    this.rerender(this._films);
+    this.rerender(this._films.getFilms());
   }
 
   rerender(films) {

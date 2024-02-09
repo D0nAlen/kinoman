@@ -95,7 +95,7 @@ export default class PageController {
     }
 
     render() {
-        const container = this._container;
+        const container = this._container.getElement();
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
         const films = this._moviesModel.getFilms();
 
@@ -148,7 +148,7 @@ export default class PageController {
             return;
         }
 
-        const container = this._container.querySelector(".films-list");
+        const container = this._container.getElement().querySelector(".films-list");
         render(container, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
 
         this._showMoreButtonComponent.setShowMoreButtonClickHandler(this._onShowMoreButtonClick);

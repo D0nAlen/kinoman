@@ -6,6 +6,7 @@ import { generateFilms } from "./mock/cardFilm.js";
 import { FILMS_CARDS } from "./const.js";
 import FilterController from "./controllers/filter.js";
 import StatisticsComponent from "./components/statistics.js";
+import PageComponent from "./components/pageComponent.js";
 
 const siteHeaderElement = document.querySelector(".header");
 const siteMainElement = document.querySelector(".main");
@@ -18,17 +19,20 @@ moviesModel.setFilms(films);
 
 const filterController = new FilterController(siteMainElement, moviesModel);
 filterController.render();
-// filterController.setStatisticsButtonClickHandler();
+filterController.setStatisticsButtonClickHandler();
 
-const pageController = new PageController(siteMainElement, moviesModel);
+const pageComponent = new PageComponent();
+render(siteMainElement, pageComponent, RenderPosition.BEFOREEND);
+
+const pageController = new PageController(pageComponent, moviesModel);
 pageController.render();
+
 
 const statisticsComponent = new StatisticsComponent({ films: moviesModel });
 render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
 
-// 1)здесь должен быть обработчик кнопки Stats, вызывающий show() статистики.
 filterController.setStatisticsButtonClickHandler(() => {
-    console.log(777);
+    pageController.hide();
     statisticsComponent.show();
 });
