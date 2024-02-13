@@ -32,6 +32,7 @@ const statisticsComponent = new StatisticsComponent({ films: moviesModel });
 render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
 
+// 1)не работают другие кнопки после вывода статистики!
 filterController.setStatisticsButtonClickHandler(() => {
     pageController.hide();
     statisticsComponent.show();
