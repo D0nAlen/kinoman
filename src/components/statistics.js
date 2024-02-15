@@ -1,4 +1,4 @@
-import AbstractComponent from "./abstract-component.js";
+import AbstractSmartComponent from "./abstract-smart-component.js";
 import Chart from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -52,81 +52,14 @@ const createStatisticsTemplate = (films) => {
   </section>`;
 };
 
-// const BAR_HEIGHT = 50;
-// const statisticCtx = document.querySelector(`.statistic__chart`);
-// // Обязательно рассчитайте высоту canvas, она 
-// // зависит от количества элементов диаграммы
-// statisticCtx.height = BAR_HEIGHT * 5;
-// const myChart = new Chart(statisticCtx, {
-//   plugins: [ChartDataLabels],
-//   type: `horizontalBar`,
-//   data: {
-//     labels: [`Sci-Fi`, `Animation`, `Fantasy`,
-//       `Comedy`, `TV Series`],
-//     datasets: [{
-//       data: [11, 8, 7, 4, 3],
-//       backgroundColor: `#ffe800`,
-//       hoverBackgroundColor: `#ffe800`,
-//       anchor: `start`
-//     }]
-//   },
-//   options: {
-//     plugins: {
-//       datalabels: {
-//         font: {
-//           size: 20
-//         },
-//         color: `#ffffff`,
-//         anchor: 'start',
-//         align: 'start',
-//         offset: 40,
-//       }
-//     },
-//     scales: {
-//       yAxes: [{
-//         ticks: {
-//           fontColor: `#ffffff`,
-//           padding: 100,
-//           fontSize: 20
-//         },
-//         gridLines: {
-//           display: false,
-//           drawBorder: false
-//         },
-//         barThickness: 24
-//       }],
-//       xAxes: [{
-//         ticks: {
-//           display: false,
-//           beginAtZero: true
-//         },
-//         gridLines: {
-//           display: false,
-//           drawBorder: false
-//         },
-//       }],
-//     },
-//     legend: {
-//       display: false
-//     },
-//     tooltips: {
-//       enabled: false
-//     }
-//   }
-// });
-
-export default class StatisticsComponent extends AbstractComponent {
+export default class StatisticsComponent extends AbstractSmartComponent {
 
   constructor({ films }) {
     super();
 
     this._films = films;
 
-    // this._daysChart = null;
-    // this._colorsChart = null;
-
-    // this._renderCharts();
-    this._renderStatistics();
+    this._renderCharts();
 
   }
 
@@ -137,36 +70,37 @@ export default class StatisticsComponent extends AbstractComponent {
   show() {
     super.show();
 
-    // this.rerender(this._films.getFilms());
     this.rerender(this._films);
   }
 
   rerender(films) {
     this._films = films;
 
-    // super.rerender();
+    super.rerender();
 
-    // this._renderCharts();
+    this._renderCharts();
   }
 
-  // 1)сначала надо отрендерить статистику, такого класса пока нет на странице
-  _renderStatistics() {
+  recoveryListeners() { }
+
+  // 2)комментарии, сделать отдельный класс, отрендерить в попап фильма 
+  // 3)(случайными комментариями, сделать в mock генерацию комментариев)
+  // 4)сделать комментарии удаляемыми
+  _renderCharts() {
     const BAR_HEIGHT = 50;
     const element = this.getElement();
-    
+
+    const daraArray = this._getDataCharts();
     const statisticCtx = element.querySelector(`.statistic__chart`);
-    console.log(statisticCtx);
-    // Обязательно рассчитайте высоту canvas, она 
-    // зависит от количества элементов диаграммы
+
     statisticCtx.height = BAR_HEIGHT * 5;
     const myChart = new Chart(statisticCtx, {
       plugins: [ChartDataLabels],
       type: `horizontalBar`,
       data: {
-        labels: [`Sci-Fi`, `Animation`, `Fantasy`,
-          `Comedy`, `TV Series`],
+        labels: [`Film-Noir`, `Mystery`, `Drama`, `Musical`, `Western`, `Comedy`, `Cartoon`],
         datasets: [{
-          data: [11, 8, 7, 4, 3],
+          data: daraArray, 
           backgroundColor: `#ffe800`,
           hoverBackgroundColor: `#ffe800`,
           anchor: `start`
@@ -216,8 +150,15 @@ export default class StatisticsComponent extends AbstractComponent {
         }
       }
     });
-
-    // render(container, myChart, RenderPosition.BEFOREEND);
   }
 
+  _getDataCharts() {
+    const counterGenres = { "Film-Noir": 0, "Mystery": 0, "Drama": 0, "Musical": 0, "Western": 0, "Comedy": 0, "Cartoon": 0 };
+    const films = this._films.getFilms();
+
+    Object.entries(counterGenres).forEach(([key, value]) => films.forEach((film) => film.genres.includes(key) ? counterGenres[key]++ : ``));
+
+    // console.log(counterGenres);
+    return Object.values(counterGenres);
+  }
 }
