@@ -3,7 +3,6 @@ import { formatFilmDuration } from "../utils/common.js";
 
 const createCardFilmTemplate = (film) => {
   //comment - массив комментариев
-
   return `<article class="film-card">
     <h3 class="film-card__title">${film.filmName}</h3>
     <p class="film-card__rating">${film.rating}</p>

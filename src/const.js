@@ -134,7 +134,7 @@ export let FILMS_CARDS = [
     actors: `Erich von Stroheim, Mary Beth Hughes, Dan Duryea`,
     releaseDate: `30 March 1945`,
     country: `USA`,
-    genres: [`Drama`, `Film-Noir`, `Mystery`],
+    genres: [`Drama`, `Mystery`],
     rating: 5.7,
     year: `1945`,
     duration: 101,
@@ -247,7 +247,6 @@ export let FILMS_CARDS = [
     rating: 3.2,
     year: `1931`,
     duration: 54,
-    genres: "Western",
     poster: `"./images/posters/santa-claus-conquers-the-martians.jpg"`,
     description: `Lorem ipsum dolor sit amet,
       consectetur adipiscing elit.Cras aliquet 
@@ -376,7 +375,7 @@ export let FILMS_CARDS = [
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
-    isMarkAsWatched: false,
+    isMarkAsWatched: true,
   },
 
   {

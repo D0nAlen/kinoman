@@ -22,7 +22,6 @@ export default class MovieController {
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
-    // 1)почему счетчики не изменяются при изменении данных фильтов?
     render(film) {
         this._film = film;
         this._cardFilmComponent = new CardFilmComponent(this._film);

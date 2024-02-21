@@ -2,7 +2,25 @@ import AbstractSmartComponent from "./abstract-smart-component.js";
 import Chart from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+const counterGenres = { "Film-Noir": 0, "Mystery": 0, "Drama": 0, "Musical": 0, "Western": 0, "Comedy": 0, "Cartoon": 0 };
+
 const createStatisticsTemplate = (films) => {
+  let watchedFilms = 0;
+  films.forEach((film) => {
+    film.isMarkAsWatched ? watchedFilms++ : ``;
+  });
+
+
+  let totalDuration = 0;
+  films.forEach((film) => {
+    totalDuration += film.duration;
+  });
+  let hours = Math.trunc(totalDuration / 60);
+  let minutes = totalDuration % 60;
+
+
+  const maxGenre = Math.max(...Object.values(counterGenres));
+  const topGenre = Object.keys(counterGenres).find(key => counterGenres[key] === maxGenre);
 
   return `<section class="statistic statistic__chart">
   <p class="statistic__rank">
@@ -33,15 +51,16 @@ const createStatisticsTemplate = (films) => {
   <ul class="statistic__text-list">
     <li class="statistic__text-item">
       <h4 class="statistic__item-title">You watched</h4>
-      <p class="statistic__item-text">22 <span class="statistic__item-description">movies</span></p>
+      <p class="statistic__item-text">${watchedFilms} <span class="statistic__item-description">movies</span></p>
     </li>
     <li class="statistic__text-item">
       <h4 class="statistic__item-title">Total duration</h4>
-      <p class="statistic__item-text">130 <span class="statistic__item-description">h</span> 22 <span class="statistic__item-description">m</span></p>
-    </li>
+      <p class="statistic__item-text">${hours} <span class="statistic__item-description">h</span> ${minutes} <span class="statistic__item-description">m</span></p>
+
+      </li>
     <li class="statistic__text-item">
       <h4 class="statistic__item-title">Top genre</h4>
-      <p class="statistic__item-text">Sci-Fi</p>
+      <p class="statistic__item-text">${topGenre}</p>
     </li>
   </ul>
   
@@ -52,19 +71,21 @@ const createStatisticsTemplate = (films) => {
   </section>`;
 };
 
+
 export default class StatisticsComponent extends AbstractSmartComponent {
 
   constructor({ films }) {
     super();
 
     this._films = films;
-
+    this.dataArray = this._getDataCharts();
+    console.log(counterGenres);
     this._renderCharts();
-
   }
 
   getTemplate() {
-    return createStatisticsTemplate({ films: this._films.getFilms() });
+    // return createStatisticsTemplate({ films: this._films.getFilms() });
+    return createStatisticsTemplate(this._films.getFilms());
   }
 
   show() {
@@ -81,8 +102,77 @@ export default class StatisticsComponent extends AbstractSmartComponent {
     this._renderCharts();
   }
 
-  recoveryListeners() { }
+  recoveryListeners() {
+    // this.setSubmitHandler(this._submitHandler);
+    this._subscribeOnEvents();
+  }
 
+  rerender() {
+    // super.rerender();
+    //   // const genres = generateGenres(this._film.genres);
+    //   // const comments = generateComments(COMMENTS);
+
+    //   // // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
+    //   // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
+
+    //   // // 1)список комментов и жанров стирается при перерисовке!!!
+    //   // //genres rendering
+    //   // const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
+    //   // for (let i = 0; i < genres.length; i++) {
+    //   //     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
+    //   // }
+
+    //   // // comments rendering
+    //   // const commentsList = this._popup.querySelector(".film-details__comments-list");
+    //   // for (let i = 0; i < comments.length; i++) {
+    //   //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
+    //   // }
+    //   // this._applyFlatpickr();
+  }
+
+  // reset() {
+  // const film = this._film;
+  // this.rerender();
+  // }
+
+  // setSubmitHandler(handler) {
+  //   this.getElement().querySelector(`form`)
+  //     .addEventListener(`submit`, handler);
+
+  //   this._submitHandler = handler;
+  // }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+
+    // element.querySelector(`.film-details__control-label--watchlist`)
+    //   .addEventListener(`click`, () => {
+    //     // this._isAddToWatchlist = !this._isAddToWatchlist;
+    //     this.rerender();
+    //   });
+
+    // element.querySelector(`.film-details__control-label--watched`)
+    //   .addEventListener(`click`, () => {
+    //     this._isMarkAsWatched = !this._isMarkAsWatched;
+    //     this.rerender();
+    //   });
+
+    // element.querySelector(`.film-details__control-label--favorite`)
+    //   .addEventListener(`click`, () => {
+    //     this._isMarkAsFavorite = !this._isMarkAsFavorite;
+    //     this.rerender();
+    //   });
+
+
+    // element.querySelector(`.film-details__close`)
+    //   .addEventListener('click', () => {
+    //     remove(this);
+    //     this.rerender();
+    //   });
+  }
+
+
+  // 1)исправить обновление страницы после нажатия statistics(навесить обработчики на другие кнопки снова при перерисовке!!!)
   // 2)комментарии, сделать отдельный класс, отрендерить в попап фильма 
   // 3)(случайными комментариями, сделать в mock генерацию комментариев)
   // 4)сделать комментарии удаляемыми
@@ -90,9 +180,9 @@ export default class StatisticsComponent extends AbstractSmartComponent {
     const BAR_HEIGHT = 50;
     const element = this.getElement();
 
-    const daraArray = this._getDataCharts();
+    // const daraArray = this._getDataCharts();
     const statisticCtx = element.querySelector(`.statistic__chart`);
-
+// console.log(this.dataArray);
     statisticCtx.height = BAR_HEIGHT * 5;
     const myChart = new Chart(statisticCtx, {
       plugins: [ChartDataLabels],
@@ -100,7 +190,7 @@ export default class StatisticsComponent extends AbstractSmartComponent {
       data: {
         labels: [`Film-Noir`, `Mystery`, `Drama`, `Musical`, `Western`, `Comedy`, `Cartoon`],
         datasets: [{
-          data: daraArray, 
+          data: this.dataArray,
           backgroundColor: `#ffe800`,
           hoverBackgroundColor: `#ffe800`,
           anchor: `start`
@@ -153,7 +243,6 @@ export default class StatisticsComponent extends AbstractSmartComponent {
   }
 
   _getDataCharts() {
-    const counterGenres = { "Film-Noir": 0, "Mystery": 0, "Drama": 0, "Musical": 0, "Western": 0, "Comedy": 0, "Cartoon": 0 };
     const films = this._films.getFilms();
 
     Object.entries(counterGenres).forEach(([key, value]) => films.forEach((film) => film.genres.includes(key) ? counterGenres[key]++ : ``));
