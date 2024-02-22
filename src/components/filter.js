@@ -10,12 +10,15 @@ const createFilterMarkup = (filter, isChecked) => {
 
 const createFilterTemplate = (filters) => {
   const filterMarkup = filters.map((it) => createFilterMarkup(it, it.checked)).join(`\n`);
-  return `<nav class="main-navigation">
-    <div class="main-navigation__items">
+//   return `<nav class="main-navigation">
+//   <div class="main-navigation__items">
+//     ${filterMarkup}
+//   </div>
+//   <a href="#stats" class="main-navigation__additional">Stats</a>
+// </nav>`;
+  return `<div class="main-navigation__items">
       ${filterMarkup}
-    </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>`;
+    </div>`;
 };
 
 export default class FilterComponent extends AbstractComponent {
@@ -35,8 +38,8 @@ export default class FilterComponent extends AbstractComponent {
     });
   }
 
-  setStatisticsButtonClickHandler(handler) {
-    this.getElement().querySelector(`.main-navigation__additional`)
-      .addEventListener(`click`, handler);
-  }
+  // setStatisticsButtonClickHandler(handler) {
+  //   this.getElement().querySelector(`.main-navigation__additional`)
+  //     .addEventListener(`click`, handler);
+  // }
 };

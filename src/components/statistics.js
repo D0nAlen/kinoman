@@ -79,7 +79,7 @@ export default class StatisticsComponent extends AbstractSmartComponent {
 
     this._films = films;
     this.dataArray = this._getDataCharts();
-    console.log(counterGenres);
+
     this._renderCharts();
   }
 
@@ -104,30 +104,7 @@ export default class StatisticsComponent extends AbstractSmartComponent {
 
   recoveryListeners() {
     // this.setSubmitHandler(this._submitHandler);
-    this._subscribeOnEvents();
-  }
-
-  rerender() {
-    // super.rerender();
-    //   // const genres = generateGenres(this._film.genres);
-    //   // const comments = generateComments(COMMENTS);
-
-    //   // // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
-    //   // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
-
-    //   // // 1)список комментов и жанров стирается при перерисовке!!!
-    //   // //genres rendering
-    //   // const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
-    //   // for (let i = 0; i < genres.length; i++) {
-    //   //     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
-    //   // }
-
-    //   // // comments rendering
-    //   // const commentsList = this._popup.querySelector(".film-details__comments-list");
-    //   // for (let i = 0; i < comments.length; i++) {
-    //   //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
-    //   // }
-    //   // this._applyFlatpickr();
+    // this._subscribeOnEvents();
   }
 
   // reset() {
@@ -182,7 +159,7 @@ export default class StatisticsComponent extends AbstractSmartComponent {
 
     // const daraArray = this._getDataCharts();
     const statisticCtx = element.querySelector(`.statistic__chart`);
-// console.log(this.dataArray);
+    // console.log(this.dataArray);
     statisticCtx.height = BAR_HEIGHT * 5;
     const myChart = new Chart(statisticCtx, {
       plugins: [ChartDataLabels],
@@ -250,4 +227,9 @@ export default class StatisticsComponent extends AbstractSmartComponent {
     // console.log(counterGenres);
     return Object.values(counterGenres);
   }
+
+  // setStatisticsButtonClickHandler(handler) {
+  //   this.getElement().querySelector(`.main-navigation__additional`)
+  //     .addEventListener(`click`, handler);
+  // }
 }
