@@ -1,9 +1,9 @@
-export const FILM_NAME = [
-  `Sagebrush Trail`,
-  `The Great Flamarion`,
-  `The Dance of Life`,
-  `The Man with the Golden Arm`,
-];
+// export const FILM_NAME = [
+//   `Sagebrush Trail`,
+//   `The Great Flamarion`,
+//   `The Dance of Life`,
+//   `The Man with the Golden Arm`,
+// ];
 
 export const COMMENTS = [
   {
@@ -59,6 +59,9 @@ export const EMOJIS = [
     src: "./images/emoji/angry.png",
   },
 ];
+
+
+// 1)как подставить сюда сгенерированный массив комментариев???
 
 // 20 фильмов
 export let FILMS_CARDS = [
