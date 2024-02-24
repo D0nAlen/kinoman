@@ -1,42 +1,4 @@
-// export const FILM_NAME = [
-//   `Sagebrush Trail`,
-//   `The Great Flamarion`,
-//   `The Dance of Life`,
-//   `The Man with the Golden Arm`,
-// ];
-
-export const COMMENTS = [
-  {
-    text: "Interesting setting and a good cast",
-    emotion: "./images/emoji/smile.png",
-    author: "Tim Macoveev",
-    date: "2019/12/31 23:59",
-  },
-  {
-    text: "Booooooooooring",
-    emotion: "./images/emoji/sleeping.png",
-    author: "John Doe",
-    date: "2019/12/31 23:59",
-  },
-  {
-    text: "Very very old. Meh",
-    emotion: "./images/emoji/puke.png",
-    author: "John Doe",
-    date: "2019/12/31 23:59",
-  },
-  {
-    text: "Almost two hours? Seriously?",
-    emotion: "./images/emoji/angry.png",
-    author: "John Doe",
-    date: "2019/12/31 23:59",
-  },
-  {
-    text: "Almost two hours? Seriously?",
-    emotion: "./images/emoji/angry.png",
-    author: "John Doe",
-    date: "2019/12/31 23:59",
-  },
-];
+import { generateComments } from "./mock/comment.js";
 
 export const EMOJIS = [
   {
@@ -60,9 +22,6 @@ export const EMOJIS = [
   },
 ];
 
-
-// 1)как подставить сюда сгенерированный массив комментариев???
-
 // 20 фильмов
 export let FILMS_CARDS = [
   {
@@ -85,7 +44,7 @@ export let FILMS_CARDS = [
     His show features a beautiful assistant, Connie (Mary Beth Hughes) and her drunken husband Al (Dan Duryea), 
     Flamarion's other assistant. Flamarion falls in love with Connie, the movie's femme fatale, and is soon manipulated 
     by her into killing her no good husband during one of their acts.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: true,
@@ -122,7 +81,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: true,
     isMarkAsFavorite: true,
@@ -158,7 +117,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: true,
     isMarkAsFavorite: false,
@@ -194,7 +153,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -230,7 +189,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: true,
@@ -267,7 +226,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: true,
     isMarkAsFavorite: false,
@@ -302,7 +261,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -338,7 +297,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -374,7 +333,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -410,7 +369,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -446,7 +405,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -481,7 +440,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -516,7 +475,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -552,7 +511,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -588,7 +547,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -624,7 +583,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -660,7 +619,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -695,7 +654,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -730,7 +689,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,
@@ -765,7 +724,7 @@ export let FILMS_CARDS = [
       volutpat.Nunc fermentum tortor ac porta 
       dapibus.In rutrum ac purus sit amet 
       tempus.`,
-    comment: COMMENTS,
+    comment: generateComments(),
     age: "18+",
     isAddToWatchlist: false,
     isMarkAsFavorite: false,

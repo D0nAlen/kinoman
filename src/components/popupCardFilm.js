@@ -1,7 +1,6 @@
 import AbstractSmartComponent from "./abstract-smart-component.js";
 import { generateGenres } from "../mock/genres.js";
 import { generateComments } from "../mock/comment.js";
-// import { COMMENTS } from "../const.js";
 import GenreTemplateComponent from "./popupComponents/genres.js";
 import { RenderPosition, render, remove } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
@@ -166,8 +165,8 @@ export default class PopupComponent extends AbstractSmartComponent {
     // render(topContainer, new CloseButtonComponent(), RenderPosition.AFTERBEGIN);
 
     const genres = generateGenres(this._film.genres);
-    // const comments = generateComments(COMMENTS);
-    const comments = generateComments();
+
+    const comments = this._film.comment;
 
     //genres rendering
     const filmDetailsGenres = this.getElement().querySelector(".film-details-genres");
@@ -176,6 +175,7 @@ export default class PopupComponent extends AbstractSmartComponent {
       render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
     }
 
+    // 1)комменты должны подцепляться от сгенеренных в const.js!!!
     // comments rendering
     const commentsList = this.getElement().querySelector(".film-details__comments-list");
     for (let i = 0; i < comments.length; i++) {
