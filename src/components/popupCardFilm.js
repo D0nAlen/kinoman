@@ -303,8 +303,7 @@ export default class PopupComponent extends AbstractSmartComponent {
       .addEventListener(`click`, handler);
   }
 
-  // нажатие enter для отправки комментария(submit)
-  setAddNewCommentSubmitHandler(handler) {
+  setAddNewCommentClickHandler(handler) {
     this.getElement().querySelector(`.film-details__comment-input`)
       .addEventListener(`click`, handler);
   }

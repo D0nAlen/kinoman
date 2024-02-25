@@ -83,9 +83,7 @@ export default class MovieController {
             this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
         });
 
-        // 1)получить эмоцию с попапа
-        // 2)добавить коммент в список комментов карточки, перерисовать попап
-        this._popupComponent.setAddNewCommentSubmitHandler(() => {
+        this._popupComponent.setAddNewCommentClickHandler(() => {
             const popup = this._popupComponent;
             const film = this._film;
             document.addEventListener("keydown", function (e) {
@@ -95,13 +93,10 @@ export default class MovieController {
 
                     const date = formatCommentDate(new Date());
                     const author = getRandomArrayItem(authorComment);
-                    //    console.log(date);
-                    const comment ={ text, emotion, author, date };
-                    console.log(comment);
+                    const comment = { text, emotion, author, date };
+                    film.comment.push(comment);
 
-                    // const newComment = new CommentComponent(comment);
-                    // this._film.comments
-                    // console.log("Был нажат CTRL+enter");
+                    popup.rerender();
                 }
             });
 
