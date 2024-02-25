@@ -1,6 +1,8 @@
 import { render, remove, RenderPosition } from "../utils/render.js";
 import PopupComponent from "../components/popupCardFilm.js";
 import CardFilmComponent from "../components/cardFilm.js";
+import { formatCommentDate } from "../utils/common.js";
+import { getRandomArrayItem, authorComment } from "../mock/comment.js";
 
 export const Mode = {
     DEFAULT: `default`,
@@ -79,6 +81,30 @@ export default class MovieController {
         });
         this._popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
             this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
+        });
+
+        // 1)получить эмоцию с попапа
+        // 2)добавить коммент в список комментов карточки, перерисовать попап
+        this._popupComponent.setAddNewCommentSubmitHandler(() => {
+            const popup = this._popupComponent;
+            const film = this._film;
+            document.addEventListener("keydown", function (e) {
+                if ((e.ctrlKey) && (e.code == "Enter")) {
+                    const text = popup.getElement().querySelector(`.film-details__comment-input`).value;
+                    const emotion = popup.getElement().querySelector(`.film-details__add-emoji-label`).getElementsByTagName('img')[0].src.replace(window.location.origin + '/', './');
+
+                    const date = formatCommentDate(new Date());
+                    const author = getRandomArrayItem(authorComment);
+                    //    console.log(date);
+                    const comment ={ text, emotion, author, date };
+                    console.log(comment);
+
+                    // const newComment = new CommentComponent(comment);
+                    // this._film.comments
+                    // console.log("Был нажат CTRL+enter");
+                }
+            });
+
         });
 
         this._mode = Mode.EDIT;

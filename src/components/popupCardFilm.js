@@ -1,6 +1,5 @@
 import AbstractSmartComponent from "./abstract-smart-component.js";
 import { generateGenres } from "../mock/genres.js";
-import { generateComments } from "../mock/comment.js";
 import GenreTemplateComponent from "./popupComponents/genres.js";
 import { RenderPosition, render, remove } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
@@ -101,9 +100,11 @@ const createPopupTemplate = (film, options = {}) => {
         <div for="add-emoji" class="film-details__add-emoji-label">
         </div>
 
+
         <label class="film-details__comment-label">
           <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
         </label>
+
 
         <div class="film-details__emoji-list">
         <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
@@ -175,7 +176,6 @@ export default class PopupComponent extends AbstractSmartComponent {
       render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
     }
 
-    // 1)комменты должны подцепляться от сгенеренных в const.js!!!
     // comments rendering
     const commentsList = this.getElement().querySelector(".film-details__comments-list");
     for (let i = 0; i < comments.length; i++) {
@@ -203,7 +203,6 @@ export default class PopupComponent extends AbstractSmartComponent {
     super.rerender();
     this._renderPopup();
     // const genres = generateGenres(this._film.genres);
-    // const comments = generateComments(COMMENTS);
 
     // // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
     // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
@@ -220,10 +219,8 @@ export default class PopupComponent extends AbstractSmartComponent {
     // for (let i = 0; i < comments.length; i++) {
     //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
     // }
-    // this._applyFlatpickr();
   }
 
-  // 1)какие данные попапа должны быть сброшены?
   reset() {
     // const film = this._film;
     this.rerender();
@@ -281,7 +278,7 @@ export default class PopupComponent extends AbstractSmartComponent {
         emojiIcon.appendChild(cloneEmoji);
         this._currentEmoji = emojiIcon;
 
-        this.rerender();
+        // this.rerender();
       });
     });
   }
@@ -303,6 +300,12 @@ export default class PopupComponent extends AbstractSmartComponent {
 
   setMarkAsFavoriteButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, handler);
+  }
+
+  // нажатие enter для отправки комментария(submit)
+  setAddNewCommentSubmitHandler(handler) {
+    this.getElement().querySelector(`.film-details__comment-input`)
       .addEventListener(`click`, handler);
   }
 };

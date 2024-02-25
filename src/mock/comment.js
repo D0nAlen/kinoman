@@ -16,14 +16,14 @@ const emotionComment = [
   `./images/emoji/angry.png`,
 ];
 
-const authorComment = [
+export const authorComment = [
   `Tim Macoveev`,
   `John Doe`,
   `Elisa Joe`,
   `Oh Han-byul`,
 ];
 
-const getRandomArrayItem = (array) => {
+export const getRandomArrayItem = (array) => {
   const randomIndex = getRandomIntegerNumber(0, array.length);
 
   return array[randomIndex];

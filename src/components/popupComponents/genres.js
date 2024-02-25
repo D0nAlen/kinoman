@@ -8,7 +8,6 @@ export default class GenreTemplateComponent extends AbstractComponent {
     constructor(genre) {
       super();
       this._genre = genre;
-      this._element = null;
     }
   
     getTemplate() {
