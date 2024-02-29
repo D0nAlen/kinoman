@@ -5,21 +5,16 @@ import { RenderPosition, render, remove } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
 import { formatDate, formatFilmDuration } from "../utils/common.js";
 
-const createCloseButtonTemplate = () => {
-  return `<div class="film-details__close">
-            <button class="film-details__close-btn" type="button">close</button>
-          </div>`;
-};
-
 const createPopupTemplate = (film, options = {}) => {
-  const buttonCloseTemplate = createCloseButtonTemplate();
 
   const { watchlistCheckbox, watchedCheckbox, favoriteCheckbox } = options;
 
   return `<section class="film-details">
 <form class="film-details__inner" action="" method="get">
   <div class="form-details__top-container">
-    ${buttonCloseTemplate}
+    <div class="film-details__close">
+  <button class="film-details__close-btn" type="button">close</button>
+    </div>
     <div class="film-details__info-wrap">
       <div class="film-details__poster">
         <img class="film-details__poster-img" src=${film.poster} alt="">
@@ -229,7 +224,6 @@ export default class PopupComponent extends AbstractSmartComponent {
   setSubmitHandler(handler) {
     this.getElement().querySelector(`form`)
       .addEventListener(`submit`, handler);
-
     this._submitHandler = handler;
   }
 
@@ -305,6 +299,6 @@ export default class PopupComponent extends AbstractSmartComponent {
 
   setAddNewCommentClickHandler(handler) {
     this.getElement().querySelector(`.film-details__comment-input`)
-      .addEventListener(`click`, handler);
+      .addEventListener(`click`, handler, {once: true});
   }
 };

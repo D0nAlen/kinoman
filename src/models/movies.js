@@ -9,6 +9,8 @@ export default class MoviesModel {
 
         this._dataChangeHandlers = [];
         this._filterChangeHandlers = [];
+
+        this._comments = [];
     }
 
     getFilms() {
@@ -54,4 +56,10 @@ export default class MoviesModel {
     _callHandlers(handlers) {
         handlers.forEach((handler) => handler());
     }
+
+
+    addComment(comment) {
+        this._comments = [].concat(comment, this._comments);
+        this._callHandlers(this._dataChangeHandlers);
+      }
 }

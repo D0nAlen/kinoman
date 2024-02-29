@@ -9,13 +9,12 @@ import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
 import NoDataFilmsComponent from "../components/no-data.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
-import MovieController, { Mode as MovieControllerMode } from "./movieController.js";
+import MovieController, { Mode as MovieControllerMode, EmptyComment } from "./movieController.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
-// let currentMenuButton = "all";
 
 const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
@@ -29,7 +28,6 @@ const renderFilms = (filmsListComponent, films, onDataChange, onViewChange) => {
     });
 };
 
-// 1)сделать по принципу фильтра, отобразить из All все фильмы, которые имеют нужный флаг.
 const renderCardTopRatedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
@@ -84,6 +82,8 @@ export default class PageController {
 
         this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChange);
         this._moviesModel.setFilterChangeHandler(this._onFilterChange);
+
+        this._creatingComment = null;
     }
 
     hide() {
@@ -159,7 +159,6 @@ export default class PageController {
         this._renderFilms(this._moviesModel.getFilms().slice(0, count));
         this._renderShowMoreButton();
     }
-
 
     _onDataChange(movieController, oldData, newData) {
         const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
