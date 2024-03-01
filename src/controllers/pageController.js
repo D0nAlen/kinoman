@@ -83,7 +83,7 @@ export default class PageController {
         this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChange);
         this._moviesModel.setFilterChangeHandler(this._onFilterChange);
 
-        this._creatingComment = null;
+        // this._creatingComment = null;
     }
 
     hide() {
@@ -161,12 +161,55 @@ export default class PageController {
     }
 
     _onDataChange(movieController, oldData, newData) {
-        const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
-
-        if (isSuccess) {
-            movieController.render(newData, MovieControllerMode.DEFAULT);
+        if (oldData === null) {
+            this._moviesModel.addComment(movieController, newData);
+        }
+        else if (newData === null) {
+            // console.log(oldData);
+            this._moviesModel.removeComment(movieController, oldData);
+        }
+        else {
+            // 1)добавить эту часть после поправки кнопок добавлений по категориям фильмов(watchlist и т.д.)
+            // const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
+            // if (isSuccess) {
+            //     movieController.render(newData, MovieControllerMode.DEFAULT);
+            // }
         }
     }
+
+
+    // _onCommentDataChange(movieController, oldData, newData) {
+    //     if (oldData === EmptyComment) {
+    //         this._creatingComment = null;
+    //         if (newData === null) {
+    //             movieController.destroy();
+    //             // this._updateFilms(this._showingFilmsCount);
+    //         } else {
+    //             this._moviesModel.addComment(newData);
+    //             movieController.render(newData, MovieControllerMode.DEFAULT);
+
+    //             if (this._showingFilmsCount % SHOWING_FILMS_COUNT_BY_BUTTON === 0) {
+    //                 const destroyedComment = this._showedMovieControllers.pop();
+    //                 destroyedComment.destroy();
+    //             }
+
+    //             this._showedMovieControllers = [].concat(movieController, this._showedMovieControllers);
+    //             this._showingFilmsCount = this._showedMovieControllers.length;
+
+    //             this._renderShowMoreButton();
+    //         }
+    //     } else if (newData === null) {
+    //         this._moviesModel.removeComment(oldData.id);
+    //         this._updateFilms(this._showingFilmsCount);
+    //     }
+    //     // else {
+    //     //     const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
+
+    //     //     if (isSuccess) {
+    //     //         movieController.render(newData, MovieControllerMode.DEFAULT);
+    //     //     }
+    //     // }
+    // }
 
     _onViewChange() {
         this._showedMovieControllers.forEach((it) => it.setDefaultView());

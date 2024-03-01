@@ -1,4 +1,4 @@
-import {FilterType} from "../const.js";
+import { FilterType } from "../const.js";
 import { getFilmsByFilter } from "../utils/filter.js";
 
 export default class MoviesModel {
@@ -29,7 +29,7 @@ export default class MoviesModel {
     setFilter(filterType) {
         this._activeFilterType = filterType;
         this._callHandlers(this._filterChangeHandlers);
-      }
+    }
 
     updateFilm(id, film) {
         const index = this._films.findIndex((it) => it.id === id);
@@ -47,7 +47,7 @@ export default class MoviesModel {
 
     setFilterChangeHandler(handler) {
         this._filterChangeHandlers.push(handler);
-      }
+    }
 
     setDataChangeHandler(handler) {
         this._dataChangeHandlers.push(handler);
@@ -57,9 +57,17 @@ export default class MoviesModel {
         handlers.forEach((handler) => handler());
     }
 
+    addComment(film, comment) {
+        film.comment.push(comment);
+    }
 
-    addComment(comment) {
-        this._comments = [].concat(comment, this._comments);
-        this._callHandlers(this._dataChangeHandlers);
-      }
+    removeComment(commentId, commentList) {
+        const index = commentList.findIndex((it) => it.id === commentId);
+
+        if (index === -1) {
+            return false;
+        }
+
+        commentList = [].concat(commentList.slice(0, index), film, commentList.slice(index + 1));
+    }
 }

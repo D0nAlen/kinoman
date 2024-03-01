@@ -1,9 +1,9 @@
 import AbstractComponent from "../abstract-component.js";
 
 const createCommentTemplate = (comment) => {
-    const { text, emotion, author, date } = comment;
-  
-    return `<li class="film-details__comment">
+  const { id, text, emotion, author, date } = comment;
+
+  return `<li class="film-details__comment" id="${id}">
     <span class="film-details__comment-emoji">
       <img src=${emotion} width="55" height="55" alt="emoji-smile">
     </span>
@@ -16,17 +16,22 @@ const createCommentTemplate = (comment) => {
       </p>
     </div>
   </li>`;
-  };
-  
-  export default class CommentComponent extends AbstractComponent{
-    constructor(comment) {
-      super();
-      this._comment = comment;
-      this._element = null;
-    }
-  
-    getTemplate() {
-      return createCommentTemplate(this._comment);
-    }
-  };
-  
+};
+
+export default class CommentComponent extends AbstractComponent {
+  constructor(comment) {
+    super();
+    this._comment = comment;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCommentTemplate(this._comment);
+  }
+
+
+  // setDeleteCommentClickHandler(handler) {
+  //   this.getElement().querySelector(`.film-details__comment-delete`)
+  //     .addEventListener(`click`, handler);
+  // }
+};

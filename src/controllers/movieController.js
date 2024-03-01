@@ -3,19 +3,18 @@ import PopupComponent from "../components/popupComponent.js";
 import CardFilmComponent from "../components/cardFilm.js";
 import { formatCommentDate } from "../utils/common.js";
 import { getRandomArrayItem, authorComment } from "../mock/comment.js";
-import CommentComponent from "../components/popupComponents/comment.js";
 
 export const Mode = {
     DEFAULT: `default`,
     EDIT: `edit`,
 };
 
-export const EmptyComment = {
-    text: ``,
-    emotion: ``,
-    author: ``,
-    date: null,
-};
+// export const EmptyComment = {
+//     text: ``,
+//     emotion: ``,
+//     author: ``,
+//     date: null,
+// };
 
 export default class MovieController {
     constructor(container, onDataChange, onViewChange) {
@@ -29,11 +28,13 @@ export default class MovieController {
         this._film = null;
         this._mode = Mode.DEFAULT;
 
-        this._commentComponent = new CommentComponent();
-        // this.getData = this.getData.bind(this);
-
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
+
+    getFilm() {
+        return this._film;
+    }
+
 
     render(film) {
         this._film = film;
@@ -99,25 +100,37 @@ export default class MovieController {
             this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
         });
 
-        // 1)рабочая функция, работает добавление(пока без удаления), нужно прикрутить _onDataChange!!!
-        // this._popupComponent.setAddNewCommentClickHandler(() => {
-        //     const popup = this._popupComponent;
-        //     const film = this._film;
-        //     document.addEventListener("keydown", function (e) {
-        //         if ((e.ctrlKey) && (e.code == "Enter")) {
-        //             const text = popup.getElement().querySelector(`.film-details__comment-input`).value;
-        //             const emotion = popup.getElement().querySelector(`.film-details__add-emoji-label`).getElementsByTagName('img')[0].src.replace(window.location.origin + '/', './');
+        const onDataChange = this._onDataChange;
+        const film = this._film;
+        const popup = this._popupComponent;
 
-        //             const date = formatCommentDate(new Date());
-        //             const author = getRandomArrayItem(authorComment);
-        //             const comment = { text, emotion, author, date };
-        //             film.comment.push(comment);
+        this._popupComponent.setAddNewCommentClickHandler(() => {
+            document.addEventListener("keydown", function (e) {
+                if ((e.ctrlKey) && (e.code == "Enter")) {
+                    const id = new Date().getTime() + Math.random();
+                    const text = popup.getElement().querySelector(`.film-details__comment-input`).value;
+                    const emotion = popup.getElement().querySelector(`.film-details__add-emoji-label`).getElementsByTagName('img')[0].src.replace(window.location.origin + '/', './');
+                    const date = formatCommentDate(new Date());
+                    const author = getRandomArrayItem(authorComment);
+                    const comment = { id, text, emotion, author, date };
 
-        //             popup.rerender();
-        //         }
-        //     });
+                    // onDataChange(this, null, comment);
+                    onDataChange(film, null, comment);
 
-        // });
+                    popup.rerender();
+                }
+            });
+
+        });
+
+        // 1)как получить id коммента на удаление?
+        this._popupComponent.setDeleteCommentClickHandler((event) => {
+            event.preventDefault();
+          
+            // onDataChange(this,  film.comment, null);
+            onDataChange(film, film.comment, null);
+            // popup.rerender();
+        });
 
 
 

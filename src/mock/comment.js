@@ -49,6 +49,7 @@ const generateComment = () => {
   const date = formatCommentDate(getRandomDate());
 
   return {
+    id: new Date().getTime() + Math.random(), 
     text: getRandomArrayItem(textComment),
     emotion: getRandomArrayItem(emotionComment),
     author: getRandomArrayItem(authorComment),

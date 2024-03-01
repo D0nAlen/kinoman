@@ -197,23 +197,6 @@ export default class PopupComponent extends AbstractSmartComponent {
   rerender() {
     super.rerender();
     this._renderPopup();
-    // const genres = generateGenres(this._film.genres);
-
-    // // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
-    // render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
-
-    // // 1)список комментов и жанров стирается при перерисовке!!!
-    // //genres rendering
-    // const filmDetailsGenres = this._popup.querySelector(".film-details-genres");
-    // for (let i = 0; i < genres.length; i++) {
-    //     render(filmDetailsGenres, new GenreTemplateComponent(genres[i]), RenderPosition.BEFOREEND);
-    // }
-
-    // // comments rendering
-    // const commentsList = this._popup.querySelector(".film-details__comments-list");
-    // for (let i = 0; i < comments.length; i++) {
-    //     render(commentsList, new CommentComponent(comments[i]), RenderPosition.BEFOREEND);
-    // }
   }
 
   reset() {
@@ -233,27 +216,33 @@ export default class PopupComponent extends AbstractSmartComponent {
     element.querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, () => {
         this._isAddToWatchlist = !this._isAddToWatchlist;
-        this.rerender();
+        // this.rerender();
       });
 
     element.querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, () => {
         this._isMarkAsWatched = !this._isMarkAsWatched;
-        this.rerender();
+        // this.rerender();
       });
 
     element.querySelector(`.film-details__control-label--favorite`)
       .addEventListener(`click`, () => {
         this._isMarkAsFavorite = !this._isMarkAsFavorite;
-        this.rerender();
+        // this.rerender();
       });
 
 
     element.querySelector(`.film-details__close`)
       .addEventListener('click', () => {
         remove(this);
-        this.rerender();
+        // this.rerender();
       });
+
+    // element.querySelectorAll(`.film-details__comment-delete`).forEach(comment => {
+    //   comment.addEventListener(`click`, () => {
+    //     console.log(333);
+    //   });
+    // });
 
     element.querySelectorAll(`.film-details__emoji-label`).forEach(emoji => {
       emoji.addEventListener(`click`, () => {
@@ -299,6 +288,12 @@ export default class PopupComponent extends AbstractSmartComponent {
 
   setAddNewCommentClickHandler(handler) {
     this.getElement().querySelector(`.film-details__comment-input`)
-      .addEventListener(`click`, handler, {once: true});
+      .addEventListener(`click`, handler, { once: true });
   }
-};
+
+  setDeleteCommentClickHandler(handler) {
+    this.getElement().querySelectorAll(`.film-details__comment-delete`).forEach(comment => {
+      comment.addEventListener(`click`, handler);
+    });
+  }
+}
