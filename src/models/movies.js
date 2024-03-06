@@ -61,13 +61,13 @@ export default class MoviesModel {
         film.comment.push(comment);
     }
 
-    removeComment(commentId, commentList) {
-        const index = commentList.findIndex((it) => it.id === commentId);
+    removeComment(commentList, commentId) {
+        const index = commentList.findIndex((it) => String(it.id) === commentId);
 
         if (index === -1) {
             return false;
         }
 
-        commentList = [].concat(commentList.slice(0, index), film, commentList.slice(index + 1));
+       return commentList = [].concat(commentList.slice(0, index), commentList.slice(index + 1));
     }
 }

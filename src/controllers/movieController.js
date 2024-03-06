@@ -35,6 +35,10 @@ export default class MovieController {
         return this._film;
     }
 
+    // getOnDataChange() {
+    //     return this._onDataChange;
+    // }
+
 
     render(film) {
         this._film = film;
@@ -56,15 +60,24 @@ export default class MovieController {
         //     }));
         //   });
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-            film.isAddToWatchlist = !film.isAddToWatchlist;
+            // film.isAddToWatchlist = !film.isAddToWatchlist;
+            this._onDataChange(this, film, Object.assign({}, film, {
+                isAddToWatchlist: !film.isAddToWatchlist,
+            }));
         });
 
         this._cardFilmComponent.setMarkAsWatchedButtonClickHandler(() => {
-            film.isMarkAsWatched = !film.isMarkAsWatched;
+            // film.isMarkAsWatched = !film.isMarkAsWatched;
+            this._onDataChange(this, film, Object.assign({}, film, {
+                isMarkAsWatched: !film.isMarkAsWatched,
+            }));
         });
 
         this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            film.isMarkAsFavorite = !film.isMarkAsFavorite;
+            // film.isMarkAsFavorite = !film.isMarkAsFavorite;
+            this._onDataChange(this, film, Object.assign({}, film, {
+                isMarkAsFavorite: !film.isMarkAsFavorite,
+            }));
         });
     }
 
@@ -90,18 +103,38 @@ export default class MovieController {
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         });
 
+        const film = this._film;
+
+        // 1)не работает автоотрисовка фильмов по фильтру!!!
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
-            this._film.isAddToWatchlist = !this._film.isAddToWatchlist;
+            // this._film.isAddToWatchlist = !this._film.isAddToWatchlist;
+            this._onDataChange(this, film, Object.assign({}, film, {
+                isAddToWatchlist: !film.isAddToWatchlist,
+            }));
+
+            this._popupComponent.rerender();
+
         });
         this._popupComponent.setMarkAsWatchedButtonClickHandler(() => {
-            this._film.isMarkAsWatched = !this._film.isMarkAsWatched;
+            this._onDataChange(this, film, Object.assign({}, film, {
+                isMarkAsWatched: !film.isMarkAsWatched,
+            }));
+
+            this._popupComponent.rerender();
+            // this._film.isMarkAsWatched = !this._film.isMarkAsWatched;
         });
         this._popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
+            this._onDataChange(this, film, Object.assign({}, film, {
+                isMarkAsFavorite: !film.isMarkAsFavorite,
+            }));
+
+            this._popupComponent.rerender();
+
+            // this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
         });
 
         const onDataChange = this._onDataChange;
-        const film = this._film;
+        // const film = this._film;
         const popup = this._popupComponent;
 
         this._popupComponent.setAddNewCommentClickHandler(() => {
@@ -114,8 +147,7 @@ export default class MovieController {
                     const author = getRandomArrayItem(authorComment);
                     const comment = { id, text, emotion, author, date };
 
-                    // onDataChange(this, null, comment);
-                    onDataChange(film, null, comment);
+                    onDataChange(this, null, comment);
 
                     popup.rerender();
                 }
@@ -123,15 +155,16 @@ export default class MovieController {
 
         });
 
-        // 1)как получить id коммента на удаление?
-        this._popupComponent.setDeleteCommentClickHandler((event) => {
-            event.preventDefault();
-          
-            // onDataChange(this,  film.comment, null);
-            onDataChange(film, film.comment, null);
-            // popup.rerender();
+        // 1)после удаления второго комментария попап закрывается(слетает обработчик событий)
+        const deleteCommentList = this._popupComponent.getElement().querySelectorAll(`.film-details__comment-delete`);
+        deleteCommentList.forEach((deleteCommentButton) => {
+            deleteCommentButton.addEventListener(`click`, (event) => {
+                event.preventDefault();
+                const idComment = deleteCommentButton.id;
+                onDataChange(this, idComment, null);
+                popup.rerender();
+            });
         });
-
 
 
         this._mode = Mode.EDIT;

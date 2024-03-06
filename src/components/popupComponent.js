@@ -138,7 +138,7 @@ export default class PopupComponent extends AbstractSmartComponent {
     this._isMarkAsFavorite = !!film.isMarkAsFavorite;
     this._isMarkAsWatched = !!film.isMarkAsWatched;
     this._currentEmoji = null;
-
+    this._idComment = null;
 
     // this._isAddToWatchlist = Object.values(film.addToWatchlist).some(Boolean);
 
@@ -291,9 +291,19 @@ export default class PopupComponent extends AbstractSmartComponent {
       .addEventListener(`click`, handler, { once: true });
   }
 
-  setDeleteCommentClickHandler(handler) {
-    this.getElement().querySelectorAll(`.film-details__comment-delete`).forEach(comment => {
-      comment.addEventListener(`click`, handler);
-    });
-  }
+  // setDeleteCommentClickHandler(handler) {
+  //   this.getElement().querySelectorAll(`.film-details__comment-delete`).forEach(comment => {
+  //     comment.addEventListener(`click`, handler);
+  //     // this._idComment = comment.id;
+  //   });
+  // }
+
+  // setDeleteCommentClickHandler(handler) {
+  //   this.getElement().querySelector(`.film-details__comment-delete`)
+  //     .addEventListener(`click`, (handler));
+  //   // event.preventDefault();
+  // }
+
+
+
 }

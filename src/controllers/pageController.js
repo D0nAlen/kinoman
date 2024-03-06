@@ -165,13 +165,17 @@ export default class PageController {
             this._moviesModel.addComment(movieController, newData);
         }
         else if (newData === null) {
-            // console.log(oldData);
-            this._moviesModel.removeComment(movieController, oldData);
+            // console.log(movieController.getFilm().comment);
+
+            movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
+            // console.log(movieController.getFilm().comment);
         }
         else {
+            console.log("update!");
             // 1)добавить эту часть после поправки кнопок добавлений по категориям фильмов(watchlist и т.д.)
+            this._moviesModel.updateFilm(oldData.id, newData);
             // const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
-            // if (isSuccess) {
+            // if (isSuccess) { //здесь происходит задвоение карточек при удалении/добавлении карточек по фильтрам
             //     movieController.render(newData, MovieControllerMode.DEFAULT);
             // }
         }
@@ -241,6 +245,7 @@ export default class PageController {
     }
 
     _onFilterChange() {
+        console.log("filter change");
         this._updateFilms(SHOWING_FILMS_COUNT_ON_START);
     }
 }
