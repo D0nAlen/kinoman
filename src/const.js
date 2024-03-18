@@ -732,18 +732,18 @@ export let FILMS_CARDS = [
   },
 ];
 
-export let MOST_COMMENTED_CARDS = [
-  FILMS_CARDS[12],
-  FILMS_CARDS[13],
-  FILMS_CARDS[18],
-  FILMS_CARDS[19],
-];
-
 export let TOP_RATED_CARDS = [
-  FILMS_CARDS[18],
-  FILMS_CARDS[19],
+  FILMS_CARDS[0],
+  FILMS_CARDS[1],
   FILMS_CARDS[11],
   FILMS_CARDS[7],
+];
+
+export let MOST_COMMENTED_CARDS = [
+  FILMS_CARDS[2],
+  FILMS_CARDS[3],
+  FILMS_CARDS[18],
+  FILMS_CARDS[19],
 ];
 
 export const FilterType = {

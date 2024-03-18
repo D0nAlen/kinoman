@@ -9,13 +9,6 @@ export const Mode = {
     EDIT: `edit`,
 };
 
-// export const EmptyComment = {
-//     text: ``,
-//     emotion: ``,
-//     author: ``,
-//     date: null,
-// };
-
 export default class MovieController {
     constructor(container, onDataChange, onViewChange) {
         this._container = container;
@@ -147,7 +140,7 @@ export default class MovieController {
                     const author = getRandomArrayItem(authorComment);
                     const comment = { id, text, emotion, author, date };
 
-                    onDataChange(this, null, comment);
+                    onDataChange(film, null, comment);
 
                     popup.rerender();
                 }
@@ -156,6 +149,7 @@ export default class MovieController {
         });
 
         // 1)после удаления второго комментария попап закрывается(слетает обработчик событий)
+        // 2)не обновляется число комментов в экстра разделе(на самой странице срабатывает после нажатия на фильтр)
         const deleteCommentList = this._popupComponent.getElement().querySelectorAll(`.film-details__comment-delete`);
         deleteCommentList.forEach((deleteCommentButton) => {
             deleteCommentButton.addEventListener(`click`, (event) => {

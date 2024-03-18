@@ -28,6 +28,7 @@ const renderFilms = (filmsListComponent, films, onDataChange, onViewChange) => {
     });
 };
 
+
 const renderCardTopRatedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
@@ -73,6 +74,7 @@ export default class PageController {
         this._sortingComponent = new SortingComponent();
         this._filmsListComponent = new FilmsListComponent();
         this._showMoreButtonComponent = new ShowMoreButtonComponent();
+        this._filmsContainerComponent = null;
 
         this._onDataChange = this._onDataChange.bind(this);
         this._onSortTypeChange = this._onSortTypeChange.bind(this);
@@ -82,8 +84,6 @@ export default class PageController {
 
         this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChange);
         this._moviesModel.setFilterChangeHandler(this._onFilterChange);
-
-        // this._creatingComment = null;
     }
 
     hide() {
@@ -99,10 +99,10 @@ export default class PageController {
         render(container, this._sortingComponent, RenderPosition.BEFOREEND);
         const films = this._moviesModel.getFilms();
 
-        const filmsContainerComponent = new FilmsContainerComponent();
-        render(container, filmsContainerComponent, RenderPosition.BEFOREEND);
+        this._filmsContainerComponent = new FilmsContainerComponent();
+        render(container, this._filmsContainerComponent, RenderPosition.BEFOREEND);
 
-        render(filmsContainerComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
+        render(this._filmsContainerComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
 
 
         const filmsListContainer = this._filmsListComponent.getElement().querySelector(".films-list__container");
@@ -123,16 +123,28 @@ export default class PageController {
 
             this._renderShowMoreButton();
 
-            renderCardTopRatedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
-            renderCardMostCommentedFilms(filmsContainerComponent, this._onDataChange, this._onViewChange);
+            renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+            renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
         }
+    }
+
+    _renderExtraCards() {
+        renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+        renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+    }
+
+    _removeExtraCards() {
+        const topRatedFilmContainer = this._container.getElement().querySelectorAll(".films-list--extra")[0];//.querySelector(".films-list__container");
+        const mostCommentedFilmContainer = this._container.getElement().querySelectorAll(".films-list--extra")[1];//.querySelector(".films-list__container");
+
+        topRatedFilmContainer.remove();
+        mostCommentedFilmContainer.remove();
     }
 
     _removeFilms() {
         this._showedMovieControllers.forEach((movieController) => movieController.destroy());
         this._showedMovieControllers = [];
     }
-
 
     _renderFilms(films) {
         const filmsListContainer = this._filmsListComponent.getElement().querySelector(".films-list__container");
@@ -158,21 +170,21 @@ export default class PageController {
         this._removeFilms();
         this._renderFilms(this._moviesModel.getFilms().slice(0, count));
         this._renderShowMoreButton();
+
+        this._removeExtraCards();
+        this._renderExtraCards();
+        console.log("updated extra units!");
     }
 
     _onDataChange(movieController, oldData, newData) {
         if (oldData === null) {
             this._moviesModel.addComment(movieController, newData);
         }
-        else if (newData === null) {
-            // console.log(movieController.getFilm().comment);
 
+        else if (newData === null) {
             movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
-            // console.log(movieController.getFilm().comment);
         }
         else {
-            console.log("update!");
-            // 1)добавить эту часть после поправки кнопок добавлений по категориям фильмов(watchlist и т.д.)
             this._moviesModel.updateFilm(oldData.id, newData);
             // const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
             // if (isSuccess) { //здесь происходит задвоение карточек при удалении/добавлении карточек по фильтрам
@@ -180,40 +192,6 @@ export default class PageController {
             // }
         }
     }
-
-
-    // _onCommentDataChange(movieController, oldData, newData) {
-    //     if (oldData === EmptyComment) {
-    //         this._creatingComment = null;
-    //         if (newData === null) {
-    //             movieController.destroy();
-    //             // this._updateFilms(this._showingFilmsCount);
-    //         } else {
-    //             this._moviesModel.addComment(newData);
-    //             movieController.render(newData, MovieControllerMode.DEFAULT);
-
-    //             if (this._showingFilmsCount % SHOWING_FILMS_COUNT_BY_BUTTON === 0) {
-    //                 const destroyedComment = this._showedMovieControllers.pop();
-    //                 destroyedComment.destroy();
-    //             }
-
-    //             this._showedMovieControllers = [].concat(movieController, this._showedMovieControllers);
-    //             this._showingFilmsCount = this._showedMovieControllers.length;
-
-    //             this._renderShowMoreButton();
-    //         }
-    //     } else if (newData === null) {
-    //         this._moviesModel.removeComment(oldData.id);
-    //         this._updateFilms(this._showingFilmsCount);
-    //     }
-    //     // else {
-    //     //     const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
-
-    //     //     if (isSuccess) {
-    //     //         movieController.render(newData, MovieControllerMode.DEFAULT);
-    //     //     }
-    //     // }
-    // }
 
     _onViewChange() {
         this._showedMovieControllers.forEach((it) => it.setDefaultView());
