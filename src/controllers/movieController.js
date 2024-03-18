@@ -28,11 +28,6 @@ export default class MovieController {
         return this._film;
     }
 
-    // getOnDataChange() {
-    //     return this._onDataChange;
-    // }
-
-
     render(film) {
         this._film = film;
         this._cardFilmComponent = new CardFilmComponent(this._film);
@@ -44,14 +39,8 @@ export default class MovieController {
             this._onViewChange();
             this._addPopup();
         });
-
-        // 1)добавить _onDataChange к обработчикам
-        // 2)не работает автоперерисовка после изменения счетчика фильтров
-        // this._taskComponent.setArchiveButtonClickHandler(() => {
-        //     this._onDataChange(this, task, Object.assign({}, task, {
-        //       isArchive: !task.isArchive,
-        //     }));
-        //   });
+    
+// 1)при попадании курсора между заголовками фильтров, срабатывает фильтр "All"(сделать чтобы клик был только по All)
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
             // film.isAddToWatchlist = !film.isAddToWatchlist;
             this._onDataChange(this, film, Object.assign({}, film, {
@@ -98,7 +87,6 @@ export default class MovieController {
 
         const film = this._film;
 
-        // 1)не работает автоотрисовка фильмов по фильтру!!!
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
             // this._film.isAddToWatchlist = !this._film.isAddToWatchlist;
             this._onDataChange(this, film, Object.assign({}, film, {
@@ -149,7 +137,6 @@ export default class MovieController {
         });
 
         // 1)после удаления второго комментария попап закрывается(слетает обработчик событий)
-        // 2)не обновляется число комментов в экстра разделе(на самой странице срабатывает после нажатия на фильтр)
         const deleteCommentList = this._popupComponent.getElement().querySelectorAll(`.film-details__comment-delete`);
         deleteCommentList.forEach((deleteCommentButton) => {
             deleteCommentButton.addEventListener(`click`, (event) => {
@@ -179,31 +166,4 @@ export default class MovieController {
             document.removeEventListener(`keydown`, this._onEscKeyDown);
         }
     };
-
-    // _onDataChange(movieController, oldData, newData) {
-
-    //     if (oldData === EmptyComment) {
-    //         this._creatingComment = null;
-    //         if (newData === null) {
-    //             movieController.destroy();
-    //             this._updateFilms(this._showingFilmsCount);
-    //         } else {
-    //             this._moviesModel.addComment(newData);
-    //             movieController.render(newData, MovieControllerMode.DEFAULT);
-
-    //             if (this._showingFilmsCount % SHOWING_FILMS_COUNT_BY_BUTTON === 0) {
-    //                 const destroyedComment = this._showedMovieControllers.pop();
-    //                 destroyedComment.destroy();
-    //             }
-
-    //             this._showedMovieControllers = [].concat(movieController, this._showedMovieControllers);
-    //             this._showingFilmsCount = this._showedMovieControllers.length;
-
-    //             // this._renderLoadMoreButton();
-    //         }
-    //     } else if (newData === null) {
-    //         this._moviesModel.removeTask(oldData.id);
-    //         this._updateFilms(this._showingFilmsCount);
-    //     }
-    // }
 }

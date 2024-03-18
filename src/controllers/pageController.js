@@ -134,8 +134,8 @@ export default class PageController {
     }
 
     _removeExtraCards() {
-        const topRatedFilmContainer = this._container.getElement().querySelectorAll(".films-list--extra")[0];//.querySelector(".films-list__container");
-        const mostCommentedFilmContainer = this._container.getElement().querySelectorAll(".films-list--extra")[1];//.querySelector(".films-list__container");
+        const topRatedFilmContainer = this._container.getElement().querySelectorAll(".films-list--extra")[0];
+        const mostCommentedFilmContainer = this._container.getElement().querySelectorAll(".films-list--extra")[1];
 
         topRatedFilmContainer.remove();
         mostCommentedFilmContainer.remove();
@@ -173,7 +173,6 @@ export default class PageController {
 
         this._removeExtraCards();
         this._renderExtraCards();
-        console.log("updated extra units!");
     }
 
     _onDataChange(movieController, oldData, newData) {
@@ -223,7 +222,6 @@ export default class PageController {
     }
 
     _onFilterChange() {
-        console.log("filter change");
         this._updateFilms(SHOWING_FILMS_COUNT_ON_START);
     }
 }
