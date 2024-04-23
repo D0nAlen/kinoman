@@ -1,3 +1,3 @@
-export const generateFilms = (arrayFilms) => {
-    return  arrayFilms.slice();
-};
+// export const generateFilms = (arrayFilms) => {
+//     return  arrayFilms.slice();
+// };

@@ -1,9 +1,9 @@
-import { FILMS_CARDS } from "../const.js";
+// import { FILMS_CARDS } from "../const.js";
 import { render, RenderPosition, replace, remove } from "../utils/render.js";
 import TopRatedContainerComponent from "../components/topRatedContainer.js";
 import MostCommentedContainerComponent from "../components/mostCommentedContainer.js";
-import { generateTopRatedFilms } from "../mock/cardTopRated.js";
-import { generateMostCommentedFilms } from "../mock/cardMostCommented.js";
+// import { generateTopRatedFilms } from "../mock/cardTopRated.js";
+// import { generateMostCommentedFilms } from "../mock/cardMostCommented.js";
 import SortingComponent, { SortType } from "../components/sort.js";
 import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
@@ -16,8 +16,10 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
-const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
-const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
+const topRatedFilms = null; //generateTopRatedFilms(CARD__TOP_RATED_COUNT);
+const mostCommentedFilms = null; //generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
+// const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
+// const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
 const renderFilms = (filmsListComponent, films, onDataChange, onViewChange) => {
     return films.map((film) => {
@@ -112,19 +114,18 @@ export default class PageController {
         // currentMenuButton = selectedMenuButton;
 
         // 1)не выводится сообщение если нет фильмов по выбранному фильтру(надо вставить проверку в фильтр)
-        if (FILMS_CARDS.length === 0) {
-            render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
-        } else {
-            // if (selectedMenuButton === "") {
-            //     selectedMenuButton = "all";
-            // }
+        // if (FILMS_CARDS.length === 0) {
+        //     render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
+        // } else 
+        {
+
 
             this._renderFilms(films.slice(0, this._showingFilmsCount));
 
             this._renderShowMoreButton();
 
-            renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
-            renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+            // renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+            // renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
         }
     }
 

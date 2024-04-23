@@ -1,3 +1,3 @@
-export const generateEmojis = (arrayEmojis) => {
-    return  arrayEmojis.slice();
-  };
+// export const generateEmojis = (arrayEmojis) => {
+//     return  arrayEmojis.slice();
+//   };
