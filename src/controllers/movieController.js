@@ -9,6 +9,26 @@ export const Mode = {
     EDIT: `edit`,
 };
 
+const parseFormData = (formData) => {
+    const date = formData.get(`date`);
+    const repeatingDays = DAYS.reduce((acc, day) => {
+      acc[day] = false;
+      return acc;
+    }, {});
+  
+    return new MovieModel({
+    //   "description": formData.get(`text`),
+    //   "dueDate": date ? new Date(date) : null,
+    //   "repeatingDays": formData.getAll(`repeat`).reduce((acc, it) => {
+    //     acc[it] = true;
+    //     return acc;
+    //   }, repeatingDays),
+    //   "color": formData.get(`color`),
+    //   "isFavorite": false,
+    //   "isDone": false,
+    });
+  };
+
 export default class MovieController {
     constructor(container, onDataChange, onViewChange) {
         this._container = container;

@@ -10,15 +10,8 @@ import PageComponent from "./components/pageComponent.js";
 import SiteMenuComponent, { MenuItem } from "./components/site-menu.js";
 import API from "./api.js";
 
-const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAo=`;
+const AUTHORIZATION = `Basic dXNlckaESDFGXDGHJwYXNzd29yZAo=`;
 const END_POINT = `http://localhost:4444`;
-
-// const dateTo = new Date();
-// const dateFrom = (() => {
-//   const d = new Date(dateTo);
-//   d.setDate(d.getDate() - 7);
-//   return d;
-// })();
 
 // const tasks = generateTasks(TASK_COUNT);
 const api = new API(END_POINT, AUTHORIZATION);
@@ -42,8 +35,8 @@ filterController.render();
 const pageComponent = new PageComponent();
 render(siteMainElement, pageComponent, RenderPosition.BEFOREEND);
 
-const pageController = new PageController(pageComponent, moviesModel);
-pageController.render();
+const pageController = new PageController(pageComponent, moviesModel, api);
+// pageController.render();
 
 const statisticsComponent = new StatisticsComponent({ films: moviesModel });
 render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);

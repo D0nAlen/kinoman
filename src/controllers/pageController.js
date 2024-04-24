@@ -66,9 +66,10 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 export default class PageController {
-    constructor(container, moviesModel) {
+    constructor(container, moviesModel, api) {
         this._container = container;
         this._moviesModel = moviesModel;
+        this._api = api;
 
         this._showedMovieControllers = [];
         this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
@@ -113,7 +114,7 @@ export default class PageController {
         // let selectedMenuButton = param.slice(1);
         // currentMenuButton = selectedMenuButton;
 
-        // 1)не выводится сообщение если нет фильмов по выбранному фильтру(надо вставить проверку в фильтр)
+        // 1)вставить сообщение в случае если нет связи с сервером
         // if (FILMS_CARDS.length === 0) {
         //     render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
         // } else 
@@ -124,6 +125,7 @@ export default class PageController {
 
             this._renderShowMoreButton();
 
+            // 2)получить с сервера и вывести экстра разделы, без них не работают фильтры!!!
             // renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
             // renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
         }
@@ -185,7 +187,25 @@ export default class PageController {
             movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
         }
         else {
-            this._moviesModel.updateFilm(oldData.id, newData);
+            this._api.updateFilm(oldData.id, newData)
+            .then((movieModel) => {
+              const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
+    
+              if (isSuccess) {
+                movieController.render(movieModel, MovieControllerMode.DEFAULT);
+                this._updateFilms(this._showingFilmsCount);
+              }
+            })
+            .catch(() => {
+                // movieController.shake();
+            });
+
+            // this._moviesModel.updateFilm(oldData.id, newData);
+
+
+
+
+
             // const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
             // if (isSuccess) { //здесь происходит задвоение карточек при удалении/добавлении карточек по фильтрам
             //     movieController.render(newData, MovieControllerMode.DEFAULT);
