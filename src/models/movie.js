@@ -1,4 +1,4 @@
-export default class Film {
+export default class MovieModel {
     constructor(data) {
         this.id = data.id;
         this.filmName = data.filmName;
@@ -19,6 +19,8 @@ export default class Film {
         this.isAddToWatchlist = data.isAddToWatchlist;
         this.isMarkAsFavorite = data.isMarkAsFavorite;
         this.isMarkAsWatched = data.isMarkAsWatched;
+        this.isCardTopRated = data.isCardTopRated;
+        this.isCardMostCommented = data.isCardMostCommented;
     }
 
     toRAW() {
@@ -50,18 +52,20 @@ export default class Film {
             "isAddToWatchlist": this.isAddToWatchlist,
             "isMarkAsFavorite": this.isMarkAsFavorite,
             "isMarkAsWatched": this.isMarkAsWatched,
+            "isCardTopRated": this.isCardTopRated,
+            "isCardMostCommented": this.isCardMostCommented,
         };
     }
 
     static parseFilm(data) {
-        return new Film(data);
+        return new MovieModel(data);
     }
 
     static parseFilms(data) {
-        return data.map(Film.parseFilm);
+        return data.map(MovieModel.parseFilm);
     }
 
     static clone(data) {
-        return new Film(data.toRAW());
+        return new MovieModel(data.toRAW());
     }
 }

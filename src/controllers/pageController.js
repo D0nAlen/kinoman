@@ -16,8 +16,8 @@ const CARD__MOST_COMMENTED_COUNT = 2;
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 
-const topRatedFilms = null; //generateTopRatedFilms(CARD__TOP_RATED_COUNT);
-const mostCommentedFilms = null; //generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
+let topRatedFilms = null; //generateTopRatedFilms(CARD__TOP_RATED_COUNT);
+let mostCommentedFilms = null; //generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 // const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
 // const mostCommentedFilms = generateMostCommentedFilms(CARD__MOST_COMMENTED_COUNT);
 
@@ -31,20 +31,20 @@ const renderFilms = (filmsListComponent, films, onDataChange, onViewChange) => {
 };
 
 
-const renderCardTopRatedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
+const renderCardTopRatedFilms = (filmsContainerComponent, onDataChange, onViewChange, cardTopRatedCount) => {
     const topRatedContainerComponent = new TopRatedContainerComponent();
     render(filmsContainerComponent.getElement(), topRatedContainerComponent, RenderPosition.BEFOREEND);
 
     const topRatedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[1];
-    renderFilms(topRatedContainerElement, topRatedFilms, onDataChange, onViewChange);
+    renderFilms(topRatedContainerElement, topRatedFilms.slice(0, cardTopRatedCount), onDataChange, onViewChange);
 };
 
-const renderCardMostCommentedFilms = (filmsContainerComponent, onDataChange, onViewChange) => {
+const renderCardMostCommentedFilms = (filmsContainerComponent, onDataChange, onViewChange, cardMostCommentedCount) => {
     const mostCommentedContainerComponent = new MostCommentedContainerComponent();
     render(filmsContainerComponent.getElement(), mostCommentedContainerComponent, RenderPosition.BEFOREEND);
 
     const mostCommentedContainerElement = filmsContainerComponent.getElement().querySelectorAll(".films-list__container")[2];
-    renderFilms(mostCommentedContainerElement, mostCommentedFilms, onDataChange, onViewChange);
+    renderFilms(mostCommentedContainerElement, mostCommentedFilms.slice(0, cardMostCommentedCount), onDataChange, onViewChange);
 };
 
 const getSortedFilms = (films, sortType, from, to) => {
@@ -126,8 +126,22 @@ export default class PageController {
             this._renderShowMoreButton();
 
             // 2)получить с сервера и вывести экстра разделы, без них не работают фильтры!!!
-            // renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
-            // renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+            // const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
+            mostCommentedFilms = this._moviesModel.getFilmsMostCommented();
+            topRatedFilms = this._moviesModel.getFilmsTopRated();
+            // const x = this._api.getFilms;
+            // console.log(mostCommentedFilms);
+            // const filterArray = films.filter((film) =>
+            //     // if(film.isCardMostCommented===true)
+            //     film.duration <= 90
+            //     // film.isCardMostCommented === true
+            // );
+
+            // console.log(filterArray);
+
+
+            renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange, CARD__TOP_RATED_COUNT);
+            renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange, CARD__MOST_COMMENTED_COUNT);
         }
     }
 
@@ -188,17 +202,17 @@ export default class PageController {
         }
         else {
             this._api.updateFilm(oldData.id, newData)
-            .then((movieModel) => {
-              const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
-    
-              if (isSuccess) {
-                movieController.render(movieModel, MovieControllerMode.DEFAULT);
-                this._updateFilms(this._showingFilmsCount);
-              }
-            })
-            .catch(() => {
-                // movieController.shake();
-            });
+                .then((movieModel) => {
+                    const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
+
+                    if (isSuccess) {
+                        movieController.render(movieModel, MovieControllerMode.DEFAULT);
+                        this._updateFilms(this._showingFilmsCount);
+                    }
+                })
+                .catch(() => {
+                    // movieController.shake();
+                });
 
             // this._moviesModel.updateFilm(oldData.id, newData);
 

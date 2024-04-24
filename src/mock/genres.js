@@ -1,3 +1,3 @@
-// export const generateGenres = (arrayGenres) => {
-//     return  arrayGenres.slice();
-// };
+export const generateGenres = (arrayGenres) => {
+    return  arrayGenres.slice();
+};

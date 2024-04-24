@@ -21,6 +21,18 @@ export default class MoviesModel {
         return this._films;
     }
 
+    getFilmsMostCommented() {
+        return this._films.filter((film) =>
+            film.isCardMostCommented
+        );
+    }
+
+    getFilmsTopRated() {
+        return this._films.filter((film) =>
+            film.isCardTopRated
+        );
+    }
+
     setFilms(films) {
         this._films = Array.from(films);
         this._callHandlers(this._dataChangeHandlers);
@@ -68,6 +80,6 @@ export default class MoviesModel {
             return false;
         }
 
-       return commentList = [].concat(commentList.slice(0, index), commentList.slice(index + 1));
+        return commentList = [].concat(commentList.slice(0, index), commentList.slice(index + 1));
     }
 }

@@ -1,4 +1,4 @@
-import Film from "./models/film.js";
+import MovieModel from "./models/movie.js";
 
 const Method = {
   GET: `GET`,
@@ -25,7 +25,7 @@ const API = class {
   getFilms() {
       return this._load({ url: `movies` })
       .then((response) => response.json())
-      .then(Film.parseFilms);
+      .then(MovieModel.parseFilms);
 
   }
 
@@ -48,7 +48,7 @@ const API = class {
       headers: new Headers({ "Content-Type": `application/json` })
     })
       .then((response) => response.json())
-      .then(Film.parseFilm);
+      .then(MovieModel.parseFilm);
   }
 
   deleteFilm(id) {
