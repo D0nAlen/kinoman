@@ -203,17 +203,17 @@ export default class PageController {
         else {
             console.log(newData);
             this._api.updateFilm(oldData.id, newData)
-                // .then((movieModel) => {
-            //         // const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
+                .then((movieModel) => {
+                    // const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
 
-            //         // if (isSuccess) {
-            //         //     movieController.render(movieModel, MovieControllerMode.DEFAULT);
-            //         //     this._updateFilms(this._showingFilmsCount);
-            //         // }
-            //     })
-                // .catch(() => {
-            //         // movieController.shake();
-                // });
+                    // if (isSuccess) {
+                    //     movieController.render(movieModel, MovieControllerMode.DEFAULT);
+                    //     this._updateFilms(this._showingFilmsCount);
+                    // }
+                })
+                .catch(() => {
+                    // movieController.shake();
+                });
 
             // this._moviesModel.updateFilm(oldData.id, newData);
 
