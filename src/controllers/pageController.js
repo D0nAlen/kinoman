@@ -125,19 +125,8 @@ export default class PageController {
 
             this._renderShowMoreButton();
 
-            // 2)получить с сервера и вывести экстра разделы, без них не работают фильтры!!!
-            // const topRatedFilms = generateTopRatedFilms(CARD__TOP_RATED_COUNT);
             mostCommentedFilms = this._moviesModel.getFilmsMostCommented();
             topRatedFilms = this._moviesModel.getFilmsTopRated();
-            // const x = this._api.getFilms;
-            // console.log(mostCommentedFilms);
-            // const filterArray = films.filter((film) =>
-            //     // if(film.isCardMostCommented===true)
-            //     film.duration <= 90
-            //     // film.isCardMostCommented === true
-            // );
-
-            // console.log(filterArray);
 
 
             renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange, CARD__TOP_RATED_COUNT);
@@ -194,26 +183,26 @@ export default class PageController {
 
     _onDataChange(movieController, oldData, newData) {
         if (oldData === null) {
-            this._moviesModel.addComment(movieController, newData);
+            // this._moviesModel.addComment(movieController, newData);
         }
 
         else if (newData === null) {
-            movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
+            // movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
         }
         else {
             console.log(newData);
             this._api.updateFilm(oldData.id, newData)
-                .then((movieModel) => {
-                    // const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
+                // .then((movieModel) => {
+                //     // const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
 
-                    // if (isSuccess) {
-                    //     movieController.render(movieModel, MovieControllerMode.DEFAULT);
-                    //     this._updateFilms(this._showingFilmsCount);
-                    // }
-                })
-                .catch(() => {
+                //     // if (isSuccess) {
+                //     //     movieController.render(movieModel, MovieControllerMode.DEFAULT);
+                //     //     this._updateFilms(this._showingFilmsCount);
+                //     // }
+                // })
+                // .catch(() => {
                     // movieController.shake();
-                });
+                // });
 
             // this._moviesModel.updateFilm(oldData.id, newData);
 

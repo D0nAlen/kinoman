@@ -204,6 +204,16 @@ export default class PopupComponent extends AbstractSmartComponent {
     this.rerender();
   }
 
+  getData() {
+    const form = this.getElement().querySelector(".film-card");
+    return new FormData(form);
+  }
+
+  setData(data) {
+    // this._externalData = Object.assign({}, DefaultData, data);
+    this.rerender();
+  }
+
   setSubmitHandler(handler) {
     this.getElement().querySelector(`form`)
       .addEventListener(`submit`, handler);

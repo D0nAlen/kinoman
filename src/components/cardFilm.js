@@ -51,4 +51,24 @@ export default class CardFilmComponent extends AbstractComponent {
     this.getElement().querySelector(`.film-card__controls-item--favorite`)
       .addEventListener(`click`, handler);
   }
+
+
+  getData() {
+    const form = this.getElement().querySelector(".film-card");
+    // return parseFormData(form);
+    return new FormData(form);
+  }
+
+  setData(data) {
+    // this._externalData = Object.assign({}, DefaultData, data);
+    this.rerender();
+  }
+
+
+  setSubmitHandler(handler) {
+    this.getElement().querySelector(`form`)
+      .addEventListener(`submit`, handler);
+
+    this._submitHandler = handler;
+  }
 };

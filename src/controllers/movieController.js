@@ -3,6 +3,7 @@ import PopupComponent from "../components/popupComponent.js";
 import CardFilmComponent from "../components/cardFilm.js";
 import { formatCommentDate } from "../utils/common.js";
 import { getRandomArrayItem, authorComment } from "../mock/comment.js";
+import MovieModel from "../models/movie.js";
 
 export const Mode = {
     DEFAULT: `default`,
@@ -12,22 +13,45 @@ export const Mode = {
 const parseFormData = (formData) => {
     const date = formData.get(`date`);
     const repeatingDays = DAYS.reduce((acc, day) => {
-      acc[day] = false;
-      return acc;
+        acc[day] = false;
+        return acc;
     }, {});
-  
+
+    // Адаптер:
     return new MovieModel({
-    //   "description": formData.get(`text`),
-    //   "dueDate": date ? new Date(date) : null,
-    //   "repeatingDays": formData.getAll(`repeat`).reduce((acc, it) => {
-    //     acc[it] = true;
-    //     return acc;
-    //   }, repeatingDays),
-    //   "color": formData.get(`color`),
-    //   "isFavorite": false,
-    //   "isDone": false,
+        //   "description": formData.get(`text`),
+        //   "dueDate": date ? new Date(date) : null,
+        //   "repeatingDays": formData.getAll(`repeat`).reduce((acc, it) => {
+        //     acc[it] = true;
+        //     return acc;
+        //   }, repeatingDays),
+        //   "color": formData.get(`color`),
+        //   "isFavorite": false,
+        //   "isDone": false,
+
+        "id": formData.get(`id`),
+        "filmName": formData.get(`filmName`),
+        "originalFilmName": formData.get(`originalFilmName`),
+        "director": formData.get(`director`),
+        "writers": formData.get(`writers`),
+        "actors": formData.get(`actors`),
+        "releaseDate": date ? new Date(date) : null,
+        "country": formData.get(`country`),
+        "genres": formData.get(`genres`),
+        "rating": formData.get(`rating`),
+        "year": formData.get(`year`),
+        "duration": formData.get(`duration`),
+        "poster": formData.get(`poster`),
+        "description": formData.get(`description`),
+        "comment": formData.get(`comment`),
+        "age": formData.get(`age`),
+        "isAddToWatchlist": false,
+        "isMarkAsFavorite": false,
+        "isMarkAsWatched": false,
+        "isCardTopRated": false,
+        "isCardMostCommented": false,
     });
-  };
+};
 
 export default class MovieController {
     constructor(container, onDataChange, onViewChange) {
@@ -44,9 +68,9 @@ export default class MovieController {
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
 
-    getFilm() {
-        return this._film;
-    }
+    // getFilm() {
+    //     return this._film;
+    // }
 
     render(film) {
         this._film = film;
@@ -59,28 +83,49 @@ export default class MovieController {
             this._onViewChange();
             this._addPopup();
         });
-    
-// 1)при попадании курсора между заголовками фильтров, срабатывает фильтр "All"(сделать чтобы клик был только по All)
+
+        //при попадании курсора между заголовками фильтров, срабатывает фильтр "All"(сделать чтобы клик был только по All)
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
-            // film.isAddToWatchlist = !film.isAddToWatchlist;
-            this._onDataChange(this, film, Object.assign({}, film, {
-                isAddToWatchlist: !film.isAddToWatchlist,
-            }));
+            // this._onDataChange(this, film, Object.assign({}, film, {
+            //     isAddToWatchlist: !film.isAddToWatchlist,
+            // }));
+            const newFilm = MovieModel.clone(film);
+            newFilm.isAddToWatchlist = !newFilm.isAddToWatchlist;
+            this._onDataChange(this, film, newFilm);
         });
 
         this._cardFilmComponent.setMarkAsWatchedButtonClickHandler(() => {
-            // film.isMarkAsWatched = !film.isMarkAsWatched;
-            this._onDataChange(this, film, Object.assign({}, film, {
-                isMarkAsWatched: !film.isMarkAsWatched,
-            }));
+            // this._onDataChange(this, film, Object.assign({}, film, {
+            //     isMarkAsWatched: !film.isMarkAsWatched,
+            // }));
+            const newFilm = MovieModel.clone(film);
+            newFilm.isMarkAsWatched = !newFilm.isMarkAsWatched;
+            this._onDataChange(this, film, newFilm);
         });
 
+        // console.log(this._cardFilmComponent);
+
         this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            // film.isMarkAsFavorite = !film.isMarkAsFavorite;
-            this._onDataChange(this, film, Object.assign({}, film, {
-                isMarkAsFavorite: !film.isMarkAsFavorite,
-            }));
+            // this._onDataChange(this, film, Object.assign({}, film, {
+            //     isMarkAsFavorite: !film.isMarkAsFavorite,
+            // }));
+            const newFilm = MovieModel.clone(film);
+            newFilm.isMarkAsFavorite = !newFilm.isMarkAsFavorite;
+            this._onDataChange(this, film, newFilm);
         });
+
+
+        this._cardFilmComponent.setSubmitHandler((evt) => {
+            evt.preventDefault();
+      
+            const formData = this._cardFilmComponent.getData();
+            const data = parseFormData(formData);
+      
+            // this._cardFilmComponent.setData({
+            // //   saveButtonText: `Saving...`,
+            // });
+            this._onDataChange(this, film, data);
+          });
     }
 
     setDefaultView() {
@@ -93,6 +138,22 @@ export default class MovieController {
         remove(this._cardFilmComponent);
         document.removeEventListener(`keydown`, this._onEscKeyDown);
     }
+
+    // shake() {
+    //     this._taskEditComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    //     this._taskComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    
+    //     setTimeout(() => {
+    //       this._taskEditComponent.getElement().style.animation = ``;
+    //       this._taskComponent.getElement().style.animation = ``;
+    
+    
+    //       this._taskEditComponent.setData({
+    //         saveButtonText: `Save`,
+    //         deleteButtonText: `Delete`,
+    //       });
+    //     }, SHAKE_ANIMATION_TIMEOUT);
+    //   }
 
     _addPopup() {
         this._popupComponent = new PopupComponent(this._film);
@@ -108,30 +169,35 @@ export default class MovieController {
         const film = this._film;
 
         this._popupComponent.setAddToWatchlistButtonClickHandler(() => {
-            // this._film.isAddToWatchlist = !this._film.isAddToWatchlist;
-            this._onDataChange(this, film, Object.assign({}, film, {
-                isAddToWatchlist: !film.isAddToWatchlist,
-            }));
+            // this._onDataChange(this, film, Object.assign({}, film, {
+            //     isAddToWatchlist: !film.isAddToWatchlist,
+            // }));
 
-            this._popupComponent.rerender();
+            // this._popupComponent.rerender();
+            const newFilm = MovieModel.clone(film);
+            newFilm.isAddToWatchlist = !newFilm.isAddToWatchlist;
+            this._onDataChange(this, film, newFilm);
 
         });
         this._popupComponent.setMarkAsWatchedButtonClickHandler(() => {
-            this._onDataChange(this, film, Object.assign({}, film, {
-                isMarkAsWatched: !film.isMarkAsWatched,
-            }));
+            // this._onDataChange(this, film, Object.assign({}, film, {
+            //     isMarkAsWatched: !film.isMarkAsWatched,
+            // }));
 
-            this._popupComponent.rerender();
-            // this._film.isMarkAsWatched = !this._film.isMarkAsWatched;
+            // this._popupComponent.rerender();
+            const newFilm = MovieModel.clone(film);
+            newFilm.isMarkAsWatched = !newFilm.isMarkAsWatched;
+            this._onDataChange(this, film, newFilm);
         });
+
         this._popupComponent.setMarkAsFavoriteButtonClickHandler(() => {
-            this._onDataChange(this, film, Object.assign({}, film, {
-                isMarkAsFavorite: !film.isMarkAsFavorite,
-            }));
-
-            this._popupComponent.rerender();
-
-            // this._film.isMarkAsFavorite = !this._film.isMarkAsFavorite;
+            // this._onDataChange(this, film, Object.assign({}, film, {
+            //     isMarkAsFavorite: !film.isMarkAsFavorite,
+            // }));
+            // this._popupComponent.rerender();
+            const newFilm = MovieModel.clone(film);
+            newFilm.isMarkAsWatched = !newFilm.isMarkAsWatched;
+            this._onDataChange(this, film, newFilm);
         });
 
         const onDataChange = this._onDataChange;
