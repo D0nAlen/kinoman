@@ -37,9 +37,4 @@ export default class FilterComponent extends AbstractComponent {
       handler(filterName);
     });
   }
-
-  // setStatisticsButtonClickHandler(handler) {
-  //   this.getElement().querySelector(`.main-navigation__additional`)
-  //     .addEventListener(`click`, handler);
-  // }
 };

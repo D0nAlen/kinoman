@@ -9,7 +9,7 @@ import FilmsContainerComponent from "../components/filmsContainer.js";
 import FilmsListComponent from "../components/filmsList.js";
 import NoDataFilmsComponent from "../components/no-data.js";
 import ShowMoreButtonComponent from "../components/showMoreButton.js";
-import MovieController, { Mode as MovieControllerMode, EmptyComment } from "./movieController.js";
+import MovieController, { Mode as MovieControllerMode } from "./movieController.js";
 
 const CARD__TOP_RATED_COUNT = 2;
 const CARD__MOST_COMMENTED_COUNT = 2;
@@ -115,7 +115,7 @@ export default class PageController {
         // currentMenuButton = selectedMenuButton;
 
         // 1)вставить сообщение в случае если нет связи с сервером
-        // if (FILMS_CARDS.length === 0) {
+        // if (films.length === 0) {
         //     render(filmsListContainer, this._noDataFilmsComponent, RenderPosition.BEFOREEND);
         // } else 
         {
@@ -135,8 +135,8 @@ export default class PageController {
     }
 
     _renderExtraCards() {
-        renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
-        renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange);
+        renderCardTopRatedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange, CARD__TOP_RATED_COUNT);
+        renderCardMostCommentedFilms(this._filmsContainerComponent, this._onDataChange, this._onViewChange, CARD__MOST_COMMENTED_COUNT);
     }
 
     _removeExtraCards() {
@@ -181,40 +181,41 @@ export default class PageController {
         this._renderExtraCards();
     }
 
+    // 1)почему задваивается до F5 карточка на текущей странице при update?
     _onDataChange(movieController, oldData, newData) {
-        if (oldData === null) {
-            // this._moviesModel.addComment(movieController, newData);
-        }
+        // if (oldData === null) {
+        //     // this._moviesModel.addComment(movieController, newData);
+        // }
 
-        else if (newData === null) {
-            // movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
-        }
-        else {
-            console.log(newData);
-            this._api.updateFilm(oldData.id, newData)
-                // .then((movieModel) => {
-                //     // const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
+        // else if (newData === null) {
+        //     // movieController.getFilm().comment = this._moviesModel.removeComment(movieController.getFilm().comment, oldData);
+        // }
+        // else {
+        // console.log(newData);
+        this._api.updateFilm(oldData.id, newData)
+            .then((movieModel) => {
+                const isSuccess = this._moviesModel.updateFilm(oldData.id, movieModel);
 
-                //     // if (isSuccess) {
-                //     //     movieController.render(movieModel, MovieControllerMode.DEFAULT);
-                //     //     this._updateFilms(this._showingFilmsCount);
-                //     // }
-                // })
-                // .catch(() => {
-                    // movieController.shake();
-                // });
+                if (isSuccess) {
+                    // movieController.render(movieModel, MovieControllerMode.DEFAULT);
+                    this._updateFilms(this._showingFilmsCount);
+                }
+            })
+            .catch(() => {
+                // movieController.shake();
+            });
 
-            // this._moviesModel.updateFilm(oldData.id, newData);
-
-
+        // this._moviesModel.updateFilm(oldData.id, newData);
 
 
 
-            // const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
-            // if (isSuccess) { //здесь происходит задвоение карточек при удалении/добавлении карточек по фильтрам
-            //     movieController.render(newData, MovieControllerMode.DEFAULT);
-            // }
-        }
+
+
+        // const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
+        // if (isSuccess) { //здесь происходит задвоение карточек при удалении/добавлении карточек по фильтрам
+        //     movieController.render(newData, MovieControllerMode.DEFAULT);
+        // }
+        // }
     }
 
     _onViewChange() {
