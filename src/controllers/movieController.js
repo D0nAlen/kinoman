@@ -54,9 +54,10 @@ const parseFormData = (formData) => {
 };
 
 export default class MovieController {
-    constructor(container, onDataChange, onViewChange) {
+    constructor(container, onDataChange, onViewChange, onDataChangeComment, api) {
         this._container = container;
         this._onDataChange = onDataChange;
+        this._onDataChangeComment = onDataChangeComment;
         this._onViewChange = onViewChange;
 
         this._cardFilmComponent = null;
@@ -64,6 +65,7 @@ export default class MovieController {
         this._popup = null;
         this._film = null;
         this._mode = Mode.DEFAULT;
+        this._api = api;
 
         this._onEscKeyDown = this._onEscKeyDown.bind(this);
     }
@@ -103,8 +105,6 @@ export default class MovieController {
             this._onDataChange(this, film, newFilm);
         });
 
-        // console.log(this._cardFilmComponent);
-
         this._cardFilmComponent.setMarkAsFavoriteButtonClickHandler(() => {
             // this._onDataChange(this, film, Object.assign({}, film, {
             //     isMarkAsFavorite: !film.isMarkAsFavorite,
@@ -114,18 +114,21 @@ export default class MovieController {
             this._onDataChange(this, film, newFilm);
         });
 
+        // console.log(this._api);
+
+
 
         this._cardFilmComponent.setSubmitHandler((evt) => {
             evt.preventDefault();
-      
+
             const formData = this._cardFilmComponent.getData();
             const data = parseFormData(formData);
-      
+
             // this._cardFilmComponent.setData({
             // //   saveButtonText: `Saving...`,
             // });
             this._onDataChange(this, film, data);
-          });
+        });
     }
 
     setDefaultView() {
@@ -142,12 +145,12 @@ export default class MovieController {
     // shake() {
     //     this._taskEditComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
     //     this._taskComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
-    
+
     //     setTimeout(() => {
     //       this._taskEditComponent.getElement().style.animation = ``;
     //       this._taskComponent.getElement().style.animation = ``;
-    
-    
+
+
     //       this._taskEditComponent.setData({
     //         saveButtonText: `Save`,
     //         deleteButtonText: `Delete`,
@@ -157,6 +160,10 @@ export default class MovieController {
 
     _addPopup() {
         this._popupComponent = new PopupComponent(this._film);
+
+        console.log(this._api.getComments());
+
+
 
         render(this._popup, this._popupComponent, RenderPosition.BEFOREEND);
         document.addEventListener(`keydown`, this._onEscKeyDown);
@@ -200,7 +207,7 @@ export default class MovieController {
             this._onDataChange(this, film, newFilm);
         });
 
-        const onDataChange = this._onDataChange;
+        const onDataChangeComment = this._onDataChangeComment;
         // const film = this._film;
         const popup = this._popupComponent;
 
@@ -214,7 +221,8 @@ export default class MovieController {
                     const author = getRandomArrayItem(authorComment);
                     const comment = { id, text, emotion, author, date };
 
-                    onDataChange(film, null, comment);
+                    // onDataChange(film, null, comment);
+                    // onDataChangeComment(film, null, comment);
 
                     popup.rerender();
                 }
@@ -222,14 +230,18 @@ export default class MovieController {
 
         });
 
-        // 1)после удаления второго комментария попап закрывается(слетает обработчик событий)
+
         const deleteCommentList = this._popupComponent.getElement().querySelectorAll(`.film-details__comment-delete`);
         deleteCommentList.forEach((deleteCommentButton) => {
             deleteCommentButton.addEventListener(`click`, (event) => {
                 event.preventDefault();
                 const idComment = deleteCommentButton.id;
-                onDataChange(this, idComment, null);
-                popup.rerender();
+                // onDataChange(this, idComment, null);
+                // onDataChangeComment(film.id, idComment, null);
+                // console.log(film.id);
+
+                // 2)после удаления второго комментария попап закрывается здесь!!!(слетает обработчик событий)
+                // popup.rerender();
             });
         });
 

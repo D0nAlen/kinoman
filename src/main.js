@@ -68,10 +68,16 @@ siteMenuComponent.setOnChange((menuItem) => {
 });
 
 api.getFilms()
-  .then((films) => {
-    moviesModel.setFilms(films);
-    pageController.render();
-  });
+    .then((films) => {
+        moviesModel.setFilms(films);
+        pageController.render();
+    });
+
+    // общий список комментов:
+// api.getComments()
+//     .then((comment) => { 
+//         console.log(comment);
+//     });
 
 //////////////////////////////////////////////
 // fetch('http://localhost:4444/movies')

@@ -73,7 +73,11 @@ export default class MoviesModel {
         film.comment.push(comment);
     }
 
+    
+
     removeComment(commentList, commentId) {
+        // console.log(commentList, "______", commentId);
+
         const index = commentList.findIndex((it) => String(it.id) === commentId);
 
         if (index === -1) {

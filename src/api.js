@@ -1,4 +1,5 @@
 import MovieModel from "./models/movie.js";
+import CommentModel from "./models/comment.js";
 
 const Method = {
   GET: `GET`,
@@ -23,22 +24,10 @@ const API = class {
   }
 
   getFilms() {
-      return this._load({ url: `movies` })
+    return this._load({ url: `movies` })
       .then((response) => response.json())
       .then(MovieModel.parseFilms);
-
   }
-
-  // createFilm(film) {
-  //   return this._load({
-  //     url: `movies`,
-  //     method: Method.POST,
-  //     body: JSON.stringify(film.toRAW()),
-  //     headers: new Headers({ "Content-Type": `application/json` })
-  //   })
-  //     .then((response) => response.json())
-  //     .then(Film.parseFilm);
-  // }
 
   updateFilm(id, data) {
     return this._load({
@@ -51,10 +40,19 @@ const API = class {
       .then(MovieModel.parseFilm);
   }
 
-  deleteFilm(id) {
-    return this._load({ url: `movies/${id}`, method: Method.DELETE });
-  }
+  // getComments() {
+  //   return this._load({ url: `comments` })
+  //   .then((response) => response.json())
+  //   .then(CommentModel.parseComments);
+  // }
 
+  getComments() {
+    return this._load({ url: `comments` })
+    .then((response) => response.json())
+    .then(CommentModel.parseComments);
+
+// console.log(allComments);
+  }
 
   _load({ url, method = Method.GET, body = null, headers = new Headers() }) {
     headers.append(`Authorization`, this._authorization);

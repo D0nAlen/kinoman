@@ -4,6 +4,7 @@ import GenreTemplateComponent from "./popupComponents/genres.js";
 import { RenderPosition, render, remove } from "../utils/render.js";
 import CommentComponent from "./popupComponents/comment.js";
 import { formatDate, formatFilmDuration } from "../utils/common.js";
+import API from "../api.js";
 
 const createPopupTemplate = (film, options = {}) => {
 
@@ -133,6 +134,7 @@ export default class PopupComponent extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+    this._api = new API();
 
     this._isAddToWatchlist = !!film.isAddToWatchlist;
     this._isMarkAsFavorite = !!film.isMarkAsFavorite;
@@ -162,7 +164,8 @@ export default class PopupComponent extends AbstractSmartComponent {
 
     const genres = generateGenres(this._film.genres);
 
-    const comments = this._film.comment;
+    // 1)комменты должны получаться через id с сервера из общего списка комментов
+    const comments = "";//this._film.comment;
 
     //genres rendering
     const filmDetailsGenres = this.getElement().querySelector(".film-details-genres");
