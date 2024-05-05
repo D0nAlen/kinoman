@@ -165,7 +165,7 @@ export default class PopupComponent extends AbstractSmartComponent {
     const genres = generateGenres(this._film.genres);
 
     // 1)комменты должны получаться через id с сервера из общего списка комментов
-    const comments = "";//this._film.comment;
+    const comments = this._film.comment;
 
     //genres rendering
     const filmDetailsGenres = this.getElement().querySelector(".film-details-genres");

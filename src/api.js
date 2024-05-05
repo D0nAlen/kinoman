@@ -48,9 +48,9 @@ const API = class {
 
   // 1)parseComments переделать, чтобы вычленял массив комментов с объекта
   getCommentsByIdFilm(movieId) {
-    return this._load({ url: `comments/:movieId` })
+    return this._load({ url: `comments/${movieId}` })
       .then((response) => response.json())
-      .then(CommentModel.parseComments);
+      // .then(CommentModel.parseComments);
   }
 
 

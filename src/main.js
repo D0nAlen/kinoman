@@ -67,14 +67,18 @@ siteMenuComponent.setOnChange((menuItem) => {
     }
 });
 
-// 1)где-то здесь должны добавляться комменты к фильмам до отрисовки(как считаются  с  сервера)
-// 2)считывание комментов сразу для всех фильмов, чтобы корректно отображаось число комментов на главной странице
+// 2)не работают счетчики на главной странице, хотя комменты добавляются в фильмы
 api.getFilms()
     .then((films) => {
         films.map((film) => {
-            // console.log(film.id);
-            console.log(api.getCommentsByIdFilm(film.id));
+            api.getCommentsByIdFilm(film.id)
+                .then((comments) => {
+                    // film.comment= Array.from(comments);
 
+                    console.log(comments);
+                    //api.getCommentsByIdFilm(film.id);
+                    film.comment = comments;
+                });
         });
         moviesModel.setFilms(films);
         pageController.render();
