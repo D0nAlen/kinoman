@@ -161,7 +161,7 @@ export default class MovieController {
     _addPopup() {
         this._popupComponent = new PopupComponent(this._film);
 
-        console.log(this._api.getComments());
+        // console.log(this._api.getComments());
 
 
 

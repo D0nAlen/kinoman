@@ -69,13 +69,33 @@ siteMenuComponent.setOnChange((menuItem) => {
 
 api.getFilms()
     .then((films) => {
+                        console.log(films);
+
+        // api.getComments()
+        //     .then((comment) => {
+        //         console.log(comment);
+        //     });
         moviesModel.setFilms(films);
         pageController.render();
     });
 
-    // общий список комментов:
+
+// generateComments()
+
+
+
+
+
+
+
+
+
+
+
+
+// // общий список комментов:
 // api.getComments()
-//     .then((comment) => { 
+//     .then((comment) => {
 //         console.log(comment);
 //     });
 
