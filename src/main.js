@@ -67,21 +67,18 @@ siteMenuComponent.setOnChange((menuItem) => {
     }
 });
 
+// 1)где-то здесь должны добавляться комменты к фильмам до отрисовки(как считаются  с  сервера)
+// 2)считывание комментов сразу для всех фильмов, чтобы корректно отображаось число комментов на главной странице
 api.getFilms()
     .then((films) => {
-                        console.log(films);
+        films.map((film) => {
+            // console.log(film.id);
+            console.log(api.getCommentsByIdFilm(film.id));
 
-        // api.getComments()
-        //     .then((comment) => {
-        //         console.log(comment);
-        //     });
+        });
         moviesModel.setFilms(films);
         pageController.render();
     });
-
-
-// generateComments()
-
 
 
 

@@ -40,19 +40,19 @@ const API = class {
       .then(MovieModel.parseFilm);
   }
 
-  // getComments() {
-  //   return this._load({ url: `comments` })
-  //   .then((response) => response.json())
-  //   .then(CommentModel.parseComments);
-  // }
-
   getComments() {
     return this._load({ url: `comments` })
-    .then((response) => response.json())
-    .then(CommentModel.parseComments);
-
-// console.log(allComments);
+      .then((response) => response.json())
+      .then(CommentModel.parseComments);
   }
+
+  // 1)parseComments переделать, чтобы вычленял массив комментов с объекта
+  getCommentsByIdFilm(movieId) {
+    return this._load({ url: `comments/:movieId` })
+      .then((response) => response.json())
+      .then(CommentModel.parseComments);
+  }
+
 
   _load({ url, method = Method.GET, body = null, headers = new Headers() }) {
     headers.append(`Authorization`, this._authorization);
