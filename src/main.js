@@ -38,6 +38,12 @@ render(siteMainElement, pageComponent, RenderPosition.BEFOREEND);
 const pageController = new PageController(pageComponent, moviesModel, api);
 // pageController.render();
 
+api.getFilms()
+    .then((films) => {
+        moviesModel.setFilms(films);
+        pageController.render();
+    });
+
 const statisticsComponent = new StatisticsComponent({ films: moviesModel });
 render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
@@ -66,39 +72,6 @@ siteMenuComponent.setOnChange((menuItem) => {
             break;
     }
 });
-
-// 2)не работают счетчики на главной странице, хотя комменты добавляются в фильмы
-api.getFilms()
-    .then((films) => {
-        films.map((film) => {
-            api.getCommentsByIdFilm(film.id)
-                .then((comments) => {
-                    // film.comment= Array.from(comments);
-
-                    console.log(comments);
-                    //api.getCommentsByIdFilm(film.id);
-                    film.comment = comments;
-                });
-        });
-        moviesModel.setFilms(films);
-        pageController.render();
-    });
-
-
-
-
-
-
-
-
-
-
-
-// // общий список комментов:
-// api.getComments()
-//     .then((comment) => {
-//         console.log(comment);
-//     });
 
 //////////////////////////////////////////////
 // fetch('http://localhost:4444/movies')

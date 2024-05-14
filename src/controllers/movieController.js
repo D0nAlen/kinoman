@@ -86,7 +86,6 @@ export default class MovieController {
             this._addPopup();
         });
 
-        //при попадании курсора между заголовками фильтров, срабатывает фильтр "All"(сделать чтобы клик был только по All)
         this._cardFilmComponent.setAddToWatchlistButtonClickHandler(() => {
             // this._onDataChange(this, film, Object.assign({}, film, {
             //     isAddToWatchlist: !film.isAddToWatchlist,
